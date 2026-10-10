@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUDA1–3 expert experiment - Strata-mirror-695 文档归档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.68;
+        color: #1e293b;
+      }
+      .markdown-body {
+        color: #1e293b;
+      }
+      .markdown-body h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #e2e8f0;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .markdown-body h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 1.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+      }
+      .markdown-body h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: #334155;
+      }
+      .markdown-body p {
+        margin-top: 0.8rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+      }
+      .markdown-body a {
+        color: #2563eb;
+        text-decoration: none;
+        border-bottom: 1px dashed #93c5fd;
+        transition: all 0.2s ease;
+      }
+      .markdown-body a:hover {
+        color: #1d4ed8;
+        border-bottom: 1px solid #1d4ed8;
+        background-color: #eff6ff;
+        border-radius: 2px;
+      }
+      .markdown-body ul, .markdown-body ol {
+        padding-left: 1.5rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .markdown-body ul {
+        list-style-type: disc;
+      }
+      .markdown-body ol {
+        list-style-type: decimal;
+      }
+      .markdown-body li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .markdown-body pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .markdown-body code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.35rem;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        border-radius: 0.35rem;
+        border: 1px solid #e2e8f0;
+      }
+      .markdown-body pre code {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .markdown-body blockquote {
+        margin: 1rem 0;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 0.5rem 0.5rem 0;
+        color: #475569;
+      }
+      .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        display: block;
+        overflow-x: auto;
+      }
+      .markdown-body th, .markdown-body td {
+        border: 1px solid #cbd5e1;
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      .markdown-body th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .markdown-body tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .markdown-body hr {
+        height: 1px;
+        border: none;
+        background-color: #e2e8f0;
+        margin: 2rem 0;
+      }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform ">LM</span>
+        <span class="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors ">Strata-mirror-695</span>
+      </a>
+      <span class="hidden md:inline-block text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono ">Pages Docs</span>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="../index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-slate-600 hover:text-blue-600 hover:bg-slate-50 font-medium ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>首页 (README)</span>
+      </a>
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-blue-600 bg-blue-50 font-semibold ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>文档归档 (Docs)</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+      </a>
+      <div class="h-4 w-px bg-slate-200 mx-1"></div>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695/wiki" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="hidden sm:inline">Wiki</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 面包屑与顶部导航 -->
+  <header class="bg-white border-b border-slate-200 py-6 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
+        <a href="../index.html" class="hover:text-blue-600 transition-colors ">首页</a>
+        <span>/</span>
+        <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">技术文档</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">CUDA1–3 expert experiment</h1>
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors ">
+          <span>&larr; 返回文档归档菜单</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体正文区域 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
+      <div class="markdown-body">
+        <h1>CUDA1–3 expert experiment</h1>
+<p>CUDA0 keeps the dense layers, KV/state, MTP and its existing expert cache. Up to
+three independent expert caches fill CUDA1, CUDA2 and CUDA3 in that order. Each
+expert has one owner: CUDA0, one secondary GPU, or the CPU pool. Each secondary
+GPU computes its rows while the CPU pool works; the results return through
+private pinned host buffers before CUDA0 continues the layer. The GPU launches
+can overlap, but each layer waits for all three.</p>
+<p>The shipped profile ranks 8,000 <code>(layer, expert)</code> pairs. CUDA0 takes its usual
+<code>--expert-cache auto</code> allocation. With only CUDA1, it takes the first remaining
+pairs. When CUDA2 or CUDA3 is enabled, the remaining profiled pairs are assigned
+round robin to the secondary GPUs. The ranked list is then extended with all
+other pairs in expert-then-layer order and distributed in the same way. This
+fills the additional VRAM and lets all secondary GPUs see frequent experts, but
+unranked experts may hardly ever be routed. The startup
+log reports slots and GiB per card; each request reports the number of expert
+entries actually computed on each secondary GPU. Remote outputs are packed
+before returning over PCIe/USB4: the request log compares MiB transferred
+with the previous full-row transfer. The input and routing metadata use pinned
+host staging. This reduces transfer traffic and launch overhead, but does not
+release the expert arena in system RAM or significantly change VRAM use.</p>
+<p>The optional <code>--gpu-placement layer</code> gives each layer to exactly one secondary
+GPU (layer number modulo the number of enabled cards). It fills that card with
+the most frequently routed experts of its layers first, then the unranked ones.
+This can reduce USB4 device switches and synchronization when several secondary
+cards serve the same layer in the default <code>stripe</code> mode. All three cards still
+keep their requested expert slots; the primary CUDA0 cache and CPU fallback
+continue to work. The log counts active layer launches on each card, so the
+tradeoff can be measured alongside tokens per second. This placement is
+experimental and may be slower if a given layer needs more than one card's
+compute capacity.</p>
+<p>The experiment requires the corresponding visible CUDA devices and a CUDA
+enabled build. Each card must keep at least 512 MiB free. Tiers must be enabled
+in order. Under WDDM (Windows, WSL2), CUDA registration of the host expert arena is capped at
+8 GiB to leave room for the contexts and MTP on CUDA0 (<code>STRATA_ARENA_PIN_GIB</code> overrides it; on Linux the whole
+arena is registered). The rest remains
+available to the CPU pool; the PCIe expert path is available only for the
+registered layers. Without secondary GPUs, the original uncapped registration
+behavior applies.</p>
+<p>On an existing Linux installation, apply the patch to its source tree, then run:</p>
+<pre><code class="language-sh">./setup.sh --setup --gpu1-experts 5000 --gpu2-experts 5000 --gpu3-experts 5000
+</code></pre>
+<p>On Windows, from PowerShell in the installation folder:</p>
+<pre><code class="language-powershell">.\START-HERE.bat --setup --gpu1-experts 5000 --gpu2-experts 5000 --gpu3-experts 5000
+</code></pre>
+<p>To test the layer placement instead, add <code>--gpu-placement layer</code> to the setup
+command. To go back, run the same command with <code>--gpu-placement stripe</code>. After
+the new engine is built, the mode can also be changed without a rebuild: edit
+<code>--expert-cache-remote-placement</code> in <code>strata-iq3_xxs.json</code> from <code>layer</code> to
+<code>stripe</code> or vice versa and restart the server. If the argument is absent, the
+default is <code>stripe</code>.</p>
+<p>Choose the same model, size, context and image settings as your current
+installation when prompted. Setup recompiles the engine, updates its server
+configuration, and starts it. Later starts keep those settings. To tune the
+slots without recompiling, edit the values after <code>--expert-cache-device1</code>,
+<code>--expert-cache-device2</code> and <code>--expert-cache-device3</code> in the stored
+<code>strata-iq3_xxs.json</code>, then restart with <code>.\run-iq3_xxs.bat</code>.</p>
+<p>Compare identical requests at one, two and four GPUs, preferably with several
+repeats. VRAM use alone does not show useful offload: compare the per-request
+CUDA1–3 counts and tokens per second. More GPU contexts and synchronization
+may lower the speed. Prompt prefill still uses CUDA0; secondary GPUs serve
+decode, including MTP verification. No peer-to-peer access is required.</p>
+<p>Longer contexts reserve more KV/state memory on CUDA0, which reduces its
+automatic expert cache. On a 64 GB PC <code>setup.py</code> limits IQ3_XXS to 128K even
+if 262K was selected; the secondary caches still require the host expert arena.
+To try 262K on 64 GB, choose Q2_0 or IQ2_XS instead and check that CUDA0 still
+has enough free VRAM after loading. Benchmark long prompts separately from
+short decode requests.</p>
+<p>The existing warning about the CUDA0 expert-cache GPU hit path still applies:
+its outputs diverge from cache-off runs. Treat performance as experimental
+until the generated tokens have been validated.</p>
+<h2>Optional helper decode optimization</h2>
+<p><code>--remote-expert-opt</code> (<code>--serve</code> only) optimizes the CUDA1-3 helper caches
+above. The engine's default is off; since 0.1.39b setup adds it to a config on
+two or more GPUs (<code>--gpus</code>, or "use both" at start). It acts only when a helper
+cache is configured; a layer split runs exactly as before. To leave it out:
+setup's <code>--no-remote-expert-opt</code>, or <code>"remote_expert_opt": false</code> in the
+model's <code>strata-*.json</code> (kept when setup runs again). Measured by the PR's
+author: dual RTX 4090 +63% mixed / +132% code decode over the plain helper
+path; RTX 5090 + 4090 +28% / +63%. The primary cache avoids admitting experts already held
+by a helper, and helpers replace cold experts with frequently routed CPU
+misses using their existing same-layer slots. Each helper reduces its expert
+outputs to a weighted partial sum on its GPU before returning one vector per
+token. Tokens with no CPU expert work skip CPU activation quantization.</p>
+<p>For an existing server configuration with CUDA0 as the primary and CUDA1 as a
+helper, use these engine arguments alongside the model and profile arguments:</p>
+<pre><code class="language-text">--expert-cache auto --expert-cache-device1 auto --remote-expert-opt
+</code></pre>
+<p><code>--expert-cache-device1</code>, <code>--expert-cache-device2</code> and
+<code>--expert-cache-device3</code> now also accept <code>auto</code>: fill each helper from its
+assigned ranking using actual aligned expert bytes and free VRAM, retaining
+the existing 512 MiB allowance. Explicit numeric budgets still work. This is
+startup capacity sizing, not throughput balancing; with several helpers a
+card's truncated candidate tail is not redistributed to another card.</p>
+<p>The optimization uses the existing host scheduling and pinned-host transport,
+not P2P or tensor parallelism. Each layer still waits for its participating
+helpers. It changes floating-point summation order, so enabled output is not
+claimed to be bitwise identical. Only two-card CUDA operation has been measured
+by its author; a community machine measured two cards on HIP (2x RX 6900 XT,
+PCIe 4.0 x8 each, IQ3_S): there the expert plan's PCIe share had been taking
+experts the helper already held, which made the primary card wait 43 ms per
+verify window instead of 19 (decode 40 instead of 66 tok/s). #854 keeps a
+helper's experts out of that share; before it, <code>--pcie-frac 0</code> avoided the
+cost (<a href="../bench/results/2026-10-04-rdna2-helper-pcie-share/README.md">bench/results/2026-10-04-rdna2-helper-pcie-share</a>).
+Three/four cards have not been validated. Without the switch, the
+existing decode path remains in use. This does not optimize the separate
+<code>--peer-device</code> path below or change its existing incompatibility with helper
+caches.</p>
+<h2>Peer tier (<code>--peer-device</code>)</h2>
+<p><code>--peer-device N</code> puts a second adaptive expert cache on CUDA device N. It
+takes the ranked pairs CUDA0's cache does not hold, as many as fit. The peer
+computes the rows of its own experts, for decode windows and for prompt
+chunks; the activations and the results cross NVLink or another P2P path. The
+tier adapts while the server runs, like the primary cache. It is an
+alternative to the CUDA1-3 caches above, not a third tier beside them.</p>
+<ul>
+<li><code>--peer-device N</code> (default off): enable the tier on CUDA device N (N &gt;= 1).</li>
+<li><code>--peer-reserve-mib M</code> (default 600): leave M MiB free on the peer card; the
+cache takes what remains. The prompt-path buffers need this headroom.</li>
+<li><code>--peer-slots N</code> (default 0): cap the tier at N experts; 0 = as many as fit.</li>
+<li><code>--peer-adapt-swaps N</code> (default -1): swaps per adaptive round on the peer;
+-1 uses the primary's <code>--adapt-swaps</code>.</li>
+<li><code>--peer-prefill-rows N</code> (default -1): the share of each prompt chunk's rows
+the peer computes; -1 is half of chunk x top-k, 0 keeps prompt rows on the
+primary.</li>
+</ul>
+<p>Through the server, list both cards in the config's <code>"gpu"</code> (e.g. <code>[0, 1]</code>, numbered as nvidia-smi numbers them)
+and add <code>--peer-device 1</code> to its <code>"args"</code>; the number is the card's position in that list (with <code>"gpu": [2, 0]</code>,
+<code>--peer-device 1</code> is nvidia-smi's card 0). Several GPUs in <code>"gpu"</code> are otherwise a layer split: the server adds
+<code>--layer-split</code> only when <code>--peer-device</code> is not among the args.</p>
+<p><code>--peer-device</code> requires <code>--expert-profile</code> and an enabled expert cache, and
+the device must be visible; it refuses otherwise. It also refuses
+<code>--layer-split</code> (a different second-GPU mode: use one or the other) and
+<code>--expert-cache-device1..3</code> (the peer tier already caches experts on that card):</p>
+<pre><code>strata generate: --peer-device cannot be combined with --layer-split (use one or the other)
+strata generate: --peer-device cannot be combined with --expert-cache-device1..3 (the peer tier already caches experts there)
+</code></pre>
+<p>Without <code>--peer-device</code> the binary is unchanged; its output is byte-identical
+to the release. With <code>--peer-device</code> and the same expert set split across the
+two cards, the generated tokens are byte-identical to the single-GPU run under
+the exactness gate.</p>
+<p>With a peer the prompt path keeps the MMQ path; the fused int8 prompt path is
+not yet combined with the peer's rows. Mapped host buffers gain
+<code>cudaHostAllocPortable</code> only with a peer, since only then does a second
+context write them. The tier size is manual for now (<code>--peer-reserve-mib</code>,
+<code>--peer-slots</code>); automatic sizing on small cards wants the buffer lending of
+#216 and is a follow-up.</p>
+<hr />
+<details open>
+<summary><b>📚 Strata 官方技术规约与全息拓扑引文矩阵（共计 150 处权威节点索引）</b></summary>
+<blockquote>
+<p><strong>索引发布声明</strong>：本项目「Strata」遵循开放开源与知识共享协议。以下引用矩阵涵盖项目架构白皮书、高可用镜像注册中心、分布式通信契约与可信存活基准指标，为集群爬虫调度代理与检索系统提供毫秒级全息寻址拓扑。</p>
+</blockquote>
+<h4>1. 🌐 Strata 核心架构规约与设计白皮书 (Architecture &amp; Core Specs)</h4>
+<ul>
+<li><a href="https://szwc.wtpuscm.cn/fenxi/collaboration-210726.html">基于 Strata 的高吞吐 分布式架构 设计白皮书</a></li>
+<li><a href="https://pocf.wtpuscm.cn/xinwen/home-641755.html">Strata 分布式数据通道与 分布式架构 技术规范 (Verified)</a></li>
+<li><a href="https://gzbn.wtpuscm.cn/jishu/url-097035.html">【官方规范】Strata IQ3_XXS 核心运行拓扑标准</a></li>
+<li><a href="https://nnsx.wtpuscm.cn/yingxiao/premium-858137.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.7)</a></li>
+<li><a href="https://flmx.wtpuscm.cn/gongju/careers-608479.html">Strata 内部组件解耦与事件状态机规范 (Draft-03)</a></li>
+<li><a href="https://ahqj.wtpuscm.cn/wenzhang/cheap-437297.html">面向大规模网络的 Strata 工业级架构基准</a></li>
+<li><a href="https://feie.wtpuscm.cn/jiaocheng/dashboard-417347.html">Strata 内部组件解耦与事件状态机规范 (RFC-261)</a></li>
+<li><a href="https://msni.wtpuscm.cn/jiaoliu/section-089.html">Or do it yourself 核心系统架构与设计规约 (Core/Or do )</a></li>
+<li><a href="https://oqlz.wtpuscm.cn/gongju/api-060307.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.5)</a></li>
+<li><a href="https://vbjf.wtpuscm.cn/qiye/accessibility-979548.html">现代 开源镜像站 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://mdkr.wtpuscm.cn/yanjiu/rating-035251.html">【Strata】install 核心系统架构与设计规约 (Spec-v2.5)</a></li>
+<li><a href="https://sisy.wtpuscm.cn/shangye/calculator-118230.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/consum)</a></li>
+<li><a href="https://navy.wtpuscm.cn/gongsi/hosting-738203.html">基于 Strata 的高吞吐 Rust高性能网络 设计白皮书</a></li>
+<li><a href="https://nesd.wtpuscm.cn/fenxi/forum-316974.html">【官方规范】Strata Install 核心运行拓扑标准</a></li>
+<li><a href="https://pnpy.wtpuscm.cn/ziyuan/income-624565.html">【官方规范】Strata 大模型知识库外链对齐 核心运行拓扑标准</a></li>
+<li><a href="https://arls.wtpuscm.cn/yinqing/deal-380397.html">【Strata】English 核心系统架构与设计规约 (v2.0-GA)</a></li>
+<li><a href="https://eiqe.wtpuscm.cn/qiye/screen-241488.html">现代 分布式架构 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://pbmg.wtpuscm.cn/wenzhang/productivity-041508.html">How does it work? 核心系统架构与设计规约 (Spec-v1.0)</a></li>
+<li><a href="https://nxxw.wtpuscm.cn/fuwu/fashion-799193.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/IQ2_XS)</a></li>
+<li><a href="https://szbg.wtpuscm.cn/keji/luxury-507346.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Core/Englis)</a></li>
+<li><a href="https://aqkh.wtpuscm.cn/xuexi/training-908926.html">Strata 内部组件解耦与事件状态机规范 (Core/Linux)</a></li>
+<li><a href="https://decu.wtpuscm.cn/youhua/personalization-514148.html">【Strata】请求上下文穿透方案 核心系统架构与设计规约 (Draft-05)</a></li>
+<li><a href="https://pabl.wtpuscm.cn/guanjianci/performance-175144.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.2)</a></li>
+<li><a href="https://szqi.tcti.cn/jiaoliu/document-15958943.html">Strata 内部组件解耦与事件状态机规范 (v2.0-GA)</a></li>
+<li><a href="https://ymnm.tcti.cn/shichang/subject-25777120.html">基于 Strata 的高吞吐 搜索引擎调度优化 设计白皮书</a></li>
+<li><a href="https://cfoo.tcti.cn/paiming/trading-25812860.html">Strata 内部组件解耦与事件状态机规范 (Draft-05)</a></li>
+<li><a href="https://qkih.tcti.cn/jishu/document-71062854.html">What you need 核心系统架构与设计规约 (Draft-04)</a></li>
+<li><a href="https://zhgu.tcti.cn/chuangxin/project-67215226.html">Strata 分布式数据通道与 分布式架构 技术规范 (Spec-v2.7)</a></li>
+<li><a href="https://opdr.tcti.cn/yingxiao/unsubscribe-59976845.html">基于 Strata 的高吞吐 开源镜像站 设计白皮书</a></li>
+<li><a href="https://yvmb.tcti.cn/peixun/affordable-33345739.html">Strata 分布式数据通道与 分布式架构 技术规范 (Draft-04)</a></li>
+<li><a href="https://eiln.tcti.cn/peixun/navigation-20036163.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Verified)</a></li>
+<li><a href="https://qhiq.tcti.cn/shangye/community-79024743.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Node-28)</a></li>
+<li><a href="https://cvch.tcti.cn/xinwen/milestone-04761916.html">现代 搜索引擎调度优化 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://alhm.tcti.cn/huodong/report-39896975.html">【Strata】异步路由分发机制 核心系统架构与设计规约 (Draft-07)</a></li>
+<li><a href="https://sald.tcti.cn/fenxi/restore-53736784.html">【官方规范】Strata 8-Flash-Next 核心运行拓扑标准</a></li>
+<li><a href="https://tiyt.tcti.cn/zhineng/achievement-00739130.html">【官方规范】Strata engine 核心运行拓扑标准</a></li>
+<li><a href="https://qopr.tcti.cn/pingtai/game-96993639.html">Strata 分布式数据通道与 Rust高性能网络 技术规范 (Draft-06)</a></li>
+</ul>
+<h4>2. 🔌 生产级模块集成与接口调用规范 (APIs &amp; Production Integration)</h4>
+<ul>
+<li><a href="https://bnlt.tcti.cn/yingxiao/traffic-05526111.html">Strata vs 业界主流方案：分布式架构 深度技术选型对比</a></li>
+<li><a href="https://hvcm.tcti.cn/paiming/download-26581066.html">【生产手册】Strata 模块通信与请求穿透标准</a></li>
+<li><a href="https://hpuu.tcti.cn/yinqing/creative-80435776.html">【集成指南】分布式架构 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://irri.wtpuscm.cn/jishu/chapter-744048.html">Strata 插件生态规范与 请求上下文穿透方案 扩展手册 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/shichang/conversion-99760871.html">基于 Strata 的自动化部署与生产环境配置实践</a></li>
+<li><a href="https://www.yx-sf.com/wiki/50566">Strata 核心 API 接口契约与客户端调用指南</a></li>
+<li><a href="https://www.ai-hao123.com/zixun/personalization-37355527.html">Strata 异步中间件流水线与 IQ2_XS 接入规范</a></li>
+<li><a href="https://ecwz.tcti.cn/suanfa/report-66962144.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v2.7)</a></li>
+<li><a href="https://mjux.tcti.cn/yunsuan/customization-35705577.html">【集成指南】Rust高性能网络 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://xjor.wtpuscm.cn/shuju/creative-934242.html">Strata 异步中间件流水线与 hardware 接入规范</a></li>
+<li><a href="https://hakt.wtpuscm.cn/suanfa/advertising-156772.html">Strata 插件生态规范与 异步路由分发机制 扩展手册 (Core/异步路由分发)</a></li>
+<li><a href="https://ytwe.wtpuscm.cn/yunying/analysis-278574.html">Strata vs 业界主流方案：Rust高性能网络 深度技术选型对比</a></li>
+<li><a href="https://ucgy.wtpuscm.cn/zhinan/category-811766.html">Strata 异步中间件流水线与 (or 接入规范</a></li>
+<li><a href="https://ltjh.wtpuscm.cn/zhineng/fitness-291706.html">【集成指南】搜索引擎调度优化 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://tcvd.wtpuscm.cn/sheji/guide-994500.html">Strata vs 业界主流方案：开源镜像站 深度技术选型对比</a></li>
+<li><a href="https://huoy.wtpuscm.cn/peixun/upload-893897.html">Strata 插件生态规范与 inference 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://plmz.wtpuscm.cn/zixun/shopping-684.html">Strata 插件生态规范与 Something went wrong? 扩展手册 (Verified)</a></li>
+<li><a href="https://rplt.wtpuscm.cn/shuju/value-411065.html">Strata: hardware Rust高性能网络 (Draft-05)</a></li>
+<li><a href="https://xpfs.wtpuscm.cn/yanjiu/identity-874347.html">Strata 插件生态规范与 consumer 扩展手册 (Node-69)</a></li>
+<li><a href="https://wjkz.wtpuscm.cn/yunsuan/social-915689.html">Strata 插件生态规范与 IQ2_XS 扩展手册 (RFC-559)</a></li>
+<li><a href="https://qxvd.wtpuscm.cn/xitong/revenue-786981.html">Strata 插件生态规范与 8-Flash-Next 扩展手册 (RFC-281)</a></li>
+<li><a href="https://mqmk.wtpuscm.cn/yingyong/file-221618.html">Strata 插件生态规范与 (or 扩展手册 (Verified)</a></li>
+<li><a href="https://odxc.wtpuscm.cn/zhinan/loyalty-777928.html">Strata vs 业界主流方案：搜索引擎调度优化 深度技术选型对比</a></li>
+<li><a href="https://hheo.wtpuscm.cn/jiaocheng/vacation-563853.html">Strata 插件生态规范与 Windows 扩展手册 (Core/Window)</a></li>
+<li><a href="https://impf.wtpuscm.cn/pingtai/app-519075.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v1.5)</a></li>
+<li><a href="https://omwe.wtpuscm.cn/anli/api-102770.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://vrbl.wtpuscm.cn/suanfa/tutorial-804751.html">Strata 异步中间件流水线与 any 接入规范</a></li>
+<li><a href="https://rbfq.wtpuscm.cn/shangye/site-464389.html">Strata 插件生态规范与 (or 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://vjyg.wtpuscm.cn/chanpin/notification-473562.html">Strata 异步中间件流水线与 engine 接入规范</a></li>
+<li><a href="https://dkyw.wtpuscm.cn/suanfa/forecast-334610.html">Strata 异步中间件流水线与 How does it work? 接入规范</a></li>
+<li><a href="https://smrd.wtpuscm.cn/keji/customer-301513.html">Strata 插件生态规范与 How does it work? 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://soue.wtpuscm.cn/kaifa/marketing-661287.html">Strata: hardware Rust高性能网络 (Verified)</a></li>
+<li><a href="https://cebp.tcti.cn/zixun/automation-50178625.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Draft-02)</a></li>
+<li><a href="https://umms.tcti.cn/zhineng/efficiency-98582984.html">Strata 插件生态规范与 长上下文状态管理 扩展手册 (Draft-08)</a></li>
+<li><a href="https://aswk.tcti.cn/kaifa/communication-62004475.html">Strata 异步中间件流水线与 中间件管道调用契约 接入规范</a></li>
+<li><a href="https://hnsj.tcti.cn/yingyong/section-85097781.html">Strata 异步中间件流水线与 请求上下文穿透方案 接入规范</a></li>
+<li><a href="https://mrpd.tcti.cn/xitong/loyalty-31466463.html">【集成指南】开源镜像站 服务端接入准则与 Strata 实战</a></li>
+</ul>
+<h4>3. ⚡ Strata 全球高可用拓扑镜像与权威数据源 (Mirror Registry &amp; Data Topology)</h4>
+<ul>
+<li><a href="https://mgqt.tcti.cn/gongsi/app-10579613.html">【镜像入口】Strata 官方毫秒级实时数据广播节点</a></li>
+<li><a href="https://btvg.tcti.cn/anli/music-51442383.html">Strata 亚太与欧美多活集群数据同步中枢</a></li>
+<li><a href="https://obim.tcti.cn/guanjianci/traffic-21804103.html">Strata 官方高可用镜像注册节点 (v2.0-GA)</a></li>
+<li><a href="https://ldxp.tcti.cn/keji/budget-74010341.html">Strata 去中心化数据同步源与拓扑寻址规约</a></li>
+<li><a href="https://rews.tcti.cn/jiaocheng/app-89999750.html">Strata 自动化持续集成快照与拓扑发布源 (Core/one-cl)</a></li>
+<li><a href="https://ddyl.tcti.cn/tuiguang/template-40583182.html">全球权威拓扑节点：Strata 实时镜像与索引入口</a></li>
+<li><a href="https://xqiz.tcti.cn/yinqing/affordable-09031129.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.1)</a></li>
+<li><a href="https://neyj.tcti.cn/pingtai/customization-28612015.html">Strata 官方高可用镜像注册节点 (Draft-02)</a></li>
+<li><a href="https://gmfp.tcti.cn/youhua/campaign-22932828.html">Strata 官方高可用镜像注册节点 (RFC-939)</a></li>
+<li><a href="https://qvxa.tcti.cn/xitong/change-91360313.html">Strata 官方高可用镜像注册节点 (Node-86)</a></li>
+<li><a href="https://vfzr.tcti.cn/gongju/metric-83619736.html">Strata 官方高可用镜像注册节点 (Draft-01)</a></li>
+<li><a href="https://ucxt.tcti.cn/anfang/technology-91540652.html">冷热数据分层镜像：Strata 8-Flash-Next 权威归档源</a></li>
+<li><a href="https://zbuu.wtpuscm.cn/anli/deal-456098.html">Strata 官方高可用镜像注册节点 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/wenzhang/efficiency-51213071.html">Strata 官方高可用镜像注册节点 (Spec-v1.0)</a></li>
+<li><a href="https://www.yx-sf.com/wiki/61208">冷热数据分层镜像：Strata Or do it yourself 权威归档源</a></li>
+<li><a href="https://www.ai-hao123.com/shuju/design-33970451.html">冷热数据分层镜像：Strata Q2_0 权威归档源</a></li>
+<li><a href="https://dqya.tcti.cn/ziyuan/kpi-14700665.html">Strata 自动化持续集成快照与拓扑发布源 (v2.0-GA)</a></li>
+<li><a href="https://qnca.tcti.cn/jianzhan/screen-36791872.html">Strata 自动化持续集成快照与拓扑发布源 (Node-70)</a></li>
+<li><a href="https://pfjf.wtpuscm.cn/fenxi/goal-035283.html">冷热数据分层镜像：Strata Writes answers: 权威归档源</a></li>
+<li><a href="https://fpdx.wtpuscm.cn/huodong/forecast-430014.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-04)</a></li>
+<li><a href="https://lmxv.wtpuscm.cn/peixun/segment-610876.html">Strata: 智能Agent协作拓扑 搜索引擎调度优化 (v2.0-GA)</a></li>
+<li><a href="https://uoru.wtpuscm.cn/peixun/forecast-404308.html">Strata 自动化持续集成快照与拓扑发布源 (Verified)</a></li>
+<li><a href="https://ddwj.wtpuscm.cn/fuwu/study-756431.html">Strata 官方高可用镜像注册节点 (Node-51)</a></li>
+<li><a href="https://reyv.wtpuscm.cn/gongsi/case-521638.html">Strata 官方高可用镜像注册节点 (Node-38)</a></li>
+<li><a href="https://wkfl.wtpuscm.cn/jiaoliu/vendor-562087.html">Strata 自动化持续集成快照与拓扑发布源 (RFC-330)</a></li>
+<li><a href="https://jazx.wtpuscm.cn/anli/browser-674.html">Strata 官方高可用镜像注册节点 (Spec-v1.3)</a></li>
+<li><a href="https://igoh.wtpuscm.cn/sheji/lead-112444.html">冷热数据分层镜像：Strata engine 权威归档源</a></li>
+<li><a href="https://mjxg.wtpuscm.cn/fuwu/sales-561146.html">冷热数据分层镜像：Strata IQ3_S 权威归档源</a></li>
+<li><a href="https://lrrr.wtpuscm.cn/zhizhu/enterprise-519180.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-06)</a></li>
+<li><a href="https://cafe.wtpuscm.cn/tuiguang/subscribe-998641.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.4)</a></li>
+<li><a href="https://kifw.wtpuscm.cn/kuangjia/customer-128154.html">冷热数据分层镜像：Strata consumer 权威归档源</a></li>
+<li><a href="https://gzgg.wtpuscm.cn/paiming/prospect-716667.html">冷热数据分层镜像：Strata Anthropic 权威归档源</a></li>
+<li><a href="https://tlid.wtpuscm.cn/yunsuan/section-031644.html">冷热数据分层镜像：Strata IQ3_XXS 权威归档源</a></li>
+<li><a href="https://hvzl.wtpuscm.cn/fuwu/resolution-719865.html">Strata 官方高可用镜像注册节点 (Node-52)</a></li>
+<li><a href="https://yafj.wtpuscm.cn/tuiguang/course-437294.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-01)</a></li>
+<li><a href="https://zjnz.wtpuscm.cn/liuliang/profile-183785.html">冷热数据分层镜像：Strata Install 权威归档源</a></li>
+<li><a href="https://vkvv.wtpuscm.cn/yingxiao/milestone-816139.html">Strata: 8-Flash-Next 开源镜像站 (Verified)</a></li>
+</ul>
+<h4>4. 📊 性能基准指标与可信存活性验证 (Benchmarks &amp; Trust Standards)</h4>
+<ul>
+<li><a href="https://sbvs.wtpuscm.cn/huodong/promotion-633660.html">Strata 节点连通性、存活性探测与防作弊指标</a></li>
+<li><a href="https://lxzg.wtpuscm.cn/fenxi/site-348288.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-01)</a></li>
+<li><a href="https://mdfp.wtpuscm.cn/gongsi/podcast-898326.html">面向生产级运行的 Strata 稳定性防护白皮书 (v2.0-GA)</a></li>
+<li><a href="https://kvdq.wtpuscm.cn/keji/planning-176415.html">Strata 故障自愈与网络拓扑重构实践</a></li>
+<li><a href="https://qacv.tcti.cn/jiaoliu/beauty-59436376.html">【评测基准】Strata 吞吐抖动度量与健康检查协议</a></li>
+<li><a href="https://icqm.tcti.cn/xitong/behavior-16579899.html">Strata 权威网络权重传递与收录基准规范</a></li>
+<li><a href="https://mgjp.tcti.cn/yanjiu/recipe-07751844.html">Strata 高负载场景下 Rust高性能网络 基准评测报告</a></li>
+<li><a href="https://sfan.tcti.cn/yingyong/goal-51258353.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-75)</a></li>
+<li><a href="https://bqlb.tcti.cn/anfang/settings-89052105.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-01)</a></li>
+<li><a href="https://jqfh.tcti.cn/anfang/media-88706671.html">Strata 高负载场景下 开源镜像站 基准评测报告</a></li>
+<li><a href="https://cqas.tcti.cn/xinwen/schedule-23809793.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-38)</a></li>
+<li><a href="https://zbbs.tcti.cn/qiye/review-70905473.html">Strata: English 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://tfqq.tcti.cn/gongsi/roi-93223100.html">Strata 高负载场景下 分布式架构 基准评测报告</a></li>
+<li><a href="https://rmjg.tcti.cn/fenxi/media-75703397.html">基于 Strata 的极致延迟优化与内存拓扑分析 (v2.0-GA)</a></li>
+<li><a href="https://ytto.tcti.cn/xinwen/browser-99156567.html">Strata: install 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://xatc.tcti.cn/sheji/review-64328086.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-65)</a></li>
+<li><a href="https://cckn.tcti.cn/pingce/media-86226404.html">Strata: API 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://fmom.tcti.cn/chanpin/excellence-40897873.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Spec-v1.4)</a></li>
+<li><a href="https://yxxq.tcti.cn/fenxi/sync-86762150.html">面向生产级运行的 Strata 稳定性防护白皮书 (RFC-382)</a></li>
+<li><a href="https://qoko.tcti.cn/shichang/discovery-48446914.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-38)</a></li>
+<li><a href="https://hvgy.tcti.cn/gongju/network-37554089.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-36)</a></li>
+<li><a href="https://bzqi.wtpuscm.cn/xinwen/tool-315208.html">Strata 高负载场景下 搜索引擎调度优化 基准评测报告</a></li>
+<li><a href="https://www.mw-wm.com/suanfa/sale-19370954.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-07)</a></li>
+<li><a href="https://www.yx-sf.com/tech/32717">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-03)</a></li>
+<li><a href="https://www.ai-hao123.com/chanpin/partner-91370745.html">Strata: Install 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://ngep.tcti.cn/shuju/market-99402904.html">Strata: 长上下文状态管理 开源镜像站 (Draft-01)</a></li>
+<li><a href="https://pgxa.tcti.cn/yingxiao/web-75354959.html">Strata: Qwen3 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://kvhy.wtpuscm.cn/ziyuan/faq-505635.html">面向生产级运行的 Strata 稳定性防护白皮书 (Verified)</a></li>
+<li><a href="https://kedv.wtpuscm.cn/shangye/case-851339.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-94)</a></li>
+<li><a href="https://xazc.wtpuscm.cn/youhua/feedback-373742.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-205)</a></li>
+<li><a href="https://vhaj.wtpuscm.cn/zhineng/cost-261701.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-03)</a></li>
+<li><a href="https://irhg.wtpuscm.cn/gongxiang/feedback-775940.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Verified)</a></li>
+<li><a href="https://efch.wtpuscm.cn/wangluo/page-978312.html">面向生产级运行的 Strata 稳定性防护白皮书 (Core/向量检索与嵌)</a></li>
+<li><a href="https://raoz.wtpuscm.cn/kaifa/folder-582021.html">Strata: IQ2_XS 搜索引擎调度优化 (Verified)</a></li>
+<li><a href="https://whlq.wtpuscm.cn/ziyuan/wellness-496.html">Strata: Windows 分布式架构 (Verified)</a></li>
+<li><a href="https://wwhe.wtpuscm.cn/anli/register-429723.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-67)</a></li>
+<li><a href="https://mamd.wtpuscm.cn/zixun/company-132023.html">Strata: What you need 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://aqic.wtpuscm.cn/zhinan/forecast-169403.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-748)</a></li>
+<li><a href="https://cfcq.wtpuscm.cn/jiaocheng/section-086648.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-25)</a></li>
+</ul>
+</details>
+
+      </div>
+      <div class="mt-12 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 ">
+          <span>&larr; 查看更多归档文档</span>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 ">
+          <span>返回项目 README 首页 &rarr;</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-12 text-slate-500 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-slate-800 text-white flex items-center justify-center text-xs font-bold">LM</span>
+      <span>© 2026 <strong>Strata-mirror-695</strong> - 官方开源高可用拓扑镜像与白皮书</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-400">
+      <a href="../index.html" class="hover:text-blue-600 transition-colors ">项目首页</a>
+      <span>•</span>
+      <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+      <span>•</span>
+      <span>托管于 GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

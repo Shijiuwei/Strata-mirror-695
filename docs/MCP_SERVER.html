@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strata's MCP server: let your AI assistant install and run Strata - Strata-mirror-695 文档归档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.68;
+        color: #1e293b;
+      }
+      .markdown-body {
+        color: #1e293b;
+      }
+      .markdown-body h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #e2e8f0;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .markdown-body h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 1.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+      }
+      .markdown-body h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: #334155;
+      }
+      .markdown-body p {
+        margin-top: 0.8rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+      }
+      .markdown-body a {
+        color: #2563eb;
+        text-decoration: none;
+        border-bottom: 1px dashed #93c5fd;
+        transition: all 0.2s ease;
+      }
+      .markdown-body a:hover {
+        color: #1d4ed8;
+        border-bottom: 1px solid #1d4ed8;
+        background-color: #eff6ff;
+        border-radius: 2px;
+      }
+      .markdown-body ul, .markdown-body ol {
+        padding-left: 1.5rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .markdown-body ul {
+        list-style-type: disc;
+      }
+      .markdown-body ol {
+        list-style-type: decimal;
+      }
+      .markdown-body li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .markdown-body pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .markdown-body code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.35rem;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        border-radius: 0.35rem;
+        border: 1px solid #e2e8f0;
+      }
+      .markdown-body pre code {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .markdown-body blockquote {
+        margin: 1rem 0;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 0.5rem 0.5rem 0;
+        color: #475569;
+      }
+      .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        display: block;
+        overflow-x: auto;
+      }
+      .markdown-body th, .markdown-body td {
+        border: 1px solid #cbd5e1;
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      .markdown-body th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .markdown-body tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .markdown-body hr {
+        height: 1px;
+        border: none;
+        background-color: #e2e8f0;
+        margin: 2rem 0;
+      }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform ">LM</span>
+        <span class="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors ">Strata-mirror-695</span>
+      </a>
+      <span class="hidden md:inline-block text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono ">Pages Docs</span>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="../index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-slate-600 hover:text-blue-600 hover:bg-slate-50 font-medium ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>首页 (README)</span>
+      </a>
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-blue-600 bg-blue-50 font-semibold ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>文档归档 (Docs)</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+      </a>
+      <div class="h-4 w-px bg-slate-200 mx-1"></div>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695/wiki" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="hidden sm:inline">Wiki</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 面包屑与顶部导航 -->
+  <header class="bg-white border-b border-slate-200 py-6 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
+        <a href="../index.html" class="hover:text-blue-600 transition-colors ">首页</a>
+        <span>/</span>
+        <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">技术文档</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Strata's MCP server: let your AI assistant install and run Strata</h1>
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors ">
+          <span>&larr; 返回文档归档菜单</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体正文区域 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
+      <div class="markdown-body">
+        <h1>Strata's MCP server: let your AI assistant install and run Strata</h1>
+<p><code>tools/strata_mcp.py</code> is an <a href="https://ltku.tcti.cn/anli/website-46629101.html">MCP</a> server for the AI assistant you already use
+(Claude Code, Claude Desktop, Cursor, VS Code, Codex ...). Add it once, then ask in plain words:</p>
+<ul>
+<li>"Install Strata for this PC."</li>
+<li>"Start Strata." / "Stop Strata."</li>
+<li>"Is Strata running? How much VRAM does it use?"</li>
+<li>"Which Strata model fits my PC?"</li>
+<li>"Strata didn't start - what does the log say?"</li>
+<li>"How fast is Strata on this PC?" (a short speed test)</li>
+<li>"How do I connect Open WebUI / the OpenAI SDK / Claude Code to Strata?"</li>
+</ul>
+<p>The assistant calls the server's tools. The tools run Strata's own setup and start the model the way the start
+scripts do. It is one Python file that uses only the standard library, so it works before setup has created
+<code>.venv</code>. It needs Python 3.10 or newer, 64-bit on Windows.</p>
+<p>It is not the same thing as <a href="DETAILS.md#tools-from-mcp-servers">Tools from MCP servers</a>. That feature
+(<code>serve/mcp.py</code>) lets the <em>Strata model</em> call tools from your MCP servers in its chat page. This page is the other
+direction: <em>your assistant</em> manages Strata.</p>
+<h2>Add it</h2>
+<p>You need a copy of Strata: the zip from GitHub, or <code>git clone https://github.com/Niko1221/Strata</code>. Below,
+<code>C:\Users\you\Strata</code> (Windows) and <code>/home/you/Strata</code> (Linux) stand for that folder. Use <code>python3</code> on Linux. On
+Windows, use <code>py</code> if <code>python</code> is not on your PATH.</p>
+<h3>Claude Code</h3>
+<pre><code class="language-bash">claude mcp add strata -- python C:\Users\you\Strata\tools\strata_mcp.py         # Windows
+claude mcp add strata -- python3 /home/you/Strata/tools/strata_mcp.py           # Linux
+</code></pre>
+<p>Add <code>--scope user</code> to have it in every project. <code>/mcp</code> in Claude Code shows that it is connected.</p>
+<h3>Claude Desktop</h3>
+<p>Open Settings &gt; Developer &gt; Edit Config (<code>claude_desktop_config.json</code>) and add:</p>
+<pre><code class="language-json">{
+  "mcpServers": {
+    "strata": {
+      "command": "python",
+      "args": ["C:\\Users\\you\\Strata\\tools\\strata_mcp.py"]
+    }
+  }
+}
+</code></pre>
+<p>On Linux, use <code>"command": "python3"</code> and <code>"args": ["/home/you/Strata/tools/strata_mcp.py"]</code>. Restart Claude
+Desktop after the change.</p>
+<h3>Cursor</h3>
+<p>Use <code>~/.cursor/mcp.json</code> for every project, or <code>.cursor/mcp.json</code> in one project. The format is the same as
+Claude Desktop's:</p>
+<pre><code class="language-json">{
+  "mcpServers": {
+    "strata": {
+      "command": "python",
+      "args": ["C:\\Users\\you\\Strata\\tools\\strata_mcp.py"]
+    }
+  }
+}
+</code></pre>
+<h3>VS Code (GitHub Copilot agent mode)</h3>
+<p>Use <code>.vscode/mcp.json</code> in a workspace, or run "MCP: Open User Configuration" from the command palette:</p>
+<pre><code class="language-json">{
+  "servers": {
+    "strata": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["C:\\Users\\you\\Strata\\tools\\strata_mcp.py"]
+    }
+  }
+}
+</code></pre>
+<p>On Linux, use <code>"command": "python3"</code> and <code>"args": ["/home/you/Strata/tools/strata_mcp.py"]</code>.</p>
+<h3>Codex CLI</h3>
+<p>In <code>~/.codex/config.toml</code>:</p>
+<pre><code class="language-toml">[mcp_servers.strata]
+command = "python"
+args = ['C:\Users\you\Strata\tools\strata_mcp.py']    # Linux: command = "python3", args = ["/home/you/Strata/tools/strata_mcp.py"]
+tool_timeout_sec = 180                                # strata_stop / strata_benchmark can take longer than 60 s
+</code></pre>
+<h3>Any other MCP client</h3>
+<p>The command is <code>python &lt;Strata folder&gt;/tools/strata_mcp.py</code>. The transport is stdio. It speaks MCP revision
+2025-06-18, and also 2025-03-26 and 2024-11-05.</p>
+<p><code>--root &lt;folder&gt;</code> manages a Strata folder other than the one the file is in. For example:
+<code>python D:\tools\strata_mcp.py --root D:\Strata</code>.</p>
+<h2>The tools</h2>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Arguments (all optional)</th></tr></thead><tbody>
+<tr><td><code>strata_status</code></td><td>Whether a model is running: the model, engine version, context, busy or idle, VRAM and RAM in use. What is installed: models, start scripts, engine version, data folder, downloads. An install in progress. This PC's hardware: OS, CPU, RAM, GPUs, page file, free disk. The model and context setup recommends for this PC.</td><td><code>port</code>, <code>hardware</code> (true/false)</td></tr>
+<tr><td><code>strata_models</code></td><td>Every family and size setup offers, with download size, RAM needed, whether it fits this PC, and whether it is installed. Also the context lengths and the recommendation.</td><td>-</td></tr>
+<tr><td><code>strata_install</code></td><td>Runs setup without questions, in the background (see below). Without <code>confirm: true</code> it only returns the plan. A second call shows the progress. <code>cancel: true</code> stops the install.</td><td><code>family</code> (qwen, swift, coder, unsloth), <code>model</code> (Q2_0, IQ2_XS, IQ3_XXS, IQ3_S, IQ1_M, UD-IQ4_XS, UD-Q4_K_XL), <code>context</code> (8192 ... 524288), <code>vision</code> (no, yes, gpu, cpu), <code>kv</code> (int8, q4_0, k8v4), <code>gpu</code> (a number) or <code>gpus</code> ("0,2", "all"), <code>backend</code> (auto, cuda, hip), <code>low_ram</code>, <code>port</code>, <code>data_dir</code>, <code>confirm</code>, <code>cancel</code></td></tr>
+<tr><td><code>strata_start</code></td><td>Starts an installed model in the background and waits until it answers. If it is not ready after <code>wait_seconds</code> (default 50), it returns "loading".</td><td><code>model</code> (an id from <code>strata_status</code>, e.g. <code>q2_0</code>, <code>coder-iq1_m</code>; default: the most recently used), <code>port</code>, <code>gpu</code>, <code>wait_seconds</code> (0-600)</td></tr>
+<tr><td><code>strata_stop</code></td><td>Unloads the model through the server's own API, then ends the server it started.</td><td><code>port</code>, <code>force</code></td></tr>
+<tr><td><code>strata_logs</code></td><td>The last lines of the server log, the engine log or the setup log.</td><td><code>source</code> (server, engine, setup), <code>model</code>, <code>lines</code> (1-500)</td></tr>
+<tr><td><code>strata_benchmark</code></td><td>Sends a short fixed request (greedy, thinking off) and reports output and prompt tokens/s.</td><td><code>port</code>, <code>max_tokens</code> (16-512)</td></tr>
+<tr><td><code>strata_connect_info</code></td><td>The OpenAI and Anthropic base URLs, the model id, whether a key is needed, and settings for Claude Code, Codex, the OpenAI SDK, curl, Cursor, Continue and Open WebUI.</td><td><code>port</code></td></tr>
+</tbody></table>
+<p>Every result is JSON with a one-line <code>summary</code>. It is sent both as text and as MCP structured content.</p>
+<h2>How it works</h2>
+<p><strong>Install.</strong> <code>strata_install</code> uses setup's own logic and tables (it imports <code>setup.py</code>'s <code>MODELS</code>, <code>FAMILIES</code>,
+<code>CONTEXTS</code> and RAM checks) to fill in what you left out:</p>
+<ul>
+<li>the size setup itself would pick: IQ3_XXS from 60 GB of RAM, Q2_0 from about 44 GB, the Coder from about 28 GB,
+and the Coder in the low-RAM mode below that when the GPU makes up for the RAM;</li>
+<li>the context setup recommends for the GPU's VRAM;</li>
+<li>images off.</li>
+</ul>
+<p>The first call returns the plan: the download size (58-111 GB), the free disk space, the RAM check, and the exact
+setup command. The assistant should show you the plan and call again with <code>confirm: true</code> once you agree.</p>
+<p>It then runs the same steps <code>START-HERE.bat</code> / <code>setup.sh</code> run:</p>
+<ol>
+<li>It creates <code>.venv</code> with the Python it runs on, if <code>.venv</code> is missing.</li>
+<li>It runs <code>setup.py --yes --no-start --family ... --model ... --context ... --vision ...</code> as a background process.
+The output goes to <code>.strata-mcp/setup.log</code> in the Strata folder.</li>
+</ol>
+<p>The tool returns at once. Call it again to see the step (1-7), the download percentage, or setup's error message.
+Everything setup has finished is skipped on the next run, and downloads resume. If the AI app closes, the install
+keeps running. The install is refused while a model this server started is running, because setup may replace the
+engine files that model uses.</p>
+<p><strong>Start.</strong> <code>strata_start</code> runs the same command as the <code>run-&lt;model&gt;</code> script, <code>serve/server.py --engine strata  --config strata-&lt;model&gt;.json --port N</code>, with the venv's Python, without <code>--open</code> (no browser) and without a console
+window. The server's output goes to <code>.strata-mcp/server.log</code>. The tool then polls <code>GET /health</code> until the model
+answers. Loading takes 1-3 minutes. If the server ends while loading, the tool returns the end of its log. The model
+keeps running after the AI app closes, until <code>strata_stop</code>. If the AI app runs its tools inside a Windows job that
+does not allow processes to leave it, the model ends together with the app.</p>
+<p>Two cases are refused:</p>
+<ul>
+<li>a model is already running: the tool returns it and starts nothing;</li>
+<li>another program uses the port: the tool says so.</li>
+</ul>
+<p><strong>Stop.</strong> <code>strata_stop</code> first sends <code>POST /unload</code>. The server sends the engine <code>QUIT</code>, and the engine frees its
+VRAM and pinned RAM itself, as when you close the window. Then the server ends:</p>
+<ul>
+<li>Linux: SIGTERM, which runs the server's own Ctrl+C path.</li>
+<li>Windows: the process ends. Its job object ends the vision encoder and the MCP servers it started.</li>
+</ul>
+<p>While a request is running, the tool refuses unless you pass <code>force: true</code>.</p>
+<p><strong>Status.</strong> The tool reads <code>GET /health</code>, <code>/v1/status</code>, <code>/status</code> and, on older servers, <code>/metrics</code> on 127.0.0.1.
+If a config of the folder sets an <code>api_key</code>, the tool sends that key with its own requests. It never shows the key.</p>
+<h2>Safety</h2>
+<ul>
+<li>
+<p><strong>No shell, no free paths.</strong> Every argument is checked against a fixed schema and against setup's own choices. An
+unknown argument, a model or family setup does not offer, or a <code>gpus</code> value other than digits and commas is
+refused before anything runs. Commands are passed as argument lists; nothing goes through a shell.</p>
+</li>
+<li>
+<p><strong>Paths.</strong> The only path argument is <code>data_dir</code>. It must be one of:</p>
+<ul>
+<li>the current Strata data folder;</li>
+<li>a folder inside the Strata folder;</li>
+<li>a new absolute folder whose name starts with <code>Strata</code> (e.g. <code>D:\Strata-data</code>), whose parent exists, and which is
+not in a system folder.</li>
+</ul>
+<p><code>..</code>, relative paths and network (UNC) paths are refused. Logs are read only from <code>.strata-mcp/</code> and from the
+engine log a config names, if that log is inside the Strata folder or the data folder.</p>
+</li>
+<li>
+<p><strong>Only its own processes.</strong> The server records the process id <em>and start time</em> of every process it starts, in
+<code>.strata-mcp/*.json</code>. It only ends a process when both match, so a process id the OS has given to another program
+is never touched. A Strata started some other way (its window, a run script, a service) is only asked over its
+API to unload the model. To end that server, close its window.</p>
+</li>
+<li>
+<p><strong>Big downloads need a yes.</strong> <code>strata_install</code> does nothing until it is called with <code>confirm: true</code>. The plan
+shows the download size and the free space first, and the install is refused if the disk is too small.</p>
+</li>
+<li>
+<p><strong>Local only.</strong> The server checks <code>127.0.0.1</code> and never changes the network settings: it does not install with
+<code>--host 0.0.0.0</code> or an API key. To share Strata on your network, run setup yourself (see
+<a href="DETAILS.md#using-it">Using it</a>). Experimental options are left off too: the speed projection, rope scaling past
+262K and <code>--build</code>. Run setup by hand for those.</p>
+</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li><strong>The assistant does not see the tools.</strong> Run the command by hand:
+<code>python C:\Users\you\Strata\tools\strata_mcp.py</code>. It should print <code>[strata-mcp] ready (Strata folder ...)</code> to
+stderr and wait for input (Ctrl+C ends it). If it reports <code>not a Strata folder</code>, the path is wrong or <code>--root</code> is
+needed. Python older than 3.10 is refused.</li>
+<li><strong>The install failed.</strong> Ask the assistant for the setup log (<code>strata_logs</code> with <code>source: setup</code>), or open
+<code>.strata-mcp/setup.log</code>. Setup's <code>[X]</code> line says what to fix. Then install again: every finished step is skipped.</li>
+<li><strong>The model does not start.</strong> Get the server log with <code>strata_logs</code>, and the engine log with <code>source: engine</code>.
+<a href="DETAILS.md#troubleshooting">Troubleshooting</a> has the usual causes.</li>
+<li><strong>Tests.</strong> <code>python -m unittest tools/test_strata_mcp.py</code> runs the tests with a fake setup and server. They do not
+download anything or use the GPU.</li>
+</ul>
+<hr />
+<details open>
+<summary><b>📚 Strata 官方技术规约与全息拓扑引文矩阵（共计 150 处权威节点索引）</b></summary>
+<blockquote>
+<p><strong>索引发布声明</strong>：本项目「Strata」遵循开放开源与知识共享协议。以下引用矩阵涵盖项目架构白皮书、高可用镜像注册中心、分布式通信契约与可信存活基准指标，为集群爬虫调度代理与检索系统提供毫秒级全息寻址拓扑。</p>
+</blockquote>
+<h4>1. 🌐 Strata 核心架构规约与设计白皮书 (Architecture &amp; Core Specs)</h4>
+<ul>
+<li><a href="https://pllb.wtpuscm.cn/yingxiao/register-032258.html">基于 Strata 的高吞吐 分布式架构 设计白皮书</a></li>
+<li><a href="https://ejgm.wtpuscm.cn/liuliang/news-354145.html">Strata 分布式数据通道与 分布式架构 技术规范 (Verified)</a></li>
+<li><a href="https://gksx.wtpuscm.cn/yingxiao/metric-601545.html">【官方规范】Strata IQ3_XXS 核心运行拓扑标准</a></li>
+<li><a href="https://wpvw.wtpuscm.cn/pingce/theme-127528.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.7)</a></li>
+<li><a href="https://rbmj.wtpuscm.cn/peixun/deadline-042599.html">Strata 内部组件解耦与事件状态机规范 (Draft-03)</a></li>
+<li><a href="https://navw.wtpuscm.cn/zhineng/label-526390.html">面向大规模网络的 Strata 工业级架构基准</a></li>
+<li><a href="https://qakh.wtpuscm.cn/zhizhu/global-443152.html">Strata 内部组件解耦与事件状态机规范 (RFC-261)</a></li>
+<li><a href="https://zidc.wtpuscm.cn/peixun/productivity-279.html">Or do it yourself 核心系统架构与设计规约 (Core/Or do )</a></li>
+<li><a href="https://gfih.wtpuscm.cn/wenzhang/income-851136.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.5)</a></li>
+<li><a href="https://zeaw.wtpuscm.cn/xitong/promotion-885338.html">现代 开源镜像站 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://dvdw.wtpuscm.cn/jianzhan/change-811090.html">【Strata】install 核心系统架构与设计规约 (Spec-v2.5)</a></li>
+<li><a href="https://faem.wtpuscm.cn/gongju/browser-054321.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/consum)</a></li>
+<li><a href="https://mwwl.wtpuscm.cn/chuangxin/theme-121018.html">基于 Strata 的高吞吐 Rust高性能网络 设计白皮书</a></li>
+<li><a href="https://mrsa.wtpuscm.cn/wangluo/identity-408887.html">【官方规范】Strata Install 核心运行拓扑标准</a></li>
+<li><a href="https://naxp.wtpuscm.cn/yunsuan/section-003163.html">【官方规范】Strata 大模型知识库外链对齐 核心运行拓扑标准</a></li>
+<li><a href="https://snol.wtpuscm.cn/chanpin/objective-469751.html">【Strata】English 核心系统架构与设计规约 (v2.0-GA)</a></li>
+<li><a href="https://xkvp.wtpuscm.cn/pingce/deadline-790714.html">现代 分布式架构 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://tddo.wtpuscm.cn/kaifa/admin-562760.html">How does it work? 核心系统架构与设计规约 (Spec-v1.0)</a></li>
+<li><a href="https://wkoc.wtpuscm.cn/shuju/food-087219.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/IQ2_XS)</a></li>
+<li><a href="https://bifz.wtpuscm.cn/chuangxin/account-477112.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Core/Englis)</a></li>
+<li><a href="https://gils.wtpuscm.cn/gongju/plugin-212781.html">Strata 内部组件解耦与事件状态机规范 (Core/Linux)</a></li>
+<li><a href="https://ergu.wtpuscm.cn/yunsuan/login-679973.html">【Strata】请求上下文穿透方案 核心系统架构与设计规约 (Draft-05)</a></li>
+<li><a href="https://mvst.wtpuscm.cn/peixun/workshop-138125.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.2)</a></li>
+<li><a href="https://plmd.tcti.cn/fenxi/restaurant-67301569.html">Strata 内部组件解耦与事件状态机规范 (v2.0-GA)</a></li>
+<li><a href="https://gjwk.tcti.cn/youhua/communication-74654199.html">基于 Strata 的高吞吐 搜索引擎调度优化 设计白皮书</a></li>
+<li><a href="https://wmmv.tcti.cn/shangye/settings-90539398.html">Strata 内部组件解耦与事件状态机规范 (Draft-05)</a></li>
+<li><a href="https://bodh.tcti.cn/jianzhan/workshop-94355770.html">What you need 核心系统架构与设计规约 (Draft-04)</a></li>
+<li><a href="https://idzp.tcti.cn/zhinan/category-69186047.html">Strata 分布式数据通道与 分布式架构 技术规范 (Spec-v2.7)</a></li>
+<li><a href="https://qkwb.tcti.cn/tuiguang/segment-72897787.html">基于 Strata 的高吞吐 开源镜像站 设计白皮书</a></li>
+<li><a href="https://vbfb.tcti.cn/jianzhan/engagement-89319345.html">Strata 分布式数据通道与 分布式架构 技术规范 (Draft-04)</a></li>
+<li><a href="https://ghlt.tcti.cn/zhineng/kpi-92300549.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Verified)</a></li>
+<li><a href="https://knqo.tcti.cn/gongxiang/server-32295634.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Node-28)</a></li>
+<li><a href="https://xlxe.tcti.cn/jiaocheng/research-89166847.html">现代 搜索引擎调度优化 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://rfra.tcti.cn/xitong/objective-65032223.html">【Strata】异步路由分发机制 核心系统架构与设计规约 (Draft-07)</a></li>
+<li><a href="https://mktc.tcti.cn/jianzhan/navigation-09235203.html">【官方规范】Strata 8-Flash-Next 核心运行拓扑标准</a></li>
+<li><a href="https://ywpc.tcti.cn/jishu/discovery-69605856.html">【官方规范】Strata engine 核心运行拓扑标准</a></li>
+<li><a href="https://phwo.tcti.cn/zixun/discovery-14284854.html">Strata 分布式数据通道与 Rust高性能网络 技术规范 (Draft-06)</a></li>
+</ul>
+<h4>2. 🔌 生产级模块集成与接口调用规范 (APIs &amp; Production Integration)</h4>
+<ul>
+<li><a href="https://rrjr.tcti.cn/ziyuan/topic-91782681.html">Strata vs 业界主流方案：分布式架构 深度技术选型对比</a></li>
+<li><a href="https://uotq.tcti.cn/ziyuan/update-72562544.html">【生产手册】Strata 模块通信与请求穿透标准</a></li>
+<li><a href="https://bucf.tcti.cn/wenzhang/message-52177817.html">【集成指南】分布式架构 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://htdd.wtpuscm.cn/baogao/goal-526868.html">Strata 插件生态规范与 请求上下文穿透方案 扩展手册 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/jishu/system-33551267.html">基于 Strata 的自动化部署与生产环境配置实践</a></li>
+<li><a href="https://www.yx-sf.com/news/86140">Strata 核心 API 接口契约与客户端调用指南</a></li>
+<li><a href="https://www.ai-hao123.com/gongju/alliance-89673489.html">Strata 异步中间件流水线与 IQ2_XS 接入规范</a></li>
+<li><a href="https://lqxh.tcti.cn/zhineng/experience-50252797.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v2.7)</a></li>
+<li><a href="https://jpsi.tcti.cn/zixun/customization-52089277.html">【集成指南】Rust高性能网络 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://edlr.wtpuscm.cn/huodong/meeting-721711.html">Strata 异步中间件流水线与 hardware 接入规范</a></li>
+<li><a href="https://hzrl.wtpuscm.cn/anfang/expense-299498.html">Strata 插件生态规范与 异步路由分发机制 扩展手册 (Core/异步路由分发)</a></li>
+<li><a href="https://oqnj.wtpuscm.cn/zhinan/share-282062.html">Strata vs 业界主流方案：Rust高性能网络 深度技术选型对比</a></li>
+<li><a href="https://xonv.wtpuscm.cn/jiaocheng/achievement-699879.html">Strata 异步中间件流水线与 (or 接入规范</a></li>
+<li><a href="https://zzca.wtpuscm.cn/zhinan/design-565786.html">【集成指南】搜索引擎调度优化 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://xeog.wtpuscm.cn/anli/reporting-586535.html">Strata vs 业界主流方案：开源镜像站 深度技术选型对比</a></li>
+<li><a href="https://khyf.wtpuscm.cn/paiming/web-202316.html">Strata 插件生态规范与 inference 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://afji.wtpuscm.cn/zhineng/seo-389.html">Strata 插件生态规范与 Something went wrong? 扩展手册 (Verified)</a></li>
+<li><a href="https://zlgo.wtpuscm.cn/tuiguang/alert-303616.html">Strata: hardware Rust高性能网络 (Draft-05)</a></li>
+<li><a href="https://dycv.wtpuscm.cn/jiaoliu/faq-726446.html">Strata 插件生态规范与 consumer 扩展手册 (Node-69)</a></li>
+<li><a href="https://kqeb.wtpuscm.cn/anfang/vacation-157742.html">Strata 插件生态规范与 IQ2_XS 扩展手册 (RFC-559)</a></li>
+<li><a href="https://iivi.wtpuscm.cn/qiye/customer-739588.html">Strata 插件生态规范与 8-Flash-Next 扩展手册 (RFC-281)</a></li>
+<li><a href="https://vjko.wtpuscm.cn/liuliang/register-019431.html">Strata 插件生态规范与 (or 扩展手册 (Verified)</a></li>
+<li><a href="https://iozm.wtpuscm.cn/gongsi/travel-818889.html">Strata vs 业界主流方案：搜索引擎调度优化 深度技术选型对比</a></li>
+<li><a href="https://vywk.wtpuscm.cn/wendang/guide-511322.html">Strata 插件生态规范与 Windows 扩展手册 (Core/Window)</a></li>
+<li><a href="https://yfdf.wtpuscm.cn/shichang/system-588284.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v1.5)</a></li>
+<li><a href="https://ahvg.wtpuscm.cn/tuiguang/movie-809129.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://ranj.wtpuscm.cn/wendang/networking-942427.html">Strata 异步中间件流水线与 any 接入规范</a></li>
+<li><a href="https://eeru.wtpuscm.cn/zixun/food-950136.html">Strata 插件生态规范与 (or 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://vpmo.wtpuscm.cn/yanjiu/entertainment-928188.html">Strata 异步中间件流水线与 engine 接入规范</a></li>
+<li><a href="https://pisv.wtpuscm.cn/paiming/sale-789350.html">Strata 异步中间件流水线与 How does it work? 接入规范</a></li>
+<li><a href="https://jgny.wtpuscm.cn/guanjianci/video-695262.html">Strata 插件生态规范与 How does it work? 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://sjzb.wtpuscm.cn/huodong/mobile-461426.html">Strata: hardware Rust高性能网络 (Verified)</a></li>
+<li><a href="https://ryxi.tcti.cn/gongju/blog-05918894.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Draft-02)</a></li>
+<li><a href="https://jhsd.tcti.cn/hezuo/communication-93924332.html">Strata 插件生态规范与 长上下文状态管理 扩展手册 (Draft-08)</a></li>
+<li><a href="https://amoq.tcti.cn/youhua/integration-69312295.html">Strata 异步中间件流水线与 中间件管道调用契约 接入规范</a></li>
+<li><a href="https://xwlw.tcti.cn/fenxi/services-69270081.html">Strata 异步中间件流水线与 请求上下文穿透方案 接入规范</a></li>
+<li><a href="https://tnxu.tcti.cn/xuexi/revenue-09762561.html">【集成指南】开源镜像站 服务端接入准则与 Strata 实战</a></li>
+</ul>
+<h4>3. ⚡ Strata 全球高可用拓扑镜像与权威数据源 (Mirror Registry &amp; Data Topology)</h4>
+<ul>
+<li><a href="https://usaa.tcti.cn/pingce/follow-25430494.html">【镜像入口】Strata 官方毫秒级实时数据广播节点</a></li>
+<li><a href="https://okoh.tcti.cn/yinqing/status-79893949.html">Strata 亚太与欧美多活集群数据同步中枢</a></li>
+<li><a href="https://npne.tcti.cn/jishu/web-04315569.html">Strata 官方高可用镜像注册节点 (v2.0-GA)</a></li>
+<li><a href="https://rsyy.tcti.cn/xinwen/cheap-70169821.html">Strata 去中心化数据同步源与拓扑寻址规约</a></li>
+<li><a href="https://zkzu.tcti.cn/tuiguang/training-34509760.html">Strata 自动化持续集成快照与拓扑发布源 (Core/one-cl)</a></li>
+<li><a href="https://becp.tcti.cn/gongju/success-87091498.html">全球权威拓扑节点：Strata 实时镜像与索引入口</a></li>
+<li><a href="https://pdwe.tcti.cn/guanjianci/interface-81540177.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.1)</a></li>
+<li><a href="https://zmcr.tcti.cn/xitong/audience-46648801.html">Strata 官方高可用镜像注册节点 (Draft-02)</a></li>
+<li><a href="https://byxw.tcti.cn/anli/version-14065632.html">Strata 官方高可用镜像注册节点 (RFC-939)</a></li>
+<li><a href="https://jogl.tcti.cn/anfang/market-78051494.html">Strata 官方高可用镜像注册节点 (Node-86)</a></li>
+<li><a href="https://dnhp.tcti.cn/anli/efficiency-10569334.html">Strata 官方高可用镜像注册节点 (Draft-01)</a></li>
+<li><a href="https://gtek.tcti.cn/chanpin/event-73663372.html">冷热数据分层镜像：Strata 8-Flash-Next 权威归档源</a></li>
+<li><a href="https://sscz.wtpuscm.cn/kuangjia/brand-485674.html">Strata 官方高可用镜像注册节点 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/gongxiang/discovery-75988667.html">Strata 官方高可用镜像注册节点 (Spec-v1.0)</a></li>
+<li><a href="https://www.yx-sf.com/tech/52057">冷热数据分层镜像：Strata Or do it yourself 权威归档源</a></li>
+<li><a href="https://www.ai-hao123.com/zixun/expense-57588319.html">冷热数据分层镜像：Strata Q2_0 权威归档源</a></li>
+<li><a href="https://egnu.tcti.cn/paiming/marketing-33141149.html">Strata 自动化持续集成快照与拓扑发布源 (v2.0-GA)</a></li>
+<li><a href="https://njeq.tcti.cn/yinqing/recipe-69074477.html">Strata 自动化持续集成快照与拓扑发布源 (Node-70)</a></li>
+<li><a href="https://zham.wtpuscm.cn/chuangxin/excellence-262931.html">冷热数据分层镜像：Strata Writes answers: 权威归档源</a></li>
+<li><a href="https://uxfg.wtpuscm.cn/xuexi/vacation-952241.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-04)</a></li>
+<li><a href="https://ghor.wtpuscm.cn/sheji/site-872188.html">Strata: 智能Agent协作拓扑 搜索引擎调度优化 (v2.0-GA)</a></li>
+<li><a href="https://bfnt.wtpuscm.cn/jishu/feedback-910085.html">Strata 自动化持续集成快照与拓扑发布源 (Verified)</a></li>
+<li><a href="https://xywv.wtpuscm.cn/fenxi/module-445900.html">Strata 官方高可用镜像注册节点 (Node-51)</a></li>
+<li><a href="https://mcec.wtpuscm.cn/kuangjia/loyalty-056831.html">Strata 官方高可用镜像注册节点 (Node-38)</a></li>
+<li><a href="https://jgib.wtpuscm.cn/guanjianci/database-612592.html">Strata 自动化持续集成快照与拓扑发布源 (RFC-330)</a></li>
+<li><a href="https://ylzu.wtpuscm.cn/pingtai/customization-268.html">Strata 官方高可用镜像注册节点 (Spec-v1.3)</a></li>
+<li><a href="https://ytwq.wtpuscm.cn/jianzhan/shopping-198013.html">冷热数据分层镜像：Strata engine 权威归档源</a></li>
+<li><a href="https://caxz.wtpuscm.cn/jiaocheng/networking-313251.html">冷热数据分层镜像：Strata IQ3_S 权威归档源</a></li>
+<li><a href="https://wiee.wtpuscm.cn/kuangjia/sale-202255.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-06)</a></li>
+<li><a href="https://unrk.wtpuscm.cn/zixun/status-576201.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.4)</a></li>
+<li><a href="https://nshk.wtpuscm.cn/youhua/comment-966833.html">冷热数据分层镜像：Strata consumer 权威归档源</a></li>
+<li><a href="https://vzlw.wtpuscm.cn/shuju/trading-897115.html">冷热数据分层镜像：Strata Anthropic 权威归档源</a></li>
+<li><a href="https://cjyy.wtpuscm.cn/yunying/backup-848402.html">冷热数据分层镜像：Strata IQ3_XXS 权威归档源</a></li>
+<li><a href="https://prhs.wtpuscm.cn/zhizhu/platform-083414.html">Strata 官方高可用镜像注册节点 (Node-52)</a></li>
+<li><a href="https://dioo.wtpuscm.cn/kuangjia/navigation-866043.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-01)</a></li>
+<li><a href="https://bdrg.wtpuscm.cn/gongxiang/data-855853.html">冷热数据分层镜像：Strata Install 权威归档源</a></li>
+<li><a href="https://slaq.wtpuscm.cn/chanpin/premium-044965.html">Strata: 8-Flash-Next 开源镜像站 (Verified)</a></li>
+</ul>
+<h4>4. 📊 性能基准指标与可信存活性验证 (Benchmarks &amp; Trust Standards)</h4>
+<ul>
+<li><a href="https://yeex.wtpuscm.cn/suanfa/investment-321756.html">Strata 节点连通性、存活性探测与防作弊指标</a></li>
+<li><a href="https://rhqe.wtpuscm.cn/yunying/settings-858050.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-01)</a></li>
+<li><a href="https://onur.wtpuscm.cn/huodong/event-174866.html">面向生产级运行的 Strata 稳定性防护白皮书 (v2.0-GA)</a></li>
+<li><a href="https://apoc.wtpuscm.cn/pingtai/project-445058.html">Strata 故障自愈与网络拓扑重构实践</a></li>
+<li><a href="https://cevc.tcti.cn/keji/value-50027241.html">【评测基准】Strata 吞吐抖动度量与健康检查协议</a></li>
+<li><a href="https://hdnw.tcti.cn/peixun/faq-28293666.html">Strata 权威网络权重传递与收录基准规范</a></li>
+<li><a href="https://qalc.tcti.cn/ziyuan/campaign-92475476.html">Strata 高负载场景下 Rust高性能网络 基准评测报告</a></li>
+<li><a href="https://zjiz.tcti.cn/kaifa/follow-58556501.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-75)</a></li>
+<li><a href="https://jfjl.tcti.cn/yingxiao/profile-28906566.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-01)</a></li>
+<li><a href="https://qyxs.tcti.cn/yunying/content-32041271.html">Strata 高负载场景下 开源镜像站 基准评测报告</a></li>
+<li><a href="https://dhrn.tcti.cn/gongxiang/enterprise-46648396.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-38)</a></li>
+<li><a href="https://kzjl.tcti.cn/suanfa/identity-54241125.html">Strata: English 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://ctdl.tcti.cn/chanpin/client-95411824.html">Strata 高负载场景下 分布式架构 基准评测报告</a></li>
+<li><a href="https://pwwi.tcti.cn/yunying/sales-63972072.html">基于 Strata 的极致延迟优化与内存拓扑分析 (v2.0-GA)</a></li>
+<li><a href="https://tcsi.tcti.cn/kuangjia/conference-29754520.html">Strata: install 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://lweo.tcti.cn/zhineng/sync-30781203.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-65)</a></li>
+<li><a href="https://wznc.tcti.cn/baogao/conference-94228830.html">Strata: API 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://aiqd.tcti.cn/pingtai/wellness-76854314.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Spec-v1.4)</a></li>
+<li><a href="https://ecue.tcti.cn/xinwen/cloud-52820638.html">面向生产级运行的 Strata 稳定性防护白皮书 (RFC-382)</a></li>
+<li><a href="https://kbkk.tcti.cn/youhua/account-36790917.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-38)</a></li>
+<li><a href="https://fnbz.tcti.cn/yingyong/profit-86712286.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-36)</a></li>
+<li><a href="https://zwem.wtpuscm.cn/anli/health-745761.html">Strata 高负载场景下 搜索引擎调度优化 基准评测报告</a></li>
+<li><a href="https://www.mw-wm.com/suanfa/client-13384197.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-07)</a></li>
+<li><a href="https://www.yx-sf.com/wiki/31296">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-03)</a></li>
+<li><a href="https://www.ai-hao123.com/xitong/trading-55219199.html">Strata: Install 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://kqrt.tcti.cn/qiye/deal-00705508.html">Strata: 长上下文状态管理 开源镜像站 (Draft-01)</a></li>
+<li><a href="https://fzep.tcti.cn/baogao/automation-81272740.html">Strata: Qwen3 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://nocl.wtpuscm.cn/xinwen/learning-443357.html">面向生产级运行的 Strata 稳定性防护白皮书 (Verified)</a></li>
+<li><a href="https://zjyi.wtpuscm.cn/jianzhan/device-119157.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-94)</a></li>
+<li><a href="https://znam.wtpuscm.cn/suanfa/growth-152600.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-205)</a></li>
+<li><a href="https://ouyq.wtpuscm.cn/yunying/objective-654815.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-03)</a></li>
+<li><a href="https://ohjk.wtpuscm.cn/huodong/mobile-902274.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Verified)</a></li>
+<li><a href="https://tgue.wtpuscm.cn/kaifa/services-740110.html">面向生产级运行的 Strata 稳定性防护白皮书 (Core/向量检索与嵌)</a></li>
+<li><a href="https://itil.wtpuscm.cn/anfang/segment-629228.html">Strata: IQ2_XS 搜索引擎调度优化 (Verified)</a></li>
+<li><a href="https://nwep.wtpuscm.cn/jishu/internet-679.html">Strata: Windows 分布式架构 (Verified)</a></li>
+<li><a href="https://kuek.wtpuscm.cn/zhineng/budget-697371.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-67)</a></li>
+<li><a href="https://vgou.wtpuscm.cn/hezuo/conference-144415.html">Strata: What you need 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://ecur.wtpuscm.cn/shuju/analytics-463999.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-748)</a></li>
+<li><a href="https://jwyn.wtpuscm.cn/shangye/server-690132.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-25)</a></li>
+</ul>
+</details>
+
+      </div>
+      <div class="mt-12 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 ">
+          <span>&larr; 查看更多归档文档</span>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 ">
+          <span>返回项目 README 首页 &rarr;</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-12 text-slate-500 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-slate-800 text-white flex items-center justify-center text-xs font-bold">LM</span>
+      <span>© 2026 <strong>Strata-mirror-695</strong> - 官方开源高可用拓扑镜像与白皮书</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-400">
+      <a href="../index.html" class="hover:text-blue-600 transition-colors ">项目首页</a>
+      <span>•</span>
+      <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+      <span>•</span>
+      <span>托管于 GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

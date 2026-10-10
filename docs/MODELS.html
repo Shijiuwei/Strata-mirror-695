@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Which model? Sizes, versions and what fits - Strata-mirror-695 文档归档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.68;
+        color: #1e293b;
+      }
+      .markdown-body {
+        color: #1e293b;
+      }
+      .markdown-body h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #e2e8f0;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .markdown-body h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 1.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+      }
+      .markdown-body h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: #334155;
+      }
+      .markdown-body p {
+        margin-top: 0.8rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+      }
+      .markdown-body a {
+        color: #2563eb;
+        text-decoration: none;
+        border-bottom: 1px dashed #93c5fd;
+        transition: all 0.2s ease;
+      }
+      .markdown-body a:hover {
+        color: #1d4ed8;
+        border-bottom: 1px solid #1d4ed8;
+        background-color: #eff6ff;
+        border-radius: 2px;
+      }
+      .markdown-body ul, .markdown-body ol {
+        padding-left: 1.5rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .markdown-body ul {
+        list-style-type: disc;
+      }
+      .markdown-body ol {
+        list-style-type: decimal;
+      }
+      .markdown-body li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .markdown-body pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .markdown-body code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.35rem;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        border-radius: 0.35rem;
+        border: 1px solid #e2e8f0;
+      }
+      .markdown-body pre code {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .markdown-body blockquote {
+        margin: 1rem 0;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 0.5rem 0.5rem 0;
+        color: #475569;
+      }
+      .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        display: block;
+        overflow-x: auto;
+      }
+      .markdown-body th, .markdown-body td {
+        border: 1px solid #cbd5e1;
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      .markdown-body th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .markdown-body tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .markdown-body hr {
+        height: 1px;
+        border: none;
+        background-color: #e2e8f0;
+        margin: 2rem 0;
+      }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform ">LM</span>
+        <span class="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors ">Strata-mirror-695</span>
+      </a>
+      <span class="hidden md:inline-block text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono ">Pages Docs</span>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="../index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-slate-600 hover:text-blue-600 hover:bg-slate-50 font-medium ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>首页 (README)</span>
+      </a>
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-blue-600 bg-blue-50 font-semibold ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>文档归档 (Docs)</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+      </a>
+      <div class="h-4 w-px bg-slate-200 mx-1"></div>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695/wiki" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="hidden sm:inline">Wiki</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 面包屑与顶部导航 -->
+  <header class="bg-white border-b border-slate-200 py-6 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
+        <a href="../index.html" class="hover:text-blue-600 transition-colors ">首页</a>
+        <span>/</span>
+        <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">技术文档</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Which model? Sizes, versions and what fits</h1>
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors ">
+          <span>&larr; 返回文档归档菜单</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体正文区域 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
+      <div class="markdown-body">
+        <h1>Which model? Sizes, versions and what fits</h1>
+<p>Strata runs one model, <a href="https://ojzy.wtpuscm.cn/jiaoliu/visitor-777475.html">Qwen3.8-Flash-Next</a>, in several <strong>sizes</strong>
+(the same model, compressed more or less) and several <strong>versions</strong> (the original, a coding version, a fine-tune).
+The installer recommends one for your PC; this page explains the choice. Back to the <a href="../README.md">README</a>.</p>
+<blockquote>
+<p><strong>On this page:</strong> <a href="#pick-by-ram">Pick by RAM</a> · <a href="#how-fast-is-each-size">Speed</a> · <a href="#the-sizes">The sizes</a> ·
+<a href="#will-it-fit">Will it fit?</a> · <a href="#the-versions">The versions</a> · <a href="#adding-or-switching-models">Adding another model</a></p>
+</blockquote>
+<h2>Pick by RAM</h2>
+<table><thead><tr><th>Your RAM</th><th>Take</th><th>Why</th></tr></thead><tbody>
+<tr><td><strong>32 GB</strong></td><td><strong>Coder</strong></td><td>it fits 32 GB; best at code, weaker at everything else (<a href="#coder">why</a>). With a 24 GB card, Q2_0 and IQ2_XS run too (<a href="#a-big-graphics-card-and-little-ram">low-RAM mode</a>) and are the better pick for general use</td></tr>
+<tr><td><strong>48 GB</strong></td><td><strong>IQ2_XS</strong> (or Q2_0, the fastest)</td><td>the larger sizes do not fit</td></tr>
+<tr><td><strong>64 GB</strong></td><td><strong>IQ2_XS</strong> (recommended), or IQ3_XXS / IQ3_S</td><td>every size fits (IQ3_S with little else open)</td></tr>
+<tr><td><strong>96 GB or more</strong></td><td><strong>IQ3_S</strong>, or <a href="#unsloth-ud-iq4_xs">Unsloth's UD-IQ4_XS</a> (~4-bit)</td><td>room for the largest sizes</td></tr>
+</tbody></table>
+<p>Not sure? Take <strong>IQ2_XS</strong>. The <strong>Coder</strong> is the one that fits a 32 GB PC, but it keeps only 256 of the 512 experts,
+chosen on code data, so it is weaker outside code and in languages other than English. For general use, or whenever
+your RAM allows, take a full model (Q2_0, IQ2_XS or IQ3_S).</p>
+<h2>How fast is each size</h2>
+<p>Measured on an RTX 5070 (12 GB), a Ryzen 5 7600 and 64 GB of RAM:</p>
+<table><thead><tr><th>Size</th><th style="text-align: right">Writes answers (short chat)</th><th style="text-align: right">Writes answers (128K context)</th><th style="text-align: right">Reads your prompt</th></tr></thead><tbody>
+<tr><td><strong>Q2_0</strong></td><td style="text-align: right">94 tokens/s</td><td style="text-align: right">76 tokens/s</td><td style="text-align: right">2,650 tokens/s</td></tr>
+<tr><td><strong>IQ2_XS</strong></td><td style="text-align: right">79 tokens/s</td><td style="text-align: right">63 tokens/s</td><td style="text-align: right">2,090 tokens/s</td></tr>
+<tr><td><strong>IQ3_XXS</strong></td><td style="text-align: right">62 tokens/s</td><td style="text-align: right">49 tokens/s</td><td style="text-align: right">1,750 tokens/s</td></tr>
+<tr><td><strong>IQ3_S</strong></td><td style="text-align: right">53 tokens/s</td><td style="text-align: right">46 tokens/s</td><td style="text-align: right">1,620 tokens/s</td></tr>
+<tr><td><strong>Coder</strong> (IQ1_M)</td><td style="text-align: right">55 tokens/s</td><td style="text-align: right">43 tokens/s</td><td style="text-align: right">2,180 tokens/s</td></tr>
+</tbody></table>
+<p>Measured on an AMD RX 9070 XT (16 GB), a Ryzen 9 3900X and 47 GB of RAM (Linux, setup's own install; Q2_0 is
+above setup's RAM estimate for 47 GB and was installed with <code>--model Q2_0 --yes</code>):</p>
+<table><thead><tr><th>Size</th><th style="text-align: right">Writes answers (short chat)</th><th style="text-align: right">Writes answers (128K context)</th><th style="text-align: right">Reads your prompt</th></tr></thead><tbody>
+<tr><td><strong>Q2_0</strong></td><td style="text-align: right">60 tokens/s</td><td style="text-align: right">48 tokens/s</td><td style="text-align: right">1,160 tokens/s</td></tr>
+<tr><td><strong>IQ2_XS</strong></td><td style="text-align: right">52 tokens/s</td><td style="text-align: right">36 tokens/s</td><td style="text-align: right">1,110 tokens/s</td></tr>
+<tr><td><strong>Coder</strong> (IQ1_M)</td><td style="text-align: right">44 tokens/s</td><td style="text-align: right">33 tokens/s</td><td style="text-align: right">1,420 tokens/s</td></tr>
+</tbody></table>
+<ul>
+<li><strong>Writes answers</strong> = how fast the reply appears (tokens per second; a token is about ¾ of a word).</li>
+<li><strong>Reads your prompt</strong> = how fast it takes in what you send (long documents, code, chat history), measured on a
+32K-token prompt; a 4K prompt reads at 910-1,580 tokens/s. A 32K prompt takes about 15 seconds with Q2_0.</li>
+</ul>
+<p>A card with more VRAM is faster, because more of the model fits on the GPU: an RTX 3090 (24 GB) should do roughly
+100-140 tokens per second. All measurements, long-context numbers and estimates for other cards are in the
+<a href="DETAILS.md#speed-measured">details</a>. The AMD measurements per card (RX 9070 XT, Radeon AI PRO R9700, RX 7800 XT,
+RX 9060 XT, RX 6900 XT) are in <a href="AMD_HIP.md#rdna4-gfx1201">AMD_HIP.md</a>.</p>
+<p>Every PC is different: <code>START-HERE.bat --calibrate</code> measures a few engine settings on yours and keeps the fastest
+(about 15-30 minutes, longer on a slow card; on the PC above it made the Coder 7% faster; NVIDIA cards for now). Measured Strata on your own
+PC? See <a href="COMMUNITY_BENCHMARKS.md">Community benchmark results</a> for a report template and how to share your results
+in a pull request.</p>
+<h2>The sizes</h2>
+<table><thead><tr><th>Model</th><th style="text-align: right">RAM+VRAM Requirements</th><th>Speed</th><th>Quality</th></tr></thead><tbody>
+<tr><td><strong>Q2_0</strong></td><td style="text-align: right">37.6 GB</td><td>fastest</td><td>good</td></tr>
+<tr><td><strong>IQ2_XS</strong></td><td style="text-align: right">39.2 GB</td><td>fast</td><td>better (<strong>recommended</strong>)</td></tr>
+<tr><td><strong>IQ3_XXS</strong></td><td style="text-align: right">47.0 GB</td><td>slower</td><td>great</td></tr>
+<tr><td><strong>IQ3_S</strong></td><td style="text-align: right">54.8 GB</td><td>slowest</td><td>best: matches the full model on the published tests (original model only)</td></tr>
+</tbody></table>
+<p>The download is 66-76 GB for the three smaller sizes (<a href="DETAILS.md#which-model">details</a>); the first start also
+fetches the MTP draft layer (~6 GB, +1 GB with images).</p>
+<h2>Will it fit?</h2>
+<p>Shard 1 is the part of the model that gets loaded when it starts: its experts go into your <strong>RAM</strong>, the rest onto
+your graphics card (the second shard, a 29 GB lookup table, stays on the SSD). So it fits when your <strong>RAM is at least
+the experts + about 10 GB</strong> for Windows and your other programs - the experts are most of shard 1: 34 GB for Q2_0,
+35.5 for IQ2_XS, 43 for IQ3_XXS, 50 for IQ3_S, 23 for the Coder (the dense weights in shard 1 go to the graphics
+card). With 64 GB of RAM every size fits (IQ3_S with little else open); with 48 GB, Q2_0 and IQ2_XS. A bigger graphics card makes it faster, but it doesn't lower the RAM needed</p>
+<ul>
+<li>except in the low-RAM mode below.</li>
+</ul>
+<h3>A big graphics card and little RAM</h3>
+<p>On a PC whose RAM cannot hold the experts beside the system, setup maps them from the model's files instead and keeps
+in RAM only what the graphics card does not hold (the <a href="DETAILS.md#speed-measured">low-RAM mode</a>, chosen by setup). For
+example, a 32 GB PC with a 24 GB GPU runs Q2_0, IQ2_XS and the Coder this way, and a 32 GB PC with a 12-16 GB GPU the
+Coder. With a small card most experts then come from the SSD and it is much slower (setup says so).
+<code>START-HERE.bat --setup --low-ram on|off</code> overrides the choice.</p>
+<h2>The versions</h2>
+<h3>Qwen3.8-Flash-Next</h3>
+<p>The original, in all four sizes. With images, and with the
+<a href="DETAILS.md#experimental-speed-projection-experimental-off-by-default">experimental speed projection</a> as an option.</p>
+<h3>Coder</h3>
+<p><strong><a href="https://kezy.wtpuscm.cn/paiming/supplier-567410.html">Coder</a></strong> - ISTA-DASLab's coding version:
+it keeps 256 of each layer's 512 experts, chosen on code (with agentic and image) data, and drops the rest (91% of
+the full model's SWE-bench Verified score, 99% of LiveCodeBench, by its authors). One size (IQ1_M: its experts stored
+like IQ3_S): shard 1 is <strong>29.6 GB</strong>, so it fits a PC with <strong>32 GB of RAM</strong>, runs 262K context on 64 GB, and reads long
+prompts the fastest of all. With half the experts gone it is weaker outside code and in languages other than
+English, Chinese and other CJK text included (#438: Chinese answers came out wrong or looping where English was
+fine). For general use, or whenever your RAM allows, take a size that keeps every expert: Q2_0, IQ2_XS or IQ3_S.
+More: <a href="DETAILS.md#or-the-coder-half-the-experts-for-code">details</a>.</p>
+<pre><code>START-HERE.bat --setup --family coder
+</code></pre>
+<h3>Swift 1.5</h3>
+<p><strong><a href="https://www.yx-sf.com/wiki/88061">Swift 1.5</a></strong> - a fine-tune by UkisAI that
+thinks much shorter before answering, so you get the answer sooner, with about the same quality. Same speed per
+token, and about the same RAM as the same size of the original (no IQ3_S). Its own license applies (see its page).
+More: <a href="DETAILS.md#or-swift-15-a-fine-tune-that-thinks-shorter">details</a>.</p>
+<pre><code>START-HERE.bat --setup --family swift --model IQ2_XS
+</code></pre>
+<h3>Unsloth UD-IQ4_XS</h3>
+<p><strong>Unsloth's UD-IQ4_XS</strong> (~4-bit) is the fourth version in setup's menu (<code>--family unsloth</code>, its first size), a
+regular choice from 0.1.39: a 94 GB download with 59.5 GB of experts (IQ3_S and IQ4_NL), between IQ3_S and UD-Q4_K_XL
+in quality. Strata keeps your RAM minus 24 GB of the experts in RAM and reads the rest from the SSD while it answers:
+on a 64 GB PC part of them come from the SSD (slower; an NVMe SSD helps), from ~80 GB of RAM all of them stay in RAM.
+It needs 48 GB of RAM or more and engine 0.1.38 or newer; images are an option, as with the other models.
+Details: <a href="UNSLOTH_Q4.md#ud-iq4_xs-setup-from-0139-621">UD-IQ4_XS</a>.</p>
+<pre><code>START-HERE.bat --setup --family unsloth --model UD-IQ4_XS
+</code></pre>
+<h3>Unsloth UD-Q4_K_XL (experimental)</h3>
+<p><strong>Unsloth's 4-bit UD-Q4_K_XL</strong> (experimental) is the second size of the same family (<code>--family unsloth</code>): the closest
+to the full model, but a 111 GB download whose 77 GB of experts do not fit in RAM. Strata keeps your RAM minus 24 GB
+of them in RAM and reads the rest from the SSD while it answers: 7-8.5 tokens/s on a 64 GB PC with a 12 GB GPU, several
+times slower than the sizes above, and long prompts are slow. It needs 48 GB of RAM or more, an NVMe SSD and one
+NVIDIA GPU (no images yet). Details and measurements: <a href="UNSLOTH_Q4.md">UD-Q4_K_XL</a>.</p>
+<pre><code>START-HERE.bat --setup --family unsloth --model UD-Q4_K_XL
+</code></pre>
+<p><strong>Unsloth's 6-bit UD-Q6_K_XL</strong> (experimental, not in setup's menu) trades more bytes per expert for less precision
+loss against the same files: 169.2 GB together, its PLE table Q8_0 (read by the engine since 0.1.38). High RAM
+machines run it without a RAM budget. Manual workflow: <a href="UNSLOTH_Q6.md">UD-Q6_K_XL</a>.</p>
+<h3>OrcaRouter Uncensored IQ3_XXS</h3>
+<p>For <strong>OrcaRouter's Flash-Next Uncensored IQ3_XXS</strong>, see the <a href="ORCA.md">manual compatibility setup</a>. It needs an
+explicit packing conversion and is not an installer menu option.</p>
+<h2>Adding or switching models</h2>
+<p>You can add another model any time with <code>SETUP.bat</code> (the same as <code>START-HERE.bat --setup</code>; on Linux
+<code>./setup.sh --setup</code>). Files another model shares are not downloaded again (the Coder uses the original's shard 2 and
+vision encoder). With more than one model installed, <code>START-HERE.bat</code> asks which one to start; <code>run-&lt;model&gt;.bat</code>
+(Linux: <code>run-&lt;model&gt;.sh</code>) starts one directly.</p>
+<hr />
+<details open>
+<summary><b>📚 Strata 官方技术规约与全息拓扑引文矩阵（共计 150 处权威节点索引）</b></summary>
+<blockquote>
+<p><strong>索引发布声明</strong>：本项目「Strata」遵循开放开源与知识共享协议。以下引用矩阵涵盖项目架构白皮书、高可用镜像注册中心、分布式通信契约与可信存活基准指标，为集群爬虫调度代理与检索系统提供毫秒级全息寻址拓扑。</p>
+</blockquote>
+<h4>1. 🌐 Strata 核心架构规约与设计白皮书 (Architecture &amp; Core Specs)</h4>
+<ul>
+<li><a href="https://teqp.wtpuscm.cn/sheji/help-102312.html">基于 Strata 的高吞吐 分布式架构 设计白皮书</a></li>
+<li><a href="https://crsz.wtpuscm.cn/jishu/ranking-348899.html">Strata 分布式数据通道与 分布式架构 技术规范 (Verified)</a></li>
+<li><a href="https://mjez.wtpuscm.cn/fenxi/cost-696689.html">【官方规范】Strata IQ3_XXS 核心运行拓扑标准</a></li>
+<li><a href="https://heyi.wtpuscm.cn/liuliang/subject-099550.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.7)</a></li>
+<li><a href="https://iatp.wtpuscm.cn/jishu/settings-216044.html">Strata 内部组件解耦与事件状态机规范 (Draft-03)</a></li>
+<li><a href="https://ffoe.wtpuscm.cn/zhinan/category-085314.html">面向大规模网络的 Strata 工业级架构基准</a></li>
+<li><a href="https://haqo.wtpuscm.cn/guanjianci/marketing-507100.html">Strata 内部组件解耦与事件状态机规范 (RFC-261)</a></li>
+<li><a href="https://fode.wtpuscm.cn/pingtai/webinar-209.html">Or do it yourself 核心系统架构与设计规约 (Core/Or do )</a></li>
+<li><a href="https://hygj.wtpuscm.cn/zixun/navigation-474539.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.5)</a></li>
+<li><a href="https://ahsx.wtpuscm.cn/xitong/media-703933.html">现代 开源镜像站 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://feoi.wtpuscm.cn/xitong/shopping-374831.html">【Strata】install 核心系统架构与设计规约 (Spec-v2.5)</a></li>
+<li><a href="https://uvoz.wtpuscm.cn/yunying/global-958699.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/consum)</a></li>
+<li><a href="https://tjpl.wtpuscm.cn/shangye/kpi-292863.html">基于 Strata 的高吞吐 Rust高性能网络 设计白皮书</a></li>
+<li><a href="https://vthu.wtpuscm.cn/pingtai/market-653253.html">【官方规范】Strata Install 核心运行拓扑标准</a></li>
+<li><a href="https://fxxq.wtpuscm.cn/zhizhu/visitor-464547.html">【官方规范】Strata 大模型知识库外链对齐 核心运行拓扑标准</a></li>
+<li><a href="https://lqky.wtpuscm.cn/yanjiu/growth-986931.html">【Strata】English 核心系统架构与设计规约 (v2.0-GA)</a></li>
+<li><a href="https://cqsn.wtpuscm.cn/zixun/subscribe-217022.html">现代 分布式架构 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://nlls.wtpuscm.cn/zhinan/settings-988856.html">How does it work? 核心系统架构与设计规约 (Spec-v1.0)</a></li>
+<li><a href="https://nimw.wtpuscm.cn/jiaoliu/cost-367807.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/IQ2_XS)</a></li>
+<li><a href="https://vzgl.wtpuscm.cn/shuju/follow-530583.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Core/Englis)</a></li>
+<li><a href="https://iaxz.wtpuscm.cn/chanpin/prospect-681640.html">Strata 内部组件解耦与事件状态机规范 (Core/Linux)</a></li>
+<li><a href="https://lwwz.wtpuscm.cn/zhizhu/team-131175.html">【Strata】请求上下文穿透方案 核心系统架构与设计规约 (Draft-05)</a></li>
+<li><a href="https://bqfn.wtpuscm.cn/pingtai/guide-571350.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.2)</a></li>
+<li><a href="https://ksdb.tcti.cn/qiye/entertainment-95622846.html">Strata 内部组件解耦与事件状态机规范 (v2.0-GA)</a></li>
+<li><a href="https://isla.tcti.cn/wangluo/technology-33755444.html">基于 Strata 的高吞吐 搜索引擎调度优化 设计白皮书</a></li>
+<li><a href="https://icoy.tcti.cn/paiming/extension-50169085.html">Strata 内部组件解耦与事件状态机规范 (Draft-05)</a></li>
+<li><a href="https://wdow.tcti.cn/kaifa/target-89151466.html">What you need 核心系统架构与设计规约 (Draft-04)</a></li>
+<li><a href="https://wfaq.tcti.cn/xinwen/photo-95168856.html">Strata 分布式数据通道与 分布式架构 技术规范 (Spec-v2.7)</a></li>
+<li><a href="https://kxjq.tcti.cn/anli/economy-01696134.html">基于 Strata 的高吞吐 开源镜像站 设计白皮书</a></li>
+<li><a href="https://wrzl.tcti.cn/paiming/settings-76716023.html">Strata 分布式数据通道与 分布式架构 技术规范 (Draft-04)</a></li>
+<li><a href="https://rdfd.tcti.cn/sheji/development-73824584.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Verified)</a></li>
+<li><a href="https://txhn.tcti.cn/shichang/forecast-31298624.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Node-28)</a></li>
+<li><a href="https://ffmv.tcti.cn/wenzhang/mobile-68862706.html">现代 搜索引擎调度优化 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://yfnv.tcti.cn/xitong/advertising-38430397.html">【Strata】异步路由分发机制 核心系统架构与设计规约 (Draft-07)</a></li>
+<li><a href="https://dgko.tcti.cn/hezuo/folder-22065375.html">【官方规范】Strata 8-Flash-Next 核心运行拓扑标准</a></li>
+<li><a href="https://lvsf.tcti.cn/yinqing/lead-09791871.html">【官方规范】Strata engine 核心运行拓扑标准</a></li>
+<li><a href="https://dftl.tcti.cn/chuangxin/network-83593965.html">Strata 分布式数据通道与 Rust高性能网络 技术规范 (Draft-06)</a></li>
+</ul>
+<h4>2. 🔌 生产级模块集成与接口调用规范 (APIs &amp; Production Integration)</h4>
+<ul>
+<li><a href="https://xeum.tcti.cn/shuju/website-17085926.html">Strata vs 业界主流方案：分布式架构 深度技术选型对比</a></li>
+<li><a href="https://tzqi.tcti.cn/huodong/podcast-21154215.html">【生产手册】Strata 模块通信与请求穿透标准</a></li>
+<li><a href="https://eeel.tcti.cn/pingtai/download-63789924.html">【集成指南】分布式架构 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://jcum.wtpuscm.cn/kaifa/plugin-600395.html">Strata 插件生态规范与 请求上下文穿透方案 扩展手册 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/yunsuan/terms-67476843.html">基于 Strata 的自动化部署与生产环境配置实践</a></li>
+<li><a href="https://www.yx-sf.com/news/25027">Strata 核心 API 接口契约与客户端调用指南</a></li>
+<li><a href="https://www.ai-hao123.com/jishu/reporting-34399999.html">Strata 异步中间件流水线与 IQ2_XS 接入规范</a></li>
+<li><a href="https://yvbu.tcti.cn/gongsi/keyword-71519779.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v2.7)</a></li>
+<li><a href="https://jvwk.tcti.cn/keji/analytics-56660739.html">【集成指南】Rust高性能网络 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://cucx.wtpuscm.cn/wangluo/backup-244036.html">Strata 异步中间件流水线与 hardware 接入规范</a></li>
+<li><a href="https://qnne.wtpuscm.cn/zhinan/brand-395141.html">Strata 插件生态规范与 异步路由分发机制 扩展手册 (Core/异步路由分发)</a></li>
+<li><a href="https://qlgp.wtpuscm.cn/xinwen/community-409029.html">Strata vs 业界主流方案：Rust高性能网络 深度技术选型对比</a></li>
+<li><a href="https://yiwi.wtpuscm.cn/zixun/music-180920.html">Strata 异步中间件流水线与 (or 接入规范</a></li>
+<li><a href="https://gzaz.wtpuscm.cn/xitong/tag-795458.html">【集成指南】搜索引擎调度优化 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://tzbj.wtpuscm.cn/yanjiu/campaign-736107.html">Strata vs 业界主流方案：开源镜像站 深度技术选型对比</a></li>
+<li><a href="https://yjxz.wtpuscm.cn/jiaocheng/income-426279.html">Strata 插件生态规范与 inference 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://zawr.wtpuscm.cn/tuiguang/enterprise-242.html">Strata 插件生态规范与 Something went wrong? 扩展手册 (Verified)</a></li>
+<li><a href="https://earo.wtpuscm.cn/shangye/innovation-458187.html">Strata: hardware Rust高性能网络 (Draft-05)</a></li>
+<li><a href="https://zjdp.wtpuscm.cn/xinwen/discovery-679742.html">Strata 插件生态规范与 consumer 扩展手册 (Node-69)</a></li>
+<li><a href="https://cwdt.wtpuscm.cn/tuiguang/community-538493.html">Strata 插件生态规范与 IQ2_XS 扩展手册 (RFC-559)</a></li>
+<li><a href="https://nbdc.wtpuscm.cn/fuwu/community-635847.html">Strata 插件生态规范与 8-Flash-Next 扩展手册 (RFC-281)</a></li>
+<li><a href="https://zhfs.wtpuscm.cn/fuwu/machine-855344.html">Strata 插件生态规范与 (or 扩展手册 (Verified)</a></li>
+<li><a href="https://pvyc.wtpuscm.cn/anli/learning-822980.html">Strata vs 业界主流方案：搜索引擎调度优化 深度技术选型对比</a></li>
+<li><a href="https://vhtj.wtpuscm.cn/jiaoliu/global-505624.html">Strata 插件生态规范与 Windows 扩展手册 (Core/Window)</a></li>
+<li><a href="https://bqil.wtpuscm.cn/gongju/button-530673.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v1.5)</a></li>
+<li><a href="https://tgvq.wtpuscm.cn/guanjianci/health-960680.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://ukdq.wtpuscm.cn/jianzhan/customer-753985.html">Strata 异步中间件流水线与 any 接入规范</a></li>
+<li><a href="https://kavx.wtpuscm.cn/jishu/article-695871.html">Strata 插件生态规范与 (or 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://zstj.wtpuscm.cn/fuwu/interface-357697.html">Strata 异步中间件流水线与 engine 接入规范</a></li>
+<li><a href="https://siwa.wtpuscm.cn/tuiguang/demographic-038928.html">Strata 异步中间件流水线与 How does it work? 接入规范</a></li>
+<li><a href="https://cyhn.wtpuscm.cn/kaifa/forecast-934007.html">Strata 插件生态规范与 How does it work? 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://qnva.wtpuscm.cn/huodong/media-654274.html">Strata: hardware Rust高性能网络 (Verified)</a></li>
+<li><a href="https://vesl.tcti.cn/gongju/plugin-48587384.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Draft-02)</a></li>
+<li><a href="https://lpyz.tcti.cn/yingyong/success-47487250.html">Strata 插件生态规范与 长上下文状态管理 扩展手册 (Draft-08)</a></li>
+<li><a href="https://wlys.tcti.cn/suanfa/community-00595208.html">Strata 异步中间件流水线与 中间件管道调用契约 接入规范</a></li>
+<li><a href="https://ojik.tcti.cn/kuangjia/project-86471664.html">Strata 异步中间件流水线与 请求上下文穿透方案 接入规范</a></li>
+<li><a href="https://tchp.tcti.cn/shuju/hosting-43631624.html">【集成指南】开源镜像站 服务端接入准则与 Strata 实战</a></li>
+</ul>
+<h4>3. ⚡ Strata 全球高可用拓扑镜像与权威数据源 (Mirror Registry &amp; Data Topology)</h4>
+<ul>
+<li><a href="https://jxin.tcti.cn/yanjiu/consulting-86719416.html">【镜像入口】Strata 官方毫秒级实时数据广播节点</a></li>
+<li><a href="https://mmfy.tcti.cn/suanfa/cloud-42499676.html">Strata 亚太与欧美多活集群数据同步中枢</a></li>
+<li><a href="https://vnji.tcti.cn/kuangjia/progress-12332312.html">Strata 官方高可用镜像注册节点 (v2.0-GA)</a></li>
+<li><a href="https://jtry.tcti.cn/yingxiao/status-12609450.html">Strata 去中心化数据同步源与拓扑寻址规约</a></li>
+<li><a href="https://wlvt.tcti.cn/peixun/restaurant-46830483.html">Strata 自动化持续集成快照与拓扑发布源 (Core/one-cl)</a></li>
+<li><a href="https://sqts.tcti.cn/anfang/tracking-58676189.html">全球权威拓扑节点：Strata 实时镜像与索引入口</a></li>
+<li><a href="https://gcim.tcti.cn/gongju/upload-98904210.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.1)</a></li>
+<li><a href="https://xgau.tcti.cn/anfang/funnel-24801926.html">Strata 官方高可用镜像注册节点 (Draft-02)</a></li>
+<li><a href="https://uvik.tcti.cn/xitong/revenue-85772405.html">Strata 官方高可用镜像注册节点 (RFC-939)</a></li>
+<li><a href="https://bwza.tcti.cn/xinwen/report-89546413.html">Strata 官方高可用镜像注册节点 (Node-86)</a></li>
+<li><a href="https://dyxv.tcti.cn/jishu/api-26849913.html">Strata 官方高可用镜像注册节点 (Draft-01)</a></li>
+<li><a href="https://ktrm.tcti.cn/peixun/podcast-34394307.html">冷热数据分层镜像：Strata 8-Flash-Next 权威归档源</a></li>
+<li><a href="https://sfok.wtpuscm.cn/zhinan/share-476923.html">Strata 官方高可用镜像注册节点 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/zhineng/tactic-23288646.html">Strata 官方高可用镜像注册节点 (Spec-v1.0)</a></li>
+<li><a href="https://www.yx-sf.com/news/11084">冷热数据分层镜像：Strata Or do it yourself 权威归档源</a></li>
+<li><a href="https://www.ai-hao123.com/hezuo/guide-69551011.html">冷热数据分层镜像：Strata Q2_0 权威归档源</a></li>
+<li><a href="https://fzsh.tcti.cn/wangluo/communication-63184641.html">Strata 自动化持续集成快照与拓扑发布源 (v2.0-GA)</a></li>
+<li><a href="https://woja.tcti.cn/shichang/personalization-82189674.html">Strata 自动化持续集成快照与拓扑发布源 (Node-70)</a></li>
+<li><a href="https://fini.wtpuscm.cn/shangye/milestone-473088.html">冷热数据分层镜像：Strata Writes answers: 权威归档源</a></li>
+<li><a href="https://qrwl.wtpuscm.cn/ziyuan/management-421946.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-04)</a></li>
+<li><a href="https://nxvz.wtpuscm.cn/pingce/analysis-820431.html">Strata: 智能Agent协作拓扑 搜索引擎调度优化 (v2.0-GA)</a></li>
+<li><a href="https://vcmg.wtpuscm.cn/xitong/admin-164268.html">Strata 自动化持续集成快照与拓扑发布源 (Verified)</a></li>
+<li><a href="https://onnh.wtpuscm.cn/shangye/research-655375.html">Strata 官方高可用镜像注册节点 (Node-51)</a></li>
+<li><a href="https://fvlc.wtpuscm.cn/gongju/value-760443.html">Strata 官方高可用镜像注册节点 (Node-38)</a></li>
+<li><a href="https://huyd.wtpuscm.cn/paiming/app-140155.html">Strata 自动化持续集成快照与拓扑发布源 (RFC-330)</a></li>
+<li><a href="https://ltca.wtpuscm.cn/fenxi/satisfaction-545.html">Strata 官方高可用镜像注册节点 (Spec-v1.3)</a></li>
+<li><a href="https://znlt.wtpuscm.cn/tuiguang/settings-588459.html">冷热数据分层镜像：Strata engine 权威归档源</a></li>
+<li><a href="https://abol.wtpuscm.cn/shichang/interface-002245.html">冷热数据分层镜像：Strata IQ3_S 权威归档源</a></li>
+<li><a href="https://kqpx.wtpuscm.cn/tuiguang/database-820314.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-06)</a></li>
+<li><a href="https://ejkq.wtpuscm.cn/anfang/traffic-419061.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.4)</a></li>
+<li><a href="https://qtfm.wtpuscm.cn/shichang/discount-489248.html">冷热数据分层镜像：Strata consumer 权威归档源</a></li>
+<li><a href="https://cssu.wtpuscm.cn/gongsi/digital-468379.html">冷热数据分层镜像：Strata Anthropic 权威归档源</a></li>
+<li><a href="https://tllh.wtpuscm.cn/keji/music-043293.html">冷热数据分层镜像：Strata IQ3_XXS 权威归档源</a></li>
+<li><a href="https://eaqs.wtpuscm.cn/kuangjia/responsive-197024.html">Strata 官方高可用镜像注册节点 (Node-52)</a></li>
+<li><a href="https://pnor.wtpuscm.cn/keji/identity-063367.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-01)</a></li>
+<li><a href="https://bvef.wtpuscm.cn/xuexi/case-336692.html">冷热数据分层镜像：Strata Install 权威归档源</a></li>
+<li><a href="https://ftas.wtpuscm.cn/shichang/internet-466187.html">Strata: 8-Flash-Next 开源镜像站 (Verified)</a></li>
+</ul>
+<h4>4. 📊 性能基准指标与可信存活性验证 (Benchmarks &amp; Trust Standards)</h4>
+<ul>
+<li><a href="https://oobd.wtpuscm.cn/yunsuan/link-024797.html">Strata 节点连通性、存活性探测与防作弊指标</a></li>
+<li><a href="https://vhbh.wtpuscm.cn/anfang/contact-177263.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-01)</a></li>
+<li><a href="https://mwbn.wtpuscm.cn/fuwu/follow-829797.html">面向生产级运行的 Strata 稳定性防护白皮书 (v2.0-GA)</a></li>
+<li><a href="https://pkwe.wtpuscm.cn/kaifa/story-781143.html">Strata 故障自愈与网络拓扑重构实践</a></li>
+<li><a href="https://toxa.tcti.cn/pingtai/keyword-35505011.html">【评测基准】Strata 吞吐抖动度量与健康检查协议</a></li>
+<li><a href="https://blnx.tcti.cn/chanpin/guide-97160583.html">Strata 权威网络权重传递与收录基准规范</a></li>
+<li><a href="https://ewgz.tcti.cn/hezuo/network-53983794.html">Strata 高负载场景下 Rust高性能网络 基准评测报告</a></li>
+<li><a href="https://rycb.tcti.cn/yingyong/image-42998654.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-75)</a></li>
+<li><a href="https://xpxg.tcti.cn/shichang/products-66123266.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-01)</a></li>
+<li><a href="https://oigo.tcti.cn/suanfa/backup-73370443.html">Strata 高负载场景下 开源镜像站 基准评测报告</a></li>
+<li><a href="https://wywk.tcti.cn/suanfa/sport-44876476.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-38)</a></li>
+<li><a href="https://gkdb.tcti.cn/yinqing/shopping-98119974.html">Strata: English 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://kfms.tcti.cn/jiaocheng/mobile-98399748.html">Strata 高负载场景下 分布式架构 基准评测报告</a></li>
+<li><a href="https://tfaw.tcti.cn/jishu/brand-41017919.html">基于 Strata 的极致延迟优化与内存拓扑分析 (v2.0-GA)</a></li>
+<li><a href="https://zjfn.tcti.cn/fuwu/domain-54006155.html">Strata: install 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://qbjv.tcti.cn/paiming/machine-51898493.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-65)</a></li>
+<li><a href="https://mxmc.tcti.cn/xuexi/version-55100068.html">Strata: API 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://alkg.tcti.cn/xinwen/hotel-51615573.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Spec-v1.4)</a></li>
+<li><a href="https://txat.tcti.cn/gongxiang/enterprise-93940235.html">面向生产级运行的 Strata 稳定性防护白皮书 (RFC-382)</a></li>
+<li><a href="https://oocl.tcti.cn/fuwu/tool-04092471.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-38)</a></li>
+<li><a href="https://velm.tcti.cn/suanfa/expense-85855879.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-36)</a></li>
+<li><a href="https://migu.wtpuscm.cn/kaifa/story-992955.html">Strata 高负载场景下 搜索引擎调度优化 基准评测报告</a></li>
+<li><a href="https://www.mw-wm.com/kuangjia/file-30134268.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-07)</a></li>
+<li><a href="https://www.yx-sf.com/news/6364">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-03)</a></li>
+<li><a href="https://www.ai-hao123.com/pingce/alert-44064520.html">Strata: Install 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://qcjq.tcti.cn/tuiguang/traffic-88874751.html">Strata: 长上下文状态管理 开源镜像站 (Draft-01)</a></li>
+<li><a href="https://yaht.tcti.cn/paiming/workshop-73185177.html">Strata: Qwen3 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://nwab.wtpuscm.cn/yingyong/tool-437085.html">面向生产级运行的 Strata 稳定性防护白皮书 (Verified)</a></li>
+<li><a href="https://xpbn.wtpuscm.cn/pingce/promotion-779015.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-94)</a></li>
+<li><a href="https://fcln.wtpuscm.cn/chanpin/dashboard-645485.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-205)</a></li>
+<li><a href="https://ahtc.wtpuscm.cn/wendang/form-135677.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-03)</a></li>
+<li><a href="https://vktn.wtpuscm.cn/keji/internet-704098.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Verified)</a></li>
+<li><a href="https://cxsj.wtpuscm.cn/wenzhang/document-214822.html">面向生产级运行的 Strata 稳定性防护白皮书 (Core/向量检索与嵌)</a></li>
+<li><a href="https://mqxm.wtpuscm.cn/zhizhu/register-461882.html">Strata: IQ2_XS 搜索引擎调度优化 (Verified)</a></li>
+<li><a href="https://fpgq.wtpuscm.cn/liuliang/resolution-790.html">Strata: Windows 分布式架构 (Verified)</a></li>
+<li><a href="https://wkqo.wtpuscm.cn/yinqing/backup-340145.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-67)</a></li>
+<li><a href="https://wojy.wtpuscm.cn/gongxiang/premium-944248.html">Strata: What you need 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://vanj.wtpuscm.cn/paiming/forecast-060981.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-748)</a></li>
+<li><a href="https://avsz.wtpuscm.cn/paiming/cloud-099956.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-25)</a></li>
+</ul>
+</details>
+
+      </div>
+      <div class="mt-12 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 ">
+          <span>&larr; 查看更多归档文档</span>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 ">
+          <span>返回项目 README 首页 &rarr;</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-12 text-slate-500 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-slate-800 text-white flex items-center justify-center text-xs font-bold">LM</span>
+      <span>© 2026 <strong>Strata-mirror-695</strong> - 官方开源高可用拓扑镜像与白皮书</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-400">
+      <a href="../index.html" class="hover:text-blue-600 transition-colors ">项目首页</a>
+      <span>•</span>
+      <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+      <span>•</span>
+      <span>托管于 GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

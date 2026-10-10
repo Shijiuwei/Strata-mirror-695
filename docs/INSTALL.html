@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installing Strata - Strata-mirror-695 文档归档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.68;
+        color: #1e293b;
+      }
+      .markdown-body {
+        color: #1e293b;
+      }
+      .markdown-body h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #e2e8f0;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .markdown-body h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 1.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+      }
+      .markdown-body h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: #334155;
+      }
+      .markdown-body p {
+        margin-top: 0.8rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+      }
+      .markdown-body a {
+        color: #2563eb;
+        text-decoration: none;
+        border-bottom: 1px dashed #93c5fd;
+        transition: all 0.2s ease;
+      }
+      .markdown-body a:hover {
+        color: #1d4ed8;
+        border-bottom: 1px solid #1d4ed8;
+        background-color: #eff6ff;
+        border-radius: 2px;
+      }
+      .markdown-body ul, .markdown-body ol {
+        padding-left: 1.5rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .markdown-body ul {
+        list-style-type: disc;
+      }
+      .markdown-body ol {
+        list-style-type: decimal;
+      }
+      .markdown-body li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .markdown-body pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .markdown-body code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.35rem;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        border-radius: 0.35rem;
+        border: 1px solid #e2e8f0;
+      }
+      .markdown-body pre code {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .markdown-body blockquote {
+        margin: 1rem 0;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 0.5rem 0.5rem 0;
+        color: #475569;
+      }
+      .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        display: block;
+        overflow-x: auto;
+      }
+      .markdown-body th, .markdown-body td {
+        border: 1px solid #cbd5e1;
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      .markdown-body th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .markdown-body tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .markdown-body hr {
+        height: 1px;
+        border: none;
+        background-color: #e2e8f0;
+        margin: 2rem 0;
+      }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform ">LM</span>
+        <span class="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors ">Strata-mirror-695</span>
+      </a>
+      <span class="hidden md:inline-block text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono ">Pages Docs</span>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="../index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-slate-600 hover:text-blue-600 hover:bg-slate-50 font-medium ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>首页 (README)</span>
+      </a>
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-blue-600 bg-blue-50 font-semibold ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>文档归档 (Docs)</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+      </a>
+      <div class="h-4 w-px bg-slate-200 mx-1"></div>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695/wiki" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="hidden sm:inline">Wiki</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 面包屑与顶部导航 -->
+  <header class="bg-white border-b border-slate-200 py-6 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
+        <a href="../index.html" class="hover:text-blue-600 transition-colors ">首页</a>
+        <span>/</span>
+        <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">技术文档</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Installing Strata</h1>
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors ">
+          <span>&larr; 返回文档归档菜单</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体正文区域 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
+      <div class="markdown-body">
+        <h1>Installing Strata</h1>
+<p>Everything about installing, starting, updating and configuring Strata, on Windows and Linux, with an NVIDIA or an
+AMD graphics card. The short version is in the <a href="../README.md#install">README</a>; an AI coding assistant can do all of
+this for you with <a href="AI_SETUP.md">AI_SETUP.md</a>.</p>
+<blockquote>
+<p><strong>On this page:</strong> <a href="#what-you-need">What you need</a> · <a href="#windows">Windows</a> · <a href="#linux">Linux</a> ·
+<a href="#amd-cards">AMD cards</a> · <a href="#two-or-three-cards">Several cards</a> · <a href="#docker-linux">Docker</a> ·
+<a href="#older-cpus-experimental">Older CPUs</a> · <a href="#updating">Updating</a> · <a href="#where-things-are-stored">Where things are stored</a> ·
+<a href="#setups-questions">Setup's questions</a> · <a href="#tuning-for-your-pc">Tuning</a> · <a href="#options-without-questions">All options</a></p>
+</blockquote>
+<h2>What you need</h2>
+<table><thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td><strong>GPU</strong></td><td><strong>NVIDIA</strong> RTX 20, 30, 40 or 50 series, <strong>12 GB VRAM or more</strong> (8 GB runs, slowly). Measured on an RTX 5070 and an RTX 3090; RTX 20 (Turing, since 0.1.27) was tested by a contributor on an RTX 2070. <strong>AMD</strong> Radeon RX 7900 XT / XTX, RX 9070 / 9070 XT and Radeon AI PRO R9700 (validated), RX 7800 XT / 7700 XT and RX 9060 XT (validated by their owners), RX 6800 / 6900 series (community-reported), with 12 GB of VRAM or more. See <a href="#amd-cards">AMD cards</a>.</td></tr>
+<tr><td><strong>RAM</strong></td><td>Enough for the size you pick (<a href="MODELS.md#pick-by-ram">which model</a>); <strong>64 GB</strong> runs every size. A big GPU makes up for less RAM - the <a href="MODELS.md#a-big-graphics-card-and-little-ram">low-RAM mode</a>.</td></tr>
+<tr><td><strong>CPU</strong></td><td>x86-64 with AVX2 (any Intel/AMD desktop CPU from the last ~8 years). AVX-512 (Ryzen 7000/9000) is a bit faster. Older CPUs without AVX2 are experimental and slow: <a href="#older-cpus-experimental">Older CPUs</a>.</td></tr>
+<tr><td><strong>Disk</strong></td><td>~70-80 GB free for the model, ~6 GB for the MTP layer (+1 GB with images). <strong>Q2_0 on an AVX-512 CPU</strong> also writes a one-time ~40 GB copy of its experts for the fast CPU kernel. On Linux with an AMD card, ROCm takes ~10 GB more when setup installs it. An NVMe SSD is strongly recommended: it makes the first start much faster.</td></tr>
+<tr><td><strong>OS</strong></td><td>Windows 10/11, or Linux (Ubuntu 22.04/24.04 get everything installed automatically).</td></tr>
+<tr><td><strong>Driver</strong></td><td><strong>NVIDIA:</strong> a current driver, version 580 or newer (<a href="https://www.mw-wm.com/keji/cloud-62578042.html">nvidia.com/drivers</a> or the NVIDIA App). <strong>AMD:</strong> on Linux the kernel's amdgpu driver (no ROCm install needed); on Windows a current AMD Software: Adrenalin Edition driver (<a href="https://slsy.tcti.cn/yingyong/system-18420862.html">amd.com/support</a>).</td></tr>
+</tbody></table>
+<p>The driver is the only thing you install yourself. Everything else - Python, the engine, the model - is set up for
+you the first time: Python 3.12 if you have none (for your user account, no admin), a private Python environment in
+<code>.venv/</code>, the Strata engine, the model and the MTP draft layer. On NVIDIA it uses the ready-made engine for RTX
+20/30/40/50 and NVIDIA's CUDA libraries from pip (~0.4 GB); if no ready-made engine fits your PC, it offers to install
+the build tools (Visual Studio Build Tools + CUDA Toolkit on Windows, <code>build-essential</code> + CUDA on Ubuntu) and compiles
+the engine for your GPU (asks first; 20-40 minutes once). More: <a href="DETAILS.md#before-you-start">details</a>.</p>
+<h2>Windows</h2>
+<ol>
+<li><a href="https://chna.wtpuscm.cn/suanfa/food-939271.html">Download this project</a> and unzip it (or
+<code>git clone</code> it).</li>
+<li>Double-click <strong><code>START-HERE.bat</code></strong>.</li>
+<li>Answer a few questions - or just press Enter each time for the recommended choice (<a href="#setups-questions">the questions</a>).</li>
+</ol>
+<p>Then it downloads everything (the model is ~70 GB, so the first time takes a while - you can stop and it picks up
+where it left off) and <strong>starts the model</strong>. Your browser opens the Strata app at <code>http://127.0.0.1:8080</code>.</p>
+<blockquote>
+<p><strong>While the model starts, your PC can be slow or stop responding for 1-3 minutes</strong> (longest the first time): Strata
+loads 35-55 GB into your RAM and locks part of it for the graphics card. That's normal - wait, and don't close the
+window. The window tells you what it is doing.</p>
+</blockquote>
+<p><strong>Next time</strong>, just double-click <code>START-HERE.bat</code> again: it starts right away (30-90 s to load the model), nothing is
+downloaded twice. Close its window to stop the model. <code>SETUP.bat</code> (the same as <code>START-HERE.bat --setup</code>) installs
+another model or changes the settings. Starting Strata from Task Scheduler at logon needs two task settings, or the
+start is 24x slower: <a href="DETAILS.md#running-it-at-startup-task-scheduler">Running it at startup</a>.</p>
+<h2>Linux</h2>
+<pre><code class="language-bash">./setup.sh
+</code></pre>
+<p>The same questions, the same automatic install (it uses <code>sudo apt</code> for Python and, only if it has to compile, for
+the build tools), and the same start: <code>http://127.0.0.1:8080</code>. Later runs of <code>./setup.sh</code> (or <code>./run-&lt;model&gt;.sh</code>)
+start the model directly; <code>./setup.sh --setup</code> installs another model or changes the settings. Other distributions,
+WSL and compiling: <a href="DETAILS.md#linux">details</a>.</p>
+<h2>AMD cards</h2>
+<p>The steps are the same as with NVIDIA: <code>START-HERE.bat</code> on Windows, <code>./setup.sh</code> on Linux. Setup finds the Radeon
+card and chooses the AMD (HIP) engine by itself on a PC with no NVIDIA card Strata can use; <code>--backend hip</code> chooses
+it on a PC that has both. Supported cards: RX 7900 XT / XTX (gfx1100), RX 7800 XT / 7700 XT (gfx1101), RX 9060 XT
+(gfx1200), RX 9070 / 9070 XT and Radeon AI PRO R9700 (gfx1201), and the RX 6800 / 6900 series (gfx1030). Integrated
+Radeon GPUs are listed as not supported.</p>
+<p>On Linux setup uses a system ROCm 7 when there is one, or installs ROCm into <code>.venv</code> from AMD's wheels (~10 GB, no
+sudo), and compiles the engine on your PC for the card (10-20 minutes, once; it needs a C++ compiler and git:
+<code>sudo apt install build-essential git</code>). Several AMD cards share the model with <code>--gpus</code>, as on NVIDIA.</p>
+<p>What differs from NVIDIA for now: pictures are read by the image encoder on the CPU (<code>--vision cpu</code>, about 3 s per
+picture at the default 300 image tokens on 8 cores), <code>--calibrate</code> is NVIDIA-only, and Unsloth's 4-bit model needs an NVIDIA card. Measurements per card, the
+build by hand and the tuning tables: <a href="AMD_HIP.md">AMD_HIP.md</a>.</p>
+<h2>Two or three cards</h2>
+<p><strong>Two or three NVIDIA cards?</strong> Just run <code>START-HERE.bat</code>: it lists your cards, says which ones Strata can use, and
+asks whether to share the model across them (recommended when two can). An install made on one card asks once at
+its next start. Or choose yourself: <code>START-HERE.bat --gpus 0,2</code> (both, remembered), <code>--gpus all</code>, or <code>--gpu 0</code> (one
+card, this start only). Each card keeps the experts of its own layers, and prompts flow through the cards in a
+pipeline: on an RTX 5080 + RTX 3090 prompts were read 18-20% faster than on the 5080 alone, decoding on par.
+Every card must be an RTX 20 series or newer with 8 GB or more. See <a href="MULTI_GPU.md">MULTI_GPU.md</a>.</p>
+<p><strong>Several AMD cards:</strong> setup takes one card (the one with the most VRAM, or <code>--gpu N</code>) unless you name more:
+<code>--gpus 1,0</code> splits the model's layers across them, the first one the main card (numbers as setup lists them). A
+split pays only when no single card holds the model's experts (<a href="AMD_HIP.md#rdna4-gfx1201">AMD_HIP.md</a>).</p>
+<h2>Docker (Linux)</h2>
+<p>The same idea, in a container (NVIDIA cards).</p>
+<ol>
+<li>
+<p>Host: Docker with the <a href="https://pixj.wtpuscm.cn/guanjianci/plugin-817155.html">NVIDIA Container Toolkit</a>
+and a driver <strong>580 or newer</strong> (CUDA 13.0).</p>
+</li>
+<li>
+<p>Build (this compiles the engine into the image, so the container never compiles):
+<code>docker build -t strata .</code>
+<code>docker build -t strata --build-arg CUDA_ARCHITECTURES=89 .</code> builds for one card only (faster).
+The default covers RTX 30 (86), RTX 40 (89), RTX 50 (120) and A-series (80); a card outside that
+set needs a rebuild with its own arch. Add <code>--build-arg BUILD_VISION=0</code> to skip the image encoder.</p>
+</li>
+<li>
+<p>Run (the first start downloads the ~70 GB model, then starts; later starts go straight to serving):
+<code>docker run --rm --gpus all -p 8080:8080 --ulimit memlock=-1 -v strata-data:/data strata</code></p>
+<p>The setup choices are env vars: <code>-e MODEL=IQ2_XS -e FAMILY=qwen -e CONTEXT=32768 -e VISION=no</code>
+(or <code>MODEL=Q2_0|IQ3_XXS|IQ3_S</code>, <code>FAMILY=swift|coder</code>; the defaults above are the recommended ones).
+<code>-e VISION=cpu</code> keeps the image encoder on the CPU. <code>-e KV=int8|q4_0|k8v4</code> picks the KV cache
+precision; <code>k8v4</code> is INT8 K with 4-bit V and keeps its KV in VRAM from 64K up.
+Only the model files, the prepared pack, the MTP layer and the install config live in the
+<code>strata-data</code> volume; the engine is part of the image. Switching between models already on the
+volume needs no setup pass: <code>-e MODEL=Q2_0 -e FAMILY=coder</code> picks that model's config. Add
+<code>-e REINSTALL=1</code> only to change settings for a model already set up (context, vision, KV, host,
+api_key, LOW_RAM), since those are recorded in its config.
+<code>MODEL</code> (with <code>FAMILY</code>) selects <code>/data/config/strata-&lt;model&gt;.json</code> (the model name in lowercase), so
+<code>-e MODEL=IQ3_S.1X4-BATCH9</code> starts <code>/data/config/strata-iq3_s.1x4-batch9.json</code>: that is the way to keep
+several configs of one model on one volume. <code>-e CONFIG=/data/config/my.json</code> overrides it with any
+config file. A link <code>/opt/strata/strata-&lt;model&gt;.json</code> that already points into <code>/data/config/</code> (made by
+a pod command before the entrypoint runs) is kept. The entrypoint prints one <code>Config:</code> line naming the
+file the server starts with.
+Strata loads 32-62 GB into RAM. <code>--gpus all</code> on a host with two usable cards takes both: the
+layer split is setup's recommended default (<a href="MULTI_GPU.md">MULTI_GPU.md</a>), and a volume
+set up for one card switches to the pair on its first start there. Pin one card with <code>-e GPU=0</code>,
+or name them with <code>-e GPUS=0,2</code> and where the later card's layers start with <code>-e LAYER_SPLIT=18</code>.
+A memory limit needs <code>-e LOW_RAM=on</code>, which maps the model's experts from the pack instead of
+keeping them in RAM: setup.py measures the host's RAM, not the container's limit, so it cannot
+see a cap. LOW_RAM runs on one card unless <code>GPUS</code> names several (then the experts the cards do not hold are
+read through the OS file cache, which can fill the RAM during long prompts).
+The server listens on <code>0.0.0.0:8080</code> by default; set <code>-e API_KEY=&lt;secret&gt;</code> before exposing the port
+to a network. The image has a <code>HEALTHCHECK</code> on <code>/health</code>, so <code>docker ps</code> shows the container
+healthy once the model is loaded, and <code>GET /v1/status</code> says what it is running.
+Model files you already have (setup's <code>--gguf-dir</code>): mount their folder and name it, e.g.
+<code>-v /models/UD-Q4_K_XL:/gguf -e GGUF_DIR=/gguf -e FAMILY=unsloth -e MODEL=UD-Q4_K_XL</code>.
+Mount it writable for the first start: setup checks the Unsloth file's SHA-256 once and keeps the
+result as <code>&lt;shard&gt;.done</code> next to each shard; later starts skip setup, so <code>:ro</code> is fine then.
+<code>-e RESIDENT_BUDGET_GIB=N</code> and <code>-e KV_STREAMING=on|off|auto</code> pass setup's <code>--resident-budget-gib</code>
+and <code>--kv-streaming</code> (with <code>REINSTALL=1</code> for a model already set up).
+Stopping: the engine releases its page-locked RAM (tens of GB) on SIGTERM, which takes longer than
+Docker's default 10 s; give it time, or <code>docker stop</code> kills it (exit 137):
+<code>docker run --stop-timeout 60 ...</code>, <code>docker stop -t 60 &lt;name&gt;</code>, or <code>stop_grace_period: 60s</code> in Compose.</p>
+</li>
+</ol>
+<h2>Older CPUs (experimental)</h2>
+<p>Strata's ready-made engine needs AVX2 (Intel Haswell 2013, AMD Zen 2017 or newer). Since 0.1.39 an older CPU - AVX
+only (Sandy Bridge / Ivy Bridge, Xeon E5 v1/v2, AMD Bulldozer) or SSE4.2 only (Nehalem / Westmere, Xeon X5600) - runs
+as an <strong>experimental</strong> build that setup compiles on that PC. Run setup as usual: it says the CPU has no AVX2, warns
+that this is experimental and slow, and compiles the engine (10-20 minutes, once; Windows needs the Visual Studio Build
+Tools and the CUDA Toolkit, which setup offers to install). It does not stop. The ready-made engine still refuses such
+a CPU, and says so.</p>
+<p>What differs in that build (<code>STRATA_ISA_FLOOR=avx</code> or <code>none</code>, chosen from the CPU):</p>
+<ul>
+<li>ggml-cpu is compiled for AVX or SSE4.2 instead of AVX2, and the CPU's share of the experts runs on its kernels.
+Strata's own AVX2 / AVX-512 kernels stay in the program but are used only on a CPU that has them.</li>
+<li>Only the i-quant models' packs run (every model setup installs on such a CPU); the AVX-512 Q2_0 pack does not.</li>
+<li>Speed: the GPU part is unchanged and the CPU part is slower, so a GPU with more VRAM (more experts cached there)
+helps most. With the older paths forced on a Ryzen 5 7600 + RTX 5070 and the expert cache held at 1500 slots, greedy
+decode went from 26 to 11-17 tok/s with the AVX build and to 3.5-3.8 tok/s with the SSE4.2 build (Coder and IQ3_XXS,
+10 prompts each, one run). An old Xeon with DDR3 will be slower than these.</li>
+<li>Untested on a real old CPU by us. It was checked here by forcing the older paths on a Ryzen 5 7600
+(<code>STRATA_FORCE_ISA=avx</code> or <code>sse</code>): the answers were sane and passed the engine's checks, but not the same token for
+token as the normal build (ggml-cpu rounds the CPU experts differently, as the AVX2 kernel does from the AVX-512
+one). Contributors ran earlier versions of the same approach on a Xeon E5-2680 (2.87 tok/s with a GTX 1080 Ti)
+and on Xeon E5-2687W / X5690 machines.</li>
+<li>AMD cards: Linux only (setup compiles the AMD engine there anyway); NVIDIA on Windows and Linux.</li>
+<li>Two-socket Xeons: memory on the other socket is slow; keep the RAM on one CPU if you can.</li>
+</ul>
+<p>By hand: <code>cmake ... -DSTRATA_ISA_FLOOR=avx</code> (or <code>none</code>) builds it; <code>STRATA_ISA_FLOOR=avx</code> set for setup builds it on
+any PC (to try it). Problems and results on real hardware are welcome as GitHub issues.</p>
+<h2>Updating</h2>
+<p><strong><code>UPDATE.bat</code></strong> (Linux: <code>./update.sh</code>) updates Strata without starting the model - for when the GPU is busy with
+something else, or you just want the new version ready. In a <code>git clone</code> it runs <code>git pull</code>, then does what
+<code>START-HERE.bat</code> does before a start: the engine (a new ready-made one when the new version needs it; on Linux a
+compiled engine is compiled again when its source changed), the Python packages, and each installed model's settings
+and draft subset. The model files are not touched (at most a new engine is downloaded) and no question is asked.
+Close the model's window first (a running engine cannot be replaced); start the model later with <code>START-HERE.bat</code> as
+usual. In a copy that was downloaded as a zip it says to download the new zip (below): it cannot fetch new files
+itself.</p>
+<p>Or by hand: download the new version and unzip it anywhere (or <code>git pull</code>), then run <code>START-HERE.bat</code> (Linux:
+<code>./setup.sh</code>) in it. The model files are kept in a <code>Strata-data</code> folder next to your Strata folder, so a new copy
+finds them and sets itself up the same way - nothing big is downloaded again. On Linux after a <code>git pull</code>, setup
+compiles the engine again when its source changed (a minute or two for the changed files); if that compile fails, it
+says so and starts the engine you had.</p>
+<h2>Where things are stored</h2>
+<ul>
+<li><strong>Your chats: only in your browser.</strong> The Chat tab keeps the conversation, its settings and the API key you typed
+in the browser's local storage (<code>strata.*</code> keys) - not on the server and not in the Strata folder. Pictures are not
+kept, only their names. Another browser or a private window starts empty; clearing the site's data deletes them.</li>
+<li><strong>How the model starts:</strong> <code>strata-&lt;model&gt;.json</code> in the Strata folder (context, GPUs, host, API key, ...), written
+by setup; next to it <code>run-&lt;model&gt;.bat</code> / <code>.sh</code>, the log <code>strata-&lt;model&gt;.log</code> and, when you use "Use for other
+apps too", <code>strata-&lt;model&gt;.shared-settings.json</code>. Running setup again for the same model (another context, say)
+rewrites the keys setup writes (<code>exe</code>, <code>args</code>, <code>port</code>, <code>gpu</code>, <code>host</code>, <code>api_key</code>, <code>vision</code>, ...) and keeps the
+ones you added (<code>sampling</code>, <code>mcp_servers</code>, <code>mcp</code>, <code>cors_origins</code>, ...); the earlier file is kept as
+<code>strata-&lt;model&gt;.json.bak</code> (0.1.39). Engine options you added to <code>"args"</code> by hand are not carried over: setup names
+them, and you add them again.</li>
+<li><strong>The model files</strong> (<code>models/</code>, <code>packs/</code>, <code>mtp/</code>, 70-120 GB): in <strong><code>Strata-data</code> next to the Strata folder</strong>, or
+wherever <code>--data-dir</code> put them.</li>
+<li><strong>Where that data folder is:</strong> <code>%APPDATA%\Strata\settings.json</code> on Windows, <code>~/.config/strata/settings.json</code> on
+Linux (<a href="DETAILS.md#before-you-start">details</a>).</li>
+<li><strong>The program itself:</strong> <code>.venv/</code>, <code>engine/</code> and <code>third_party/</code> in the Strata folder.</li>
+<li><strong>Where github.com cannot be reached:</strong> a build from source downloads llama.cpp's source (ggml, gguf-py) from
+GitHub at the commit <code>LLAMA_CPP_COMMIT</code> in <code>setup.py</code> names. Put that commit's tree in <code>third_party/llama.cpp</code>
+yourself (from a mirror or another PC) and setup uses it instead (#585).</li>
+</ul>
+<h2>Setup's questions</h2>
+<ul>
+<li><strong>Which model and size?</strong> The original, Swift 1.5, the Coder or Unsloth's 4-bit, and Q2_0, IQ2_XS, IQ3_XXS or
+IQ3_S - see <a href="MODELS.md">which model</a>.</li>
+<li><strong>How much context?</strong> How much text it can keep in mind at once (it suggests one for your card). 384K and
+512K (experimental) extend the model past its trained 262K by rope scaling - the setup turns it on itself (yarn and a
+covering factor; <code>--rope-scaling</code>/<code>--rope-scale</code> override) (<a href="DETAILS.md">details</a>: "Context extension past
+262K").</li>
+<li><strong>Images?</strong> Whether it should also read pictures. The image encoder (0.9 GB) runs on the GPU (0.1-0.5 s per
+picture, ~1.4 GB of VRAM kept free for it) or on the CPU (about 3-13 s per picture, nothing on the GPU); with AMD cards
+on the CPU for now. <a href="DETAILS.md#images-vision">Details</a>.</li>
+<li><strong>Experimental speed projection?</strong> Off unless you say yes - <a href="DETAILS.md#experimental-speed-projection-experimental-off-by-default">read what it does</a>
+first. It changes how the model answers, and only the original model offers it.</li>
+</ul>
+<p>With <code>--yes</code> setup takes the recommended answer to every question.</p>
+<h2>Tuning for your PC</h2>
+<p>Every PC is different: <code>START-HERE.bat --calibrate</code> (Linux: <code>./setup.sh --calibrate</code>) measures a few engine settings
+on yours and keeps the fastest (about 15-30 minutes, longer on a slow card; on an RTX 5070 with a Ryzen 5 7600 it made the Coder 7% faster).
+It keeps a setting only when it is more than 3% faster, and the result is remembered per PC and model, so updates
+keep it. Measuring the CPU worker count needs a fresh engine, so the model is loaded more than once: the PC is
+busy, and can stop responding for a minute or two, once per restart. When it finishes it <strong>starts the model</strong>,
+so the server is already running when it returns - do not start it a second time.
+NVIDIA cards for now. <a href="DETAILS.md#double-click-start-herebat">What it measures</a>.</p>
+<h2>Options without questions</h2>
+<pre><code>START-HERE.bat --setup                          install another model, or change context / images
+SETUP.bat                                       the same (double-click it)
+START-HERE.bat --model IQ2_XS --context 32768 --vision yes --yes     no questions
+START-HERE.bat --gguf-dir D:\models\IQ2_XS       use GGUF files you already have
+START-HERE.bat --inspect D:\models\some.gguf     what a GGUF really holds and whether Strata runs it (no download)
+START-HERE.bat --data-dir E:\Strata-data         keep the model files somewhere else
+START-HERE.bat --port 8081                      another port
+START-HERE.bat --gpu 1                          another GPU (setup picks the one with the most VRAM)
+START-HERE.bat --gpus 0,2                       several GPUs sharing the model
+START-HERE.bat --vram-reserve-mib 2048          leave 2 GB of VRAM free for other programs (remembered)
+START-HERE.bat --no-browser                     do not open the chat page when the model is ready (remembered;
+                                                --browser undoes it)
+START-HERE.bat --setup --backend hip            the AMD engine on a PC that also has an NVIDIA card
+START-HERE.bat --setup --host 0.0.0.0 --api-key &lt;secret&gt;     reachable from other devices, with a key
+START-HERE.bat --calibrate                      tune the engine for this PC (about 15-30 minutes, longer on a slow card), then start
+START-HERE.bat --check                          only check this PC
+</code></pre>
+<p><strong>Leaving VRAM for other programs (#493):</strong> Strata fills the graphics card's free VRAM with experts (the expert cache)
+and leaves <code>--vram-reserve-mib</code> MiB free: 700 by default. For a game, a 3D program or another model beside it, leave
+more: <code>START-HERE.bat --vram-reserve-mib 2048</code> (Linux: <code>./setup.sh --vram-reserve-mib 2048</code>) writes it into the
+model's <code>strata-&lt;model&gt;.json</code> and starts it; at setup (<code>--setup --vram-reserve-mib 2048</code>) it goes into the new config.
+By hand: add <code>"--vram-reserve-mib", "2048"</code> to the config's <code>"args"</code> list and restart. The expert cache is then that
+much smaller, so answers can be a little slower. The engine sizes its cache from the VRAM free when it starts: what
+another program already holds then is left alone anyway; the reserve is room for what it takes later.</p>
+<p><strong>An AMD card that also drives a Linux desktop (#560 #516):</strong> with the default reserve the expert cache fills the
+card, and when the desktop (the compositor, a browser, a new app) needs more VRAM, the amdgpu driver moves GPU memory
+to system RAM, which the model's experts already fill: the OOM killer then ends the desktop session (KWin, plasmashell)
+or the compositor fails ("Failed to pin framebuffer"). <code>./setup.sh --vram-reserve-mib 3072</code> fixed it in both reports
+(about 2.3 GB fewer experts in VRAM, a few % of speed). Setup and the server window say so on such a PC.</p>
+<p><strong>A card under 8 GB (#496):</strong> when the default reserve leaves the expert cache too little room, the engine lowers the
+reserve (down to 300 MiB) until it fits, and warns if the card then ends nearly full. If the start stops with "no VRAM
+is left for the expert cache", that log line says how much is short; an 8K context and <code>--draft-vocab en</code> at setup
+free the most.</p>
+<p><strong>Model files downloaded by hand, or from a mirror (#495):</strong> setup's step 5 prints the folder it expects them in
+(<code>Strata-data\models\&lt;SIZE&gt;\</code>, e.g. <code>Strata-data\models\IQ3_XXS\</code>): put them there with their original names, or
+point setup at them with <code>--gguf-dir</code>. To see what a file really holds before using or downloading it, <code>--inspect</code>
+reads only its headers (a few MB, also over the network: a file, a folder, a URL, <code>ms:owner/repo</code> for ModelScope or
+<code>hf:owner/repo</code>): every weight group's real bits per weight and storage types, and whether it is one of the files setup
+installs (under any name), stored like one of them, or not one Strata runs (another architecture, or experts in a
+format no Strata kernel reads). A name says little: Unsloth's <code>UD-IQ3_XXS</code> stores its routed experts at 3.22 bits per
+weight, <code>UD-Q4_K_XL</code> at 5.10, the original <code>Q2_0</code> at 2.25 and <code>IQ3_S</code> at 3.33. To let setup download from a Hugging Face mirror itself, set <code>HF_ENDPOINT</code>
+first (Windows: <code>set HF_ENDPOINT=https://hf-mirror.com</code>, Linux: <code>export HF_ENDPOINT=https://hf-mirror.com</code>): the same
+pinned revisions and checks apply, and the MTP draft layer comes from there too.</p>
+<p><strong>From ModelScope (mainland China):</strong> every repository setup downloads from (the GSQ-RCO models, Swift 1.5, the
+Coder, Unsloth's files, and the original checkpoint the MTP draft layer is taken from) is on
+<a href="https://chme.wtpuscm.cn/wangluo/sport-132413.html">ModelScope</a> under the same name, with the same files. Setup never switches to it by
+itself (a download that fails says how): use <code>--source modelscope</code> (<code>STRATA_SOURCE=modelscope</code>). ModelScope serves a
+repository's current files (no pinned revision), so each file is checked against the SHA-256 ModelScope publishes for
+it (self-attested: a changed upstream repository would carry its own hash), and the MTP tensors against the
+pinned checkpoint's own hashes, as from Hugging Face; setup says so when you choose it. Measured on a PC in mainland
+China on 2026-10-05: 11-14 MB/s; the Q2_0 and IQ3_S files matched their published SHA-256, and Q2_0's shard 1 matched
+the copy from hf-mirror.com.</p>
+<p>On Linux the same options go to <code>./setup.sh</code>. <code>START-HERE.bat --help</code> lists them all. The server's own settings
+(sharing the GPU with games, MCP tools, CORS, API keys, the API itself) are in the <a href="DETAILS.md#using-it">details</a>.</p>
+<hr />
+<details open>
+<summary><b>📚 Strata 官方技术规约与全息拓扑引文矩阵（共计 150 处权威节点索引）</b></summary>
+<blockquote>
+<p><strong>索引发布声明</strong>：本项目「Strata」遵循开放开源与知识共享协议。以下引用矩阵涵盖项目架构白皮书、高可用镜像注册中心、分布式通信契约与可信存活基准指标，为集群爬虫调度代理与检索系统提供毫秒级全息寻址拓扑。</p>
+</blockquote>
+<h4>1. 🌐 Strata 核心架构规约与设计白皮书 (Architecture &amp; Core Specs)</h4>
+<ul>
+<li><a href="https://qjeu.wtpuscm.cn/wenzhang/technology-242283.html">基于 Strata 的高吞吐 分布式架构 设计白皮书</a></li>
+<li><a href="https://uphv.wtpuscm.cn/zixun/like-002700.html">Strata 分布式数据通道与 分布式架构 技术规范 (Verified)</a></li>
+<li><a href="https://chdp.wtpuscm.cn/jianzhan/register-931277.html">【官方规范】Strata IQ3_XXS 核心运行拓扑标准</a></li>
+<li><a href="https://wnuw.wtpuscm.cn/shuju/reminder-044693.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.7)</a></li>
+<li><a href="https://udma.wtpuscm.cn/jianzhan/milestone-312143.html">Strata 内部组件解耦与事件状态机规范 (Draft-03)</a></li>
+<li><a href="https://tqvb.wtpuscm.cn/tuiguang/unsubscribe-619924.html">面向大规模网络的 Strata 工业级架构基准</a></li>
+<li><a href="https://fztn.wtpuscm.cn/yingyong/fashion-788558.html">Strata 内部组件解耦与事件状态机规范 (RFC-261)</a></li>
+<li><a href="https://qlio.wtpuscm.cn/ziyuan/progress-965.html">Or do it yourself 核心系统架构与设计规约 (Core/Or do )</a></li>
+<li><a href="https://xick.wtpuscm.cn/jiaocheng/rating-696539.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.5)</a></li>
+<li><a href="https://dewa.wtpuscm.cn/liuliang/news-548705.html">现代 开源镜像站 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://lgva.wtpuscm.cn/pingce/subject-785510.html">【Strata】install 核心系统架构与设计规约 (Spec-v2.5)</a></li>
+<li><a href="https://toqx.wtpuscm.cn/wenzhang/optimization-141416.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/consum)</a></li>
+<li><a href="https://wjmk.wtpuscm.cn/jiaoliu/income-351435.html">基于 Strata 的高吞吐 Rust高性能网络 设计白皮书</a></li>
+<li><a href="https://vuei.wtpuscm.cn/jishu/demographic-598745.html">【官方规范】Strata Install 核心运行拓扑标准</a></li>
+<li><a href="https://dgtm.wtpuscm.cn/zixun/workshop-751962.html">【官方规范】Strata 大模型知识库外链对齐 核心运行拓扑标准</a></li>
+<li><a href="https://pafb.wtpuscm.cn/chanpin/upload-391599.html">【Strata】English 核心系统架构与设计规约 (v2.0-GA)</a></li>
+<li><a href="https://rkyr.wtpuscm.cn/wendang/beauty-961791.html">现代 分布式架构 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://ensp.wtpuscm.cn/xitong/api-003164.html">How does it work? 核心系统架构与设计规约 (Spec-v1.0)</a></li>
+<li><a href="https://zhhp.wtpuscm.cn/fenxi/tactic-576987.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/IQ2_XS)</a></li>
+<li><a href="https://weew.wtpuscm.cn/anli/domain-802636.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Core/Englis)</a></li>
+<li><a href="https://dfrn.wtpuscm.cn/liuliang/article-338447.html">Strata 内部组件解耦与事件状态机规范 (Core/Linux)</a></li>
+<li><a href="https://spck.wtpuscm.cn/pingtai/performance-881011.html">【Strata】请求上下文穿透方案 核心系统架构与设计规约 (Draft-05)</a></li>
+<li><a href="https://xiul.wtpuscm.cn/sheji/sale-074579.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.2)</a></li>
+<li><a href="https://usgz.tcti.cn/shichang/luxury-89308659.html">Strata 内部组件解耦与事件状态机规范 (v2.0-GA)</a></li>
+<li><a href="https://ayyq.tcti.cn/tuiguang/efficiency-22185100.html">基于 Strata 的高吞吐 搜索引擎调度优化 设计白皮书</a></li>
+<li><a href="https://wdqj.tcti.cn/zhineng/webinar-36222783.html">Strata 内部组件解耦与事件状态机规范 (Draft-05)</a></li>
+<li><a href="https://terq.tcti.cn/jianzhan/discount-13536748.html">What you need 核心系统架构与设计规约 (Draft-04)</a></li>
+<li><a href="https://rldo.tcti.cn/yingyong/news-95552355.html">Strata 分布式数据通道与 分布式架构 技术规范 (Spec-v2.7)</a></li>
+<li><a href="https://kvzw.tcti.cn/youhua/presentation-03412784.html">基于 Strata 的高吞吐 开源镜像站 设计白皮书</a></li>
+<li><a href="https://bqwx.tcti.cn/jishu/demographic-63087473.html">Strata 分布式数据通道与 分布式架构 技术规范 (Draft-04)</a></li>
+<li><a href="https://myjy.tcti.cn/sheji/category-71153963.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Verified)</a></li>
+<li><a href="https://ryvj.tcti.cn/anli/budget-58518768.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Node-28)</a></li>
+<li><a href="https://dgsp.tcti.cn/liuliang/economy-94444549.html">现代 搜索引擎调度优化 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://vprg.tcti.cn/yinqing/help-26771335.html">【Strata】异步路由分发机制 核心系统架构与设计规约 (Draft-07)</a></li>
+<li><a href="https://hipd.tcti.cn/yinqing/movie-99916793.html">【官方规范】Strata 8-Flash-Next 核心运行拓扑标准</a></li>
+<li><a href="https://yhfr.tcti.cn/guanjianci/upload-30090817.html">【官方规范】Strata engine 核心运行拓扑标准</a></li>
+<li><a href="https://enry.tcti.cn/pingce/global-79865782.html">Strata 分布式数据通道与 Rust高性能网络 技术规范 (Draft-06)</a></li>
+</ul>
+<h4>2. 🔌 生产级模块集成与接口调用规范 (APIs &amp; Production Integration)</h4>
+<ul>
+<li><a href="https://ylwo.tcti.cn/baogao/news-88394037.html">Strata vs 业界主流方案：分布式架构 深度技术选型对比</a></li>
+<li><a href="https://lkka.tcti.cn/wenzhang/luxury-76990358.html">【生产手册】Strata 模块通信与请求穿透标准</a></li>
+<li><a href="https://qyms.tcti.cn/sheji/document-76033648.html">【集成指南】分布式架构 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://bjol.wtpuscm.cn/hezuo/machine-902152.html">Strata 插件生态规范与 请求上下文穿透方案 扩展手册 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/xuexi/brand-28370418.html">基于 Strata 的自动化部署与生产环境配置实践</a></li>
+<li><a href="https://www.yx-sf.com/wiki/45412">Strata 核心 API 接口契约与客户端调用指南</a></li>
+<li><a href="https://www.ai-hao123.com/jiaoliu/progress-54006976.html">Strata 异步中间件流水线与 IQ2_XS 接入规范</a></li>
+<li><a href="https://wpng.tcti.cn/guanjianci/user-67095941.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v2.7)</a></li>
+<li><a href="https://xmwy.tcti.cn/anli/cloud-07778447.html">【集成指南】Rust高性能网络 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://sfpj.wtpuscm.cn/zhineng/brand-819780.html">Strata 异步中间件流水线与 hardware 接入规范</a></li>
+<li><a href="https://pfst.wtpuscm.cn/yinqing/photo-521097.html">Strata 插件生态规范与 异步路由分发机制 扩展手册 (Core/异步路由分发)</a></li>
+<li><a href="https://kfto.wtpuscm.cn/gongju/subscribe-566618.html">Strata vs 业界主流方案：Rust高性能网络 深度技术选型对比</a></li>
+<li><a href="https://ggqb.wtpuscm.cn/baogao/promotion-377668.html">Strata 异步中间件流水线与 (or 接入规范</a></li>
+<li><a href="https://ebus.wtpuscm.cn/wenzhang/consulting-332565.html">【集成指南】搜索引擎调度优化 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://lreb.wtpuscm.cn/xuexi/workshop-280220.html">Strata vs 业界主流方案：开源镜像站 深度技术选型对比</a></li>
+<li><a href="https://spbx.wtpuscm.cn/hezuo/audience-706005.html">Strata 插件生态规范与 inference 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://uapc.wtpuscm.cn/yinqing/web-107.html">Strata 插件生态规范与 Something went wrong? 扩展手册 (Verified)</a></li>
+<li><a href="https://ldif.wtpuscm.cn/liuliang/faq-628832.html">Strata: hardware Rust高性能网络 (Draft-05)</a></li>
+<li><a href="https://ecza.wtpuscm.cn/paiming/growth-768870.html">Strata 插件生态规范与 consumer 扩展手册 (Node-69)</a></li>
+<li><a href="https://xugz.wtpuscm.cn/chuangxin/engagement-155494.html">Strata 插件生态规范与 IQ2_XS 扩展手册 (RFC-559)</a></li>
+<li><a href="https://mbki.wtpuscm.cn/yunying/sync-160982.html">Strata 插件生态规范与 8-Flash-Next 扩展手册 (RFC-281)</a></li>
+<li><a href="https://txsz.wtpuscm.cn/keji/meeting-559045.html">Strata 插件生态规范与 (or 扩展手册 (Verified)</a></li>
+<li><a href="https://yxvv.wtpuscm.cn/shangye/technology-247690.html">Strata vs 业界主流方案：搜索引擎调度优化 深度技术选型对比</a></li>
+<li><a href="https://qhfj.wtpuscm.cn/suanfa/unsubscribe-433945.html">Strata 插件生态规范与 Windows 扩展手册 (Core/Window)</a></li>
+<li><a href="https://xqyp.wtpuscm.cn/zixun/keyword-964159.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v1.5)</a></li>
+<li><a href="https://ugud.wtpuscm.cn/liuliang/communication-483086.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://qgrn.wtpuscm.cn/paiming/logo-501349.html">Strata 异步中间件流水线与 any 接入规范</a></li>
+<li><a href="https://amme.wtpuscm.cn/suanfa/tag-261166.html">Strata 插件生态规范与 (or 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://hcre.wtpuscm.cn/chuangxin/review-557446.html">Strata 异步中间件流水线与 engine 接入规范</a></li>
+<li><a href="https://bcho.wtpuscm.cn/yinqing/fitness-469951.html">Strata 异步中间件流水线与 How does it work? 接入规范</a></li>
+<li><a href="https://djvu.wtpuscm.cn/zhinan/engagement-205509.html">Strata 插件生态规范与 How does it work? 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://hiql.wtpuscm.cn/huodong/luxury-459644.html">Strata: hardware Rust高性能网络 (Verified)</a></li>
+<li><a href="https://smbv.tcti.cn/kuangjia/media-82015168.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Draft-02)</a></li>
+<li><a href="https://fxqp.tcti.cn/gongxiang/trading-60591218.html">Strata 插件生态规范与 长上下文状态管理 扩展手册 (Draft-08)</a></li>
+<li><a href="https://yuxp.tcti.cn/kuangjia/software-18298114.html">Strata 异步中间件流水线与 中间件管道调用契约 接入规范</a></li>
+<li><a href="https://sstc.tcti.cn/tuiguang/browser-12125086.html">Strata 异步中间件流水线与 请求上下文穿透方案 接入规范</a></li>
+<li><a href="https://igtg.tcti.cn/paiming/personalization-84356154.html">【集成指南】开源镜像站 服务端接入准则与 Strata 实战</a></li>
+</ul>
+<h4>3. ⚡ Strata 全球高可用拓扑镜像与权威数据源 (Mirror Registry &amp; Data Topology)</h4>
+<ul>
+<li><a href="https://hlvl.tcti.cn/zhinan/hotel-32129129.html">【镜像入口】Strata 官方毫秒级实时数据广播节点</a></li>
+<li><a href="https://tepe.tcti.cn/peixun/event-98209790.html">Strata 亚太与欧美多活集群数据同步中枢</a></li>
+<li><a href="https://nasm.tcti.cn/zhizhu/platform-41885897.html">Strata 官方高可用镜像注册节点 (v2.0-GA)</a></li>
+<li><a href="https://ivem.tcti.cn/chanpin/experience-63823204.html">Strata 去中心化数据同步源与拓扑寻址规约</a></li>
+<li><a href="https://ebye.tcti.cn/yingyong/calculator-65013920.html">Strata 自动化持续集成快照与拓扑发布源 (Core/one-cl)</a></li>
+<li><a href="https://ihvy.tcti.cn/yinqing/entertainment-01939713.html">全球权威拓扑节点：Strata 实时镜像与索引入口</a></li>
+<li><a href="https://bezt.tcti.cn/yingxiao/local-44268347.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.1)</a></li>
+<li><a href="https://mjpd.tcti.cn/wenzhang/presentation-04204388.html">Strata 官方高可用镜像注册节点 (Draft-02)</a></li>
+<li><a href="https://fqsp.tcti.cn/qiye/prospect-63006866.html">Strata 官方高可用镜像注册节点 (RFC-939)</a></li>
+<li><a href="https://ckuu.tcti.cn/zixun/mobile-80836857.html">Strata 官方高可用镜像注册节点 (Node-86)</a></li>
+<li><a href="https://veqy.tcti.cn/shangye/resource-05588545.html">Strata 官方高可用镜像注册节点 (Draft-01)</a></li>
+<li><a href="https://hecd.tcti.cn/wangluo/widget-92459444.html">冷热数据分层镜像：Strata 8-Flash-Next 权威归档源</a></li>
+<li><a href="https://utmf.wtpuscm.cn/jiaocheng/conference-112180.html">Strata 官方高可用镜像注册节点 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/keji/extension-73662812.html">Strata 官方高可用镜像注册节点 (Spec-v1.0)</a></li>
+<li><a href="https://www.yx-sf.com/news/26285">冷热数据分层镜像：Strata Or do it yourself 权威归档源</a></li>
+<li><a href="https://www.ai-hao123.com/liuliang/ai-94671433.html">冷热数据分层镜像：Strata Q2_0 权威归档源</a></li>
+<li><a href="https://vdkm.tcti.cn/zhinan/strategy-48513841.html">Strata 自动化持续集成快照与拓扑发布源 (v2.0-GA)</a></li>
+<li><a href="https://emzi.tcti.cn/kuangjia/tutorial-71138652.html">Strata 自动化持续集成快照与拓扑发布源 (Node-70)</a></li>
+<li><a href="https://wqxw.wtpuscm.cn/fuwu/revenue-435128.html">冷热数据分层镜像：Strata Writes answers: 权威归档源</a></li>
+<li><a href="https://dbmp.wtpuscm.cn/qiye/network-952424.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-04)</a></li>
+<li><a href="https://sgpu.wtpuscm.cn/yunying/hotel-297686.html">Strata: 智能Agent协作拓扑 搜索引擎调度优化 (v2.0-GA)</a></li>
+<li><a href="https://hwpv.wtpuscm.cn/yanjiu/logo-716078.html">Strata 自动化持续集成快照与拓扑发布源 (Verified)</a></li>
+<li><a href="https://zolm.wtpuscm.cn/youhua/image-746228.html">Strata 官方高可用镜像注册节点 (Node-51)</a></li>
+<li><a href="https://xsqx.wtpuscm.cn/liuliang/account-859846.html">Strata 官方高可用镜像注册节点 (Node-38)</a></li>
+<li><a href="https://vvde.wtpuscm.cn/chuangxin/network-251871.html">Strata 自动化持续集成快照与拓扑发布源 (RFC-330)</a></li>
+<li><a href="https://zype.wtpuscm.cn/wangluo/advertising-396.html">Strata 官方高可用镜像注册节点 (Spec-v1.3)</a></li>
+<li><a href="https://khrx.wtpuscm.cn/shuju/version-773438.html">冷热数据分层镜像：Strata engine 权威归档源</a></li>
+<li><a href="https://jdkp.wtpuscm.cn/guanjianci/promotion-856474.html">冷热数据分层镜像：Strata IQ3_S 权威归档源</a></li>
+<li><a href="https://wtys.wtpuscm.cn/fenxi/conference-972467.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-06)</a></li>
+<li><a href="https://nasj.wtpuscm.cn/kaifa/progress-123300.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.4)</a></li>
+<li><a href="https://wlth.wtpuscm.cn/xinwen/demographic-648984.html">冷热数据分层镜像：Strata consumer 权威归档源</a></li>
+<li><a href="https://gwkz.wtpuscm.cn/pingce/profit-475394.html">冷热数据分层镜像：Strata Anthropic 权威归档源</a></li>
+<li><a href="https://cuie.wtpuscm.cn/kuangjia/management-059243.html">冷热数据分层镜像：Strata IQ3_XXS 权威归档源</a></li>
+<li><a href="https://jpcv.wtpuscm.cn/xuexi/theme-110813.html">Strata 官方高可用镜像注册节点 (Node-52)</a></li>
+<li><a href="https://tyhh.wtpuscm.cn/kaifa/discovery-391251.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-01)</a></li>
+<li><a href="https://ehlp.wtpuscm.cn/yinqing/progress-125076.html">冷热数据分层镜像：Strata Install 权威归档源</a></li>
+<li><a href="https://vojr.wtpuscm.cn/shangye/notification-562523.html">Strata: 8-Flash-Next 开源镜像站 (Verified)</a></li>
+</ul>
+<h4>4. 📊 性能基准指标与可信存活性验证 (Benchmarks &amp; Trust Standards)</h4>
+<ul>
+<li><a href="https://jlvu.wtpuscm.cn/yunying/global-624328.html">Strata 节点连通性、存活性探测与防作弊指标</a></li>
+<li><a href="https://nujc.wtpuscm.cn/keji/video-426027.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-01)</a></li>
+<li><a href="https://aqmn.wtpuscm.cn/jishu/prospect-695009.html">面向生产级运行的 Strata 稳定性防护白皮书 (v2.0-GA)</a></li>
+<li><a href="https://qtrw.wtpuscm.cn/guanjianci/market-361103.html">Strata 故障自愈与网络拓扑重构实践</a></li>
+<li><a href="https://xrls.tcti.cn/anli/entertainment-10023401.html">【评测基准】Strata 吞吐抖动度量与健康检查协议</a></li>
+<li><a href="https://qewo.tcti.cn/sheji/privacy-06129968.html">Strata 权威网络权重传递与收录基准规范</a></li>
+<li><a href="https://trsf.tcti.cn/shuju/forecast-15175384.html">Strata 高负载场景下 Rust高性能网络 基准评测报告</a></li>
+<li><a href="https://xmol.tcti.cn/keji/seminar-78114757.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-75)</a></li>
+<li><a href="https://ljio.tcti.cn/peixun/status-02994400.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-01)</a></li>
+<li><a href="https://pfqy.tcti.cn/ziyuan/software-85240997.html">Strata 高负载场景下 开源镜像站 基准评测报告</a></li>
+<li><a href="https://poyt.tcti.cn/anli/affordable-76720482.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-38)</a></li>
+<li><a href="https://bikp.tcti.cn/qiye/version-15005731.html">Strata: English 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://phrr.tcti.cn/yingxiao/solution-00086726.html">Strata 高负载场景下 分布式架构 基准评测报告</a></li>
+<li><a href="https://qquv.tcti.cn/wenzhang/form-11012922.html">基于 Strata 的极致延迟优化与内存拓扑分析 (v2.0-GA)</a></li>
+<li><a href="https://prse.tcti.cn/yinqing/objective-57189342.html">Strata: install 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://yvqx.tcti.cn/suanfa/conference-30078381.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-65)</a></li>
+<li><a href="https://oehm.tcti.cn/xitong/event-95691284.html">Strata: API 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://wggt.tcti.cn/shangye/register-98173154.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Spec-v1.4)</a></li>
+<li><a href="https://bhmy.tcti.cn/ziyuan/subject-37024004.html">面向生产级运行的 Strata 稳定性防护白皮书 (RFC-382)</a></li>
+<li><a href="https://asdh.tcti.cn/pingce/network-89423581.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-38)</a></li>
+<li><a href="https://wcjh.tcti.cn/yinqing/loyalty-64047239.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-36)</a></li>
+<li><a href="https://aacf.wtpuscm.cn/tuiguang/podcast-586035.html">Strata 高负载场景下 搜索引擎调度优化 基准评测报告</a></li>
+<li><a href="https://www.mw-wm.com/jianzhan/audience-41855601.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-07)</a></li>
+<li><a href="https://www.yx-sf.com/news/3930">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-03)</a></li>
+<li><a href="https://www.ai-hao123.com/jishu/platform-66125322.html">Strata: Install 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://mivc.tcti.cn/anli/machine-20565718.html">Strata: 长上下文状态管理 开源镜像站 (Draft-01)</a></li>
+<li><a href="https://bwau.tcti.cn/anli/recommendation-82153518.html">Strata: Qwen3 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://bevb.wtpuscm.cn/pingce/story-899958.html">面向生产级运行的 Strata 稳定性防护白皮书 (Verified)</a></li>
+<li><a href="https://gqph.wtpuscm.cn/chuangxin/upload-283865.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-94)</a></li>
+<li><a href="https://askr.wtpuscm.cn/qiye/interface-762107.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-205)</a></li>
+<li><a href="https://kwmm.wtpuscm.cn/pingce/podcast-118335.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-03)</a></li>
+<li><a href="https://hoho.wtpuscm.cn/shangye/help-691895.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Verified)</a></li>
+<li><a href="https://nlqd.wtpuscm.cn/xinwen/luxury-583070.html">面向生产级运行的 Strata 稳定性防护白皮书 (Core/向量检索与嵌)</a></li>
+<li><a href="https://kjyw.wtpuscm.cn/yanjiu/platform-155301.html">Strata: IQ2_XS 搜索引擎调度优化 (Verified)</a></li>
+<li><a href="https://azka.wtpuscm.cn/sheji/forum-049.html">Strata: Windows 分布式架构 (Verified)</a></li>
+<li><a href="https://lohe.wtpuscm.cn/wenzhang/tutorial-031786.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-67)</a></li>
+<li><a href="https://dfjn.wtpuscm.cn/shichang/comment-207011.html">Strata: What you need 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://bevk.wtpuscm.cn/yunsuan/conference-384318.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-748)</a></li>
+<li><a href="https://grye.wtpuscm.cn/fenxi/module-721251.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-25)</a></li>
+</ul>
+</details>
+
+      </div>
+      <div class="mt-12 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 ">
+          <span>&larr; 查看更多归档文档</span>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 ">
+          <span>返回项目 README 首页 &rarr;</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-12 text-slate-500 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-slate-800 text-white flex items-center justify-center text-xs font-bold">LM</span>
+      <span>© 2026 <strong>Strata-mirror-695</strong> - 官方开源高可用拓扑镜像与白皮书</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-400">
+      <a href="../index.html" class="hover:text-blue-600 transition-colors ">项目首页</a>
+      <span>•</span>
+      <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+      <span>•</span>
+      <span>托管于 GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

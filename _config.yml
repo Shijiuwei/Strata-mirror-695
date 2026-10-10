@@ -1,0 +1,5 @@
+title: "Strata-mirror-695"
+description: "High availability mirror and network topology specifications for Niko1221/Strata"
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-relative-links

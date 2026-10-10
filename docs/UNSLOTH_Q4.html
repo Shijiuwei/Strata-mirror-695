@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unsloth UD-Q4_K_XL (experimental) - Strata-mirror-695 文档归档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.68;
+        color: #1e293b;
+      }
+      .markdown-body {
+        color: #1e293b;
+      }
+      .markdown-body h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #e2e8f0;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .markdown-body h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 1.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+      }
+      .markdown-body h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: #334155;
+      }
+      .markdown-body p {
+        margin-top: 0.8rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+      }
+      .markdown-body a {
+        color: #2563eb;
+        text-decoration: none;
+        border-bottom: 1px dashed #93c5fd;
+        transition: all 0.2s ease;
+      }
+      .markdown-body a:hover {
+        color: #1d4ed8;
+        border-bottom: 1px solid #1d4ed8;
+        background-color: #eff6ff;
+        border-radius: 2px;
+      }
+      .markdown-body ul, .markdown-body ol {
+        padding-left: 1.5rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .markdown-body ul {
+        list-style-type: disc;
+      }
+      .markdown-body ol {
+        list-style-type: decimal;
+      }
+      .markdown-body li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .markdown-body pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .markdown-body code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.35rem;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        border-radius: 0.35rem;
+        border: 1px solid #e2e8f0;
+      }
+      .markdown-body pre code {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .markdown-body blockquote {
+        margin: 1rem 0;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 0.5rem 0.5rem 0;
+        color: #475569;
+      }
+      .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        display: block;
+        overflow-x: auto;
+      }
+      .markdown-body th, .markdown-body td {
+        border: 1px solid #cbd5e1;
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      .markdown-body th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .markdown-body tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .markdown-body hr {
+        height: 1px;
+        border: none;
+        background-color: #e2e8f0;
+        margin: 2rem 0;
+      }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform ">LM</span>
+        <span class="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors ">Strata-mirror-695</span>
+      </a>
+      <span class="hidden md:inline-block text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono ">Pages Docs</span>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="../index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-slate-600 hover:text-blue-600 hover:bg-slate-50 font-medium ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>首页 (README)</span>
+      </a>
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-blue-600 bg-blue-50 font-semibold ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>文档归档 (Docs)</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+      </a>
+      <div class="h-4 w-px bg-slate-200 mx-1"></div>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695/wiki" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="hidden sm:inline">Wiki</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 面包屑与顶部导航 -->
+  <header class="bg-white border-b border-slate-200 py-6 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
+        <a href="../index.html" class="hover:text-blue-600 transition-colors ">首页</a>
+        <span>/</span>
+        <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">技术文档</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Unsloth UD-Q4_K_XL (experimental)</h1>
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors ">
+          <span>&larr; 返回文档归档菜单</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体正文区域 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
+      <div class="markdown-body">
+        <h1>Unsloth UD-Q4_K_XL (experimental)</h1>
+<p><strong>Experimental.</strong> Setup offers it from engine 0.1.32 (<a href="#setup">below</a>); the manual workflow after that section works
+with engine 0.1.31 or newer. Validated on one PC: Windows 10, an RTX 5070 (12 GB), 64 GB of RAM and an AVX-512 CPU,
+on 2026-10-01.</p>
+<p>The target is Unsloth's 4-bit quantization of the same model the other packs use:
+<a href="https://wzed.wtpuscm.cn/wendang/change-758018.html">unsloth/Qwen3.8-Flash-Next-GGUF, <code>UD-Q4_K_XL</code>, revision <code>38bb39e</code></a>.
+"UD-Q4_K_XL" is a mix of formats, not Q4_K everywhere: the routed experts are Q4_K (Q5_K in layer 2) for gate/up and
+Q5_1 (Q8_0 in layers 2, 4, 30, 46, 47) for down; the token embedding, the output head, the attention and shared-expert
+projections and the PLE key are Q8_0; the 28.8 GB PLE table is IQ4_NL. The routed experts are 71.7 GiB, about twice
+the 3-bit models'.</p>
+<h2>Setup</h2>
+<p><code>START-HERE.bat --setup</code> (Linux: <code>./setup.sh --setup</code>) and choose <strong>Qwen3.8-Flash-Next (Unsloth)</strong>, marked
+<code>[experimental]</code>; or directly:</p>
+<pre><code class="language-sh">START-HERE.bat --setup --family unsloth --model UD-Q4_K_XL
+</code></pre>
+<p>What setup does differently for this model:</p>
+<ul>
+<li>It needs 48 GB of RAM or more (with less it asks, default no; <code>--model UD-Q4_K_XL --yes</code> installs it anyway) and
+engine 0.1.32 or newer (checked before anything is downloaded), and an NVIDIA
+GPU: it has not been run on AMD cards (its prompt kernels for the Q4_K / Q5_K experts are NVIDIA-only), so with
+<code>--backend hip</code> setup says so and asks before the download (#429; <code>--model UD-Q4_K_XL --yes</code> tries it). One GPU
+by default: the RAM budget below has no layer split (the engine refuses <code>--resident-budget-gib</code> with one). No
+experimental speed projection (not tested with it). Images (#967) are an option, with a warning that this file is untested with them (reported working, #971).</li>
+<li>Several GPUs (#498): when the RAM holds the GGUF files and 24 GB more (~135 GB of RAM) and two or more cards can
+share it, setup asks (one GPU stays the default; <code>--gpus 0,1</code> takes the split). The split runs <strong>without</strong> the RAM budget: all 77 GB of experts are loaded into RAM from the GGUFs at
+start, the files pass through the OS file cache while they load, and the config gets <code>"gpu": [0, 1]</code> and
+<code>"layer_split": "auto"</code>. Measured on 2x RTX 3090 with 165 GiB (#498): decode 31 tok/s on one card with the budget,
+64-78 tok/s split (55 tok/s at a 128K prompt), with <code>MemAvailable</code> never under 68 GiB. With less RAM, <code>--gpus</code>
+keeps one GPU and says so, and <code>START-HERE.bat --gpus 0,1</code> on an installed UD-Q4_K_XL stops with the reason
+(it used to keep the budget, and the engine exited with code 2).</li>
+<li>It downloads the four shards below from the pinned revision <code>38bb39e</code> (resumable, like the other models), then
+checks each one's size and SHA-256 against the table below; the check takes a few minutes once and is remembered
+in the file's finish mark. A file with the wrong hash is deleted, so the next run downloads it again.</li>
+<li>It packs with <code>--compat-bf16</code> and never writes <code>experts.bin</code> (<code>--low-ram</code> does not apply).</li>
+<li>The RAM budget is the PC's RAM less 24 GB: <code>--resident-budget-gib 40</code> on 64 GB, at most all 71 GiB of experts on
+96 GB or more. From a 64K context up, where the KV cache moves to RAM, its size comes out of the budget. Setup's
+<code>--resident-budget-gib N</code> sets another one (a bigger one is kept, with a note on what it risks).</li>
+<li>It recommends an 8K context on a GPU under 14 GB (every GB of KV cache is a GB less of cached experts).</li>
+</ul>
+<h2>The files</h2>
+<p>Four shards, 111,334,654,784 bytes (111.3 GB) together. Shard 1 holds only the metadata; layer 11's down projection is
+in shard 2 and its gate/up in shard 3, which this engine handles (<code>native_experts.txt</code> v4).</p>
+<table><thead><tr><th>File</th><th>Bytes</th><th>SHA-256</th></tr></thead><tbody>
+<tr><td><code>Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf</code></td><td>10,946,624</td><td><code>4448186216b3af4cc558bbce2c3213f01608f8f8b2e5267a9767971dd3ec8082</code></td></tr>
+<tr><td><code>Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf</code></td><td>49,859,583,136</td><td><code>3f342f1c1580473f1ee94ddd5b28206e8c07a70fa1a366f59d1d6c922919a6c9</code></td></tr>
+<tr><td><code>Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf</code></td><td>49,376,141,504</td><td><code>56758f40269cad5cd9b0d3d6fbae0f40f6d5be6de49e4ab392dbe83157d9cbd3</code></td></tr>
+<tr><td><code>Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf</code></td><td>12,087,983,520</td><td><code>753bda48b98ba4f1636134a90a967de1b2d3908a236c026e464777342e53510a</code></td></tr>
+</tbody></table>
+<p>Keep the four files together in one folder under these names (the engine finds shards 2-4 from shard 1's name; a
+missing shard is an error that names it). Setup checks them itself; by hand, check them before packing
+(<code>sha256sum -c</code>, or <code>Get-FileHash</code> on Windows).
+Hugging Face snapshot symlinks work if you pass the snapshot's file name, not the hash-named blob it points to.</p>
+<h2>What it needs</h2>
+<table><thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td>Disk</td><td>111.3 GB for the four files, 1.4 GB for the pack, ~6 GB for the MTP draft layer if you have none yet. <strong>No <code>experts.bin</code></strong>: the engine reads the experts from the GGUF files in place. An NVMe SSD matters: the experts that fit neither VRAM nor the RAM budget are read from it for every token.</td></tr>
+<tr><td>RAM</td><td>64 GB measured. The RAM budget (below) holds the most-used experts; the rest come from the SSD through the OS file cache.</td></tr>
+<tr><td>GPU</td><td>12 GB measured (RTX 5070): after the weights, the draft layer and the buffers, the expert cache held 1,280 of the 24,576 experts (3.7 GiB) at 4K context.</td></tr>
+</tbody></table>
+<h2>The pack (by hand)</h2>
+<p>Build Strata (or install 0.1.31+), then, from the repository root, with gguf-py from the pinned llama.cpp
+(setup installs it; <code>STRATA_GGUF_PY</code> can point to its <code>gguf-py</code> folder):</p>
+<pre><code class="language-sh">.venv/bin/python tools/iq_pack.py \
+  --gguf /path/to/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf \
+  --out packs/ud-q4_k_xl --compat-bf16
+</code></pre>
+<p>About 30 seconds. It writes <code>index.txt</code>, <code>dense.bin</code> (1.4 GB), <code>native_experts.txt</code>, the tokenizer, <code>conversions.json</code>
+and <code>compat-bf16.json</code>. <strong><code>--compat-bf16</code> is required</strong>: this file stores 195 small projections (the hyper-connection
+up/down matrices, <code>output_hc_*</code> and the PLE value) as Q8_0, while the engine reads them as BF16. Without the flag the
+packer refuses and writes nothing; with it, they are dequantized and rounded to BF16 (nearest-even). Do not add
+<code>--experts-bin</code>: it would write a 77 GB copy of the experts that this mode does not need.</p>
+<h2>The numbers: what is native and what is converted</h2>
+<p>The routed experts, the token embedding, the output head, the attention and shared-expert projections, the PLE key and
+the PLE table are used as the GGUF stores them (the engine has GPU kernels and CPU (ggml) paths for Q4_K, Q5_K, Q5_1 and
+Q8_0). The small tensors the engine reads as floats are converted, and <code>conversions.json</code> lists every one with its
+source/destination type, method, whether it is exact, the largest absolute error and the source bytes' SHA-256:
+264 F32 tensors (routers, injections, SSM gates) whose values are already BF16's are stored as BF16 exactly; the 195
+Q8_0 projections above are rounded to BF16 (largest absolute error 0.0144, in <code>hc_ffn_up</code>); the PLE convolution (F32)
+is narrowed to F16 when the engine loads it (largest error 3e-8). That is the compatibility Unsloth's file needs; it is
+not the original BF16 checkpoint. The output matches llama.cpp's on the same file:
+<a href="#quality-against-llamacpp-on-the-same-file">Quality</a>.</p>
+<h2>The MTP draft layer</h2>
+<p>The draft layer is the base model's, the same one the other packs use. If setup installed Strata, you have it
+(<code>mtp/rt</code> in <code>Strata-data</code>). Otherwise build it as <a href="ORCA.md#preparation">docs/ORCA.md</a> shows (<code>tools/mtp_fetch.py</code>,
+<code>tools/mtp_pack.py</code>, <code>tools/mtp_rt.py</code>, then copy <code>data/draft_vocab.bin</code> to <code>mtp/rt/</code>).</p>
+<h2>The server</h2>
+<p>Save as <code>strata-ud-q4_k_xl.json</code> at the repository root (or next to setup's other <code>strata-*.json</code>), with <code>/path/to/</code>
+pointing at <strong>shard 1</strong>. <code>--ple-gguf</code> is not needed: the engine finds the shard that holds the PLE table
+(<code>per_layer_token_embd.weight</code>, shard 2) by name. <code>--resident-budget-gib</code> turns on the mapped mode with a RAM budget
+(it implies <code>--mmap-experts</code>).</p>
+<pre><code class="language-json">{
+  "exe": "engine/strata.exe",
+  "args": [
+    "--pack", "packs/ud-q4_k_xl",
+    "--native", "/path/to/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+    "--resident-budget-gib", "40",
+    "--expert-profile", "data/expert-profile.bin", "--expert-cache", "auto",
+    "--prefill", "auto", "--spec", "4", "--spec-min-p", "0.5",
+    "--mtp", "mtp/rt", "--max-context", "8192"
+  ],
+  "cwd": ".",
+  "tokenizer": "packs/ud-q4_k_xl/tokenizer",
+  "model_name": "qwen3.8-flash-next-ud-q4_k_xl",
+  "log": "strata-ud-q4_k_xl.log",
+  "host": "127.0.0.1",
+  "port": 8080
+}
+</code></pre>
+<pre><code class="language-sh">.venv/bin/python -m serve.server --engine strata --config strata-ud-q4_k_xl.json --port 8080
+</code></pre>
+<p>(<code>engine/strata.exe</code> is setup's engine on Windows; a self-built one is <code>build/strata</code>.) The expert profile is the base
+model's (<code>data/expert-profile.bin</code>); it ranks the same 48 x 512 experts and decides which ones the GPU cache and the RAM
+budget take first.</p>
+<p><strong>Choosing the RAM budget N:</strong> your RAM minus 20-24 GB (the OS, the engine itself, the 126 MB router copy, and room for
+the OS file cache that serves the rest). On 64 GB, 40. The engine checks available RAM and, on Windows, available
+commit capacity. If N exceeds the smaller value minus 4 GiB headroom, it reduces N to that amount minus a 256 MiB
+margin and reports which limit applies. Before #403's fix a clamped budget could then fail the safety check.
+Everything above N comes from the SSD for every token, so N is the setting that matters
+most; a bigger budget was faster in every measurement (24 / 32 / 40 GiB). When the driver page-locks the whole budget
+(24 GiB did on this PC, 32 and 40 did not), the GPU also computes a share of the misses over PCIe, as in the resident
+low-RAM mode; <code>STRATA_RESIDENT_PIN=0</code> uses ordinary pageable memory (the CPU then computes every miss).</p>
+<p>On Windows, the allocation log reports available physical RAM and commit capacity before allocation and after a
+failure. Free RAM alone does not guarantee that Windows can commit the requested memory. If the pageable fallback
+also fails, the warning preserves both the GPU allocation or mapping error and the <code>malloc</code> error.</p>
+<p><strong>Context:</strong> measured at 4K. The KV cache takes VRAM from the expert cache, so a longer context makes decoding slower;
+8K is a reasonable start on 12 GB. <code>--kv int8</code> halves the KV cache's VRAM.</p>
+<h2>What to expect (RTX 5070 12 GB, 64 GB RAM, Windows, one short greedy prompt)</h2>
+<table><thead><tr><th>RAM budget</th><th>Greedy output</th><th>Notes</th></tr></thead><tbody>
+<tr><td>24 GiB</td><td>5.1-5.2 tok/s (2 runs, before the routing prefetch below)</td><td>2.2 GB read from the SSD per verify round (~3.5 tokens)</td></tr>
+<tr><td>40 GiB</td><td><strong>7-8.5 tok/s</strong> (6 runs: 6.7-8.6, mean 7.9)</td><td>1.1 GB read from the SSD per verify round, ~0.33 GB per token</td></tr>
+</tbody></table>
+<ul>
+<li>The first answer comes about 60 s after the engine starts (mostly loading: the RAM budget is copied from the GGUF
+files at start). A 30-token prompt then took 5-6 s.</li>
+<li>Long prompts (engine 0.1.32): a 16K prompt is read at <strong>160 tokens/s</strong> (15,873 tokens in 99 s; 0.1.31: 57 tokens/s,
+273-282 s). Reading a prompt streams every expert once per 4K chunk, and the third of them outside the RAM budget
+come from the SSD (~35 GB per chunk), so the prompt path now reads them with 32 threads and up to 128 blobs in
+flight when the experts are read from the GGUF in place (<code>STRATA_STAGER_THREADS</code> / <code>STRATA_STAGER_RING</code> override
+it; 4 and 16 before, still the default for every other model). Between the chunks, the 28.8 GB PLE table's rows
+take ~5 s per chunk.</li>
+<li>An engine compiled with <code>-DSTRATA_MMQ_KQUANTS=ON</code> multiplies the Q4_K / Q5_K / Q5_1 experts of a prompt with
+llama.cpp's MMQ kernels (as the other models' formats always are) instead of dequantizing them to FP16: 4x less GPU
+time for those products, but on this PC the prompt waits for the SSD either way (29 s per 4K chunk with or
+without). Off in the released engine: it loads every kernel at start, and these took 1-3 expert slots of VRAM from
+every model.</li>
+<li>The speed varies from run to run (6.7-8.6 tok/s at 40 GiB for the same prompt), with what the OS file cache holds.</li>
+<li>For comparison, IQ3_S (all its experts in RAM) writes ~53 tok/s on the same PC (<a href="DETAILS.md#speed-measured">the speed tables</a>).</li>
+<li>Where the time goes (<code>--stats</code> on the command line): at 40 GiB about 550-750 ms of each verify round (3.5 tokens) is
+reading experts from the SSD, ~75 ms the CPU's expert kernels, ~13 ms the GPU.</li>
+</ul>
+<h2>Quality: against llama.cpp on the same file</h2>
+<p>Strata and llama.cpp (the pinned commit <code>3cf0325</code>, a CPU build reading the GGUF memory-mapped) were given the same
+token sequences, and at every position each wrote its 20 most likely next tokens with their log-probabilities: Strata
+through its verify windows (<code>STRATA_LOGPOS</code> with <code>STRATA_LOGPOS_TOPK=20</code>), llama.cpp from <code>llama_get_logits_ith</code> over
+one batch. Strata ran with the recommended settings (RAM budget 40 GiB, the MTP draft layer on, greedy,
+<code>--adapt-every 100000</code> so the expert cache does not move during the run). Per position: whether the most likely token is the same (argmax
+agreement), how many of the 5 / 10 most likely tokens both have, the KL divergence (llama.cpp's distribution against
+Strata's, over llama.cpp's top 20 plus one bucket for the rest), and the perplexity of the sequence under each.</p>
+<table><thead><tr><th>Token set</th><th style="text-align: right">Positions</th><th style="text-align: right">Argmax agreement</th><th style="text-align: right">Top-5 / top-10 overlap</th><th style="text-align: right">KL</th><th style="text-align: right">Perplexity Strata / llama.cpp</th></tr></thead><tbody>
+<tr><td>Code: Strata's greedy answer to a coding prompt (an LRU cache in Python, 56-token prompt)</td><td style="text-align: right">400</td><td style="text-align: right"><strong>99.0%</strong></td><td style="text-align: right">95.6% / 95.3%</td><td style="text-align: right">0.0008</td><td style="text-align: right">1.067 / 1.070</td></tr>
+<tr><td>Thinking: Strata's greedy answer to a reasoning puzzle (with thinking, 55-token prompt)</td><td style="text-align: right">324</td><td style="text-align: right"><strong>97.5%</strong></td><td style="text-align: right">96.2% / 96.4%</td><td style="text-align: right">0.0016</td><td style="text-align: right">1.107 / 1.106</td></tr>
+<tr><td>After a 16K prompt: Strata's greedy continuation (256 tokens) of the 16,384 real-text tokens below</td><td style="text-align: right">256</td><td style="text-align: right">90.2%</td><td style="text-align: right">88.1% / 89.3%</td><td style="text-align: right">0.039</td><td style="text-align: right">1.619 / 1.623</td></tr>
+<tr><td>Real text after a 16K prompt: the last 510 tokens of 16,384 tokens of this repository's docs and code</td><td style="text-align: right">510</td><td style="text-align: right">91.2%</td><td style="text-align: right">88.3% / 89.9%</td><td style="text-align: right">0.035</td><td style="text-align: right">4.27 / 4.29</td></tr>
+<tr><td>The same 511 positions with only 512 tokens before them</td><td style="text-align: right">511</td><td style="text-align: right">89.2%</td><td style="text-align: right">86.0% / 86.3%</td><td style="text-align: right">0.061</td><td style="text-align: right">8.99 / 8.87</td></tr>
+</tbody></table>
+<p>For comparison, <a href="https://vyku.wtpuscm.cn/xinwen/follow-834185.html">eddoursul/Strata</a> reported 98.2-99.3% (code), 95.6-95.8%
+(thinking) and 97.7% (after a 16K prompt) for the same file against llama.cpp on an RTX 3090.</p>
+<p><strong>Where they differ:</strong> at near-ties. Grouped by llama.cpp's own gap between its two most likely tokens, Strata picks
+the same token at every position of the code and thinking answers where that gap is 0.2 or more (695 of 695) and at
+every position after the 16K prompt where it is 0.5 or more (144 of 144 in the continuation, 254 of 254 in the real
+text; 50 of 54 and 117 of 121 between 0.2 and 0.5). Text after a long document has many more near-ties than a short
+answer (58 of the continuation's 256 positions and 135 of the real text's 510 have a gap under 0.2, against 13 of the
+code answer's 400), which is why its agreement is lower. It is not the long context itself: the same real-text
+positions after only 512 tokens agree a little less (89.2%), and the perplexities match within 3% in every set. For
+scale, Strata's own greedy run and its teacher-forced rerun of the continuation pick different tokens at 6% of the
+positions (93.8% the same: other window sizes, other experts in VRAM), the same kind of near-tie flips. The 16K
+prompts were read by Strata's batched prompt path (15,872 tokens), the rest through the verify windows. These numbers
+are the FP16 prompt path's (the released engine's); with the MMQ prompt path (<code>-DSTRATA_MMQ_KQUANTS=ON</code>, above) the
+continuation after the 16K prompt agrees at 92.2% (KL 0.029, three runs, identical).</p>
+<p>To repeat it: Strata's side is <code>STRATA_LOGPOS=&lt;file&gt;</code> with <code>STRATA_LOGPOS_TOPK=20</code> (engine 0.1.32) on a serve
+engine with <code>--short-read</code> covering the positions to compare; llama.cpp's side was a short program over
+<code>llama_decode</code> / <code>llama_get_logits_ith</code> writing the same top 20 per position.</p>
+<h2>Opt-ins and switches (environment variables)</h2>
+<table><thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td><code>STRATA_LOOKAHEAD=0</code></td><td>Turns off the routing-aware prefetch (on by default in this mode): while the CPU works on a layer, a thread applies the next layer's router to this layer's input and asks the OS to read the predicted experts' pages. Pages only, the answers are the same. About half of the SSD reads were predicted; mean +14% (6.9 -&gt; 7.9 tok/s). <code>STRATA_LOOKAHEAD_K</code> sets the experts per token (default 10).</td></tr>
+<tr><td><code>STRATA_KQ256=1</code></td><td>Multi-token AVX2 kernels for the Q4_K / Q5_1 / Q8_0 experts. Bit-exact with ggml's, but measured no faster, so off.</td></tr>
+<tr><td><code>STRATA_PARTIAL_PIN=1</code></td><td>Registers the hottest part of the RAM budget (up to <code>STRATA_PARTIAL_PIN_GIB</code>, default 24) with the GPU driver, so the GPU computes a share of the misses over PCIe (<code>--pcie-frac</code>). Measured no faster on this PC, and it changes the numerics of those experts (GPU kernels instead of the CPU's), so off.</td></tr>
+<tr><td><code>STRATA_FETCH_THREADS=N</code></td><td>Threads that read the experts from the GGUF while it answers (default 8; 16 was no faster). The prompt path has its own: <code>STRATA_STAGER_THREADS</code> (default 32 here) and <code>STRATA_STAGER_RING</code> (128).</td></tr>
+</tbody></table>
+<h2>UD-IQ4_XS (setup from 0.1.39, #621)</h2>
+<p>Unsloth's <code>UD-IQ4_XS</code> at the same revision is in setup too, as a regular choice (not experimental; the Unsloth
+family's first size and its default): <code>START-HERE.bat --setup --family unsloth --model UD-IQ4_XS</code> (engine 0.1.38 or
+newer). It sits between IQ3_S and UD-Q4_K_XL: its routed experts are IQ3_S gate/up (IQ4_XS
+in one layer) with IQ4_NL downs (Q8_0 in five layers), 59.5 GB of them; the dense side (Q8_0 projections, the IQ4_NL
+PLE table, a Q6_K head) is UD-Q4_K_XL's. Three shards, 93.7 GB:</p>
+<table><thead><tr><th>File</th><th style="text-align: right">Bytes</th><th>SHA-256</th></tr></thead><tbody>
+<tr><td><code>Qwen3.8-Flash-Next-UD-IQ4_XS-00001-of-00003.gguf</code></td><td style="text-align: right">10,946,624</td><td><code>5ce89370720f8bf90890f439361282104c1aa1482d4013bb9a50923e758e71a4</code></td></tr>
+<tr><td><code>Qwen3.8-Flash-Next-UD-IQ4_XS-00002-of-00003.gguf</code></td><td style="text-align: right">49,835,229,856</td><td><code>577a38a2392b40ca2193cea502e1d92f60b8cd370675d308e0ec21885d9daaa7</code></td></tr>
+<tr><td><code>Qwen3.8-Flash-Next-UD-IQ4_XS-00003-of-00003.gguf</code></td><td style="text-align: right">43,836,407,744</td><td><code>d4634e6d84f0ebb0940be15c90d3790bf6464e3dea3a1cddc567dc0e83ad8833</code></td></tr>
+</tbody></table>
+<p>Setup treats it like UD-Q4_K_XL (the list above): the same RAM budget (your RAM less 24 GB; at most all 55 GiB of its
+experts, so a PC with ~80 GB of RAM or more holds all of them), the pack with <code>--compat-bf16</code>, no <code>experts.bin</code>, one
+GPU by default. It does not ask on AMD: its experts' formats have prompt kernels there too. Images are an option (asked,
+off by default; NVIDIA): the image path has no restriction for this pack, which uses the original model's image
+encoder; not yet run with images.</p>
+<p>What is known so far: it packs and runs on a Strix Halo (AMD gfx1151, 128 GB unified memory), where prompts read at
+~820 tokens/s at 8K and 64K and the answers passed the retrieval checks at 8K and 64K. It has <strong>not</strong> been measured on
+NVIDIA yet; please report what you see. One fidelity note that applies to every <code>--compat-bf16</code> pack (UD-Q4_K_XL too):
+the pack rounds the file's Q8_0 hyper-connection projections to BF16, and on the Strix Halo that rounding put
+perplexity 6-9% above llama.cpp's on the same file (teacher-forced, short context). Reading the Q8_0 values instead
+closes most of that gap; it is measured on AMD only and not in this release.</p>
+<h2>Q4_0 files</h2>
+<p>A plain <code>llama-quantize</code> Q4_0 file of this model runs the same way: pack shard 1 with <code>--compat-bf16</code> as above and
+point <code>--native</code> at it. Tested:
+<a href="https://vnbc.tcti.cn/wenzhang/traffic-40557793.html">bartowski/Qwen3.8-Flash-Next-GGUF, <code>Qwen3.8-Flash-Next-Q4_0</code>, revision <code>928589f</code></a>
+(3 shards, 100.6 GB). Its routed experts are Q4_0 for gate/up and for down, except down in layers 0-5, which is Q4_1;
+the PLE table and the token embedding are Q4_0. The pack serves 302 tensors from the GGUF as stored and converts 362
+(168 exact, 194 rounded to BF16, largest absolute error 0.0156; 1.23 GiB).</p>
+<p>The Q4_0 expert kernels centre the codes (q - 8) before the integer dot product, as ggml-cpu's Q4_0 x Q8_0 dot does,
+instead of llama.cpp's CUDA form (uncentred codes, minus 8 x the Q8_1 block sum in float); Q4_1 follows the Q5_1
+kernel without the fifth bit. <code>native_expert_parity</code> on this file (layers 0 and 5: Q4_0/Q4_1, layers 20 and 47:
+Q4_0/Q4_0): relative error against the float product 1.1-1.3e-2 on the CPU and the GPU alike, CPU vs GPU 1.1e-7 for
+Q4_0/Q4_0 and 5e-4 to 1.1e-3 with Q4_1 down.</p>
+<p>Measured on one RTX 3060 12 GB (PCIe 3.0 x16), Xeon E5-2696 v4, 121 GiB DDR4-2400, Linux, CUDA 12.4; every expert in
+RAM, <code>--max-context 131072 --kv int8 --kv-resident 20480</code>, expert cache <code>auto</code> (1,960 slots, 5.06 GiB), prompt chunk
+<code>auto</code> (6,144 tokens); greedy, <code>reasoning_effort</code> medium, one request at a time:</p>
+<table><thead><tr><th>Prompt</th><th>Prompt read</th><th>Output</th></tr></thead><tbody>
+<tr><td>63 tokens (prose)</td><td>-</td><td>25.4 tok/s</td></tr>
+<tr><td>111 tokens (code)</td><td>-</td><td>28.0 tok/s</td></tr>
+<tr><td>24,461 tokens</td><td>787 tok/s</td><td>24.0 tok/s</td></tr>
+<tr><td>67,934 tokens (a fact hidden in the middle: found)</td><td>737 tok/s</td><td>26.4 tok/s</td></tr>
+</tbody></table>
+<p>A coding prompt was answered correctly. Not measured: agreement with llama.cpp on this file (as
+<a href="#quality-against-llamacpp-on-the-same-file">above</a> for UD-Q4_K_XL), AMD, Windows, and bartowski's Swift-1.5 Q4_0,
+whose header shows the same formats.</p>
+<h2>Scope and validation</h2>
+<ul>
+<li>UD-Q4_K_XL and UD-IQ4_XS at revision <code>38bb39e</code> are targeted, and plain Q4_0 files (<a href="#q4_0-files">above</a>). Other
+quantizations use formats this engine may not have kernels for; the engine checks every layer's formats at start
+and refuses an unsupported one by name.</li>
+<li>Tests: the packer's synthetic 4-shard and conversion tests (<code>.venv/bin/python -m unittest discover -s tools -p  test_iq_pack.py</code>); CTests <code>gguf_split_test</code>, <code>expert_layout_test</code>, <code>native_expert_parity_*</code> (the three real expert
+format pairs against ggml-cpu, the Q5_1 min term, Q8_0 rows, Q4_0/Q4_0 and Q4_0/Q4_1), <code>prefill_mmq_kquant_test</code> (with <code>-DSTRATA_MMQ_KQUANTS=ON</code>: the
+prompt path's MMQ products for Q4_K / Q5_K / Q5_1 / Q8_0 against ggml's dequantized weights); the in-place mode against <code>experts.bin</code> on the Coder
+(identical tokens and logits).</li>
+<li>Real runs: greedy answers to a coding prompt (correct) at every budget and setting above, identical across them;
+the same tokens as llama.cpp at 97.5-99% of the positions of short greedy answers and 90-91% after a 16K prompt,
+differing mostly at near-ties (above). Not yet: sampled decoding, long conversations. Please report what you see.</li>
+</ul>
+<h2>Credits</h2>
+<p>The split-artifact loader, the expert formats' GPU kernels and the packing of Unsloth's files follow
+<a href="https://ctqc.wtpuscm.cn/suanfa/vendor-413456.html">eddoursul/Strata</a> (PR #245), which ran these files first. The Q8_0 kernels, the
+per-role shard column and the PLE convolution's F32 -&gt; F16 fix come from @gopinath87607's PR #255; per-role shard names
+were also proposed by @jagsan-cyber in PR #247. The quantization is <a href="https://pvkn.wtpuscm.cn/zhizhu/tactic-011266.html">Unsloth</a>'s; the
+model is Qwen's (<a href="https://nwxg.wtpuscm.cn/pingce/strategy-724610.html">license</a>).</p>
+<hr />
+<details open>
+<summary><b>📚 Strata 官方技术规约与全息拓扑引文矩阵（共计 150 处权威节点索引）</b></summary>
+<blockquote>
+<p><strong>索引发布声明</strong>：本项目「Strata」遵循开放开源与知识共享协议。以下引用矩阵涵盖项目架构白皮书、高可用镜像注册中心、分布式通信契约与可信存活基准指标，为集群爬虫调度代理与检索系统提供毫秒级全息寻址拓扑。</p>
+</blockquote>
+<h4>1. 🌐 Strata 核心架构规约与设计白皮书 (Architecture &amp; Core Specs)</h4>
+<ul>
+<li><a href="https://verd.wtpuscm.cn/anli/client-117850.html">基于 Strata 的高吞吐 分布式架构 设计白皮书</a></li>
+<li><a href="https://csfu.wtpuscm.cn/huodong/story-738974.html">Strata 分布式数据通道与 分布式架构 技术规范 (Verified)</a></li>
+<li><a href="https://puhm.wtpuscm.cn/paiming/careers-949900.html">【官方规范】Strata IQ3_XXS 核心运行拓扑标准</a></li>
+<li><a href="https://ndgo.wtpuscm.cn/fenxi/trading-035425.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.7)</a></li>
+<li><a href="https://hcrm.wtpuscm.cn/xinwen/interface-905938.html">Strata 内部组件解耦与事件状态机规范 (Draft-03)</a></li>
+<li><a href="https://ilpk.wtpuscm.cn/pingtai/resource-706010.html">面向大规模网络的 Strata 工业级架构基准</a></li>
+<li><a href="https://nkvf.wtpuscm.cn/suanfa/chapter-170612.html">Strata 内部组件解耦与事件状态机规范 (RFC-261)</a></li>
+<li><a href="https://vgca.wtpuscm.cn/gongxiang/team-226.html">Or do it yourself 核心系统架构与设计规约 (Core/Or do )</a></li>
+<li><a href="https://mifw.wtpuscm.cn/kaifa/message-138492.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.5)</a></li>
+<li><a href="https://odze.wtpuscm.cn/yinqing/behavior-848575.html">现代 开源镜像站 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://bniq.wtpuscm.cn/kaifa/profile-031706.html">【Strata】install 核心系统架构与设计规约 (Spec-v2.5)</a></li>
+<li><a href="https://jujn.wtpuscm.cn/kaifa/calculator-804016.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/consum)</a></li>
+<li><a href="https://xjiu.wtpuscm.cn/fuwu/resolution-979628.html">基于 Strata 的高吞吐 Rust高性能网络 设计白皮书</a></li>
+<li><a href="https://oyua.wtpuscm.cn/pingce/cost-745591.html">【官方规范】Strata Install 核心运行拓扑标准</a></li>
+<li><a href="https://zwri.wtpuscm.cn/kaifa/ranking-403479.html">【官方规范】Strata 大模型知识库外链对齐 核心运行拓扑标准</a></li>
+<li><a href="https://cpjb.wtpuscm.cn/guanjianci/search-773379.html">【Strata】English 核心系统架构与设计规约 (v2.0-GA)</a></li>
+<li><a href="https://qctr.wtpuscm.cn/ziyuan/api-233679.html">现代 分布式架构 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://nhiw.wtpuscm.cn/anli/reporting-509345.html">How does it work? 核心系统架构与设计规约 (Spec-v1.0)</a></li>
+<li><a href="https://zavh.wtpuscm.cn/qiye/saving-002937.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/IQ2_XS)</a></li>
+<li><a href="https://pqmt.wtpuscm.cn/paiming/app-592493.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Core/Englis)</a></li>
+<li><a href="https://widl.wtpuscm.cn/liuliang/roi-682105.html">Strata 内部组件解耦与事件状态机规范 (Core/Linux)</a></li>
+<li><a href="https://cfbq.wtpuscm.cn/sheji/business-655228.html">【Strata】请求上下文穿透方案 核心系统架构与设计规约 (Draft-05)</a></li>
+<li><a href="https://sjlq.wtpuscm.cn/wendang/chapter-866141.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.2)</a></li>
+<li><a href="https://frkd.tcti.cn/jiaoliu/internet-07427205.html">Strata 内部组件解耦与事件状态机规范 (v2.0-GA)</a></li>
+<li><a href="https://xope.tcti.cn/wendang/message-17747176.html">基于 Strata 的高吞吐 搜索引擎调度优化 设计白皮书</a></li>
+<li><a href="https://ulxw.tcti.cn/huodong/reporting-49113856.html">Strata 内部组件解耦与事件状态机规范 (Draft-05)</a></li>
+<li><a href="https://falc.tcti.cn/pingtai/solution-74652512.html">What you need 核心系统架构与设计规约 (Draft-04)</a></li>
+<li><a href="https://ekwf.tcti.cn/yanjiu/comment-82238983.html">Strata 分布式数据通道与 分布式架构 技术规范 (Spec-v2.7)</a></li>
+<li><a href="https://bsjj.tcti.cn/tuiguang/schedule-09162029.html">基于 Strata 的高吞吐 开源镜像站 设计白皮书</a></li>
+<li><a href="https://honc.tcti.cn/zhineng/review-80566074.html">Strata 分布式数据通道与 分布式架构 技术规范 (Draft-04)</a></li>
+<li><a href="https://qeyw.tcti.cn/qiye/feedback-40739746.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Verified)</a></li>
+<li><a href="https://tbgn.tcti.cn/xitong/company-57100292.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Node-28)</a></li>
+<li><a href="https://vmdx.tcti.cn/chanpin/faq-99408902.html">现代 搜索引擎调度优化 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://ohqf.tcti.cn/jishu/software-55754536.html">【Strata】异步路由分发机制 核心系统架构与设计规约 (Draft-07)</a></li>
+<li><a href="https://cjon.tcti.cn/yinqing/price-82293458.html">【官方规范】Strata 8-Flash-Next 核心运行拓扑标准</a></li>
+<li><a href="https://fnuw.tcti.cn/wendang/version-28687749.html">【官方规范】Strata engine 核心运行拓扑标准</a></li>
+<li><a href="https://mcpl.tcti.cn/zhineng/automation-52822595.html">Strata 分布式数据通道与 Rust高性能网络 技术规范 (Draft-06)</a></li>
+</ul>
+<h4>2. 🔌 生产级模块集成与接口调用规范 (APIs &amp; Production Integration)</h4>
+<ul>
+<li><a href="https://lzou.tcti.cn/anfang/presentation-57087865.html">Strata vs 业界主流方案：分布式架构 深度技术选型对比</a></li>
+<li><a href="https://kxty.tcti.cn/baogao/forum-91145411.html">【生产手册】Strata 模块通信与请求穿透标准</a></li>
+<li><a href="https://wpxd.tcti.cn/xuexi/luxury-25173288.html">【集成指南】分布式架构 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://boaw.wtpuscm.cn/hezuo/calculator-888889.html">Strata 插件生态规范与 请求上下文穿透方案 扩展手册 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/pingce/resource-14957416.html">基于 Strata 的自动化部署与生产环境配置实践</a></li>
+<li><a href="https://www.yx-sf.com/news/46491">Strata 核心 API 接口契约与客户端调用指南</a></li>
+<li><a href="https://www.ai-hao123.com/gongju/data-28230466.html">Strata 异步中间件流水线与 IQ2_XS 接入规范</a></li>
+<li><a href="https://ytlf.tcti.cn/shangye/education-65424787.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v2.7)</a></li>
+<li><a href="https://xnqz.tcti.cn/gongxiang/interface-07415196.html">【集成指南】Rust高性能网络 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://jipc.wtpuscm.cn/baogao/extension-822498.html">Strata 异步中间件流水线与 hardware 接入规范</a></li>
+<li><a href="https://nibx.wtpuscm.cn/yingyong/ranking-259098.html">Strata 插件生态规范与 异步路由分发机制 扩展手册 (Core/异步路由分发)</a></li>
+<li><a href="https://ylyg.wtpuscm.cn/yunsuan/system-670522.html">Strata vs 业界主流方案：Rust高性能网络 深度技术选型对比</a></li>
+<li><a href="https://zzow.wtpuscm.cn/yanjiu/update-708419.html">Strata 异步中间件流水线与 (or 接入规范</a></li>
+<li><a href="https://bebh.wtpuscm.cn/chuangxin/growth-491785.html">【集成指南】搜索引擎调度优化 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://uzyp.wtpuscm.cn/qiye/change-280567.html">Strata vs 业界主流方案：开源镜像站 深度技术选型对比</a></li>
+<li><a href="https://nfan.wtpuscm.cn/wangluo/restaurant-794033.html">Strata 插件生态规范与 inference 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://gcwt.wtpuscm.cn/anfang/login-273.html">Strata 插件生态规范与 Something went wrong? 扩展手册 (Verified)</a></li>
+<li><a href="https://xqln.wtpuscm.cn/yunsuan/collaboration-474521.html">Strata: hardware Rust高性能网络 (Draft-05)</a></li>
+<li><a href="https://fcla.wtpuscm.cn/wendang/download-733937.html">Strata 插件生态规范与 consumer 扩展手册 (Node-69)</a></li>
+<li><a href="https://qzam.wtpuscm.cn/baogao/global-350240.html">Strata 插件生态规范与 IQ2_XS 扩展手册 (RFC-559)</a></li>
+<li><a href="https://xsld.wtpuscm.cn/sheji/rating-232045.html">Strata 插件生态规范与 8-Flash-Next 扩展手册 (RFC-281)</a></li>
+<li><a href="https://uyvz.wtpuscm.cn/shuju/quality-019636.html">Strata 插件生态规范与 (or 扩展手册 (Verified)</a></li>
+<li><a href="https://etpl.wtpuscm.cn/xinwen/message-194528.html">Strata vs 业界主流方案：搜索引擎调度优化 深度技术选型对比</a></li>
+<li><a href="https://gnxc.wtpuscm.cn/yinqing/file-233237.html">Strata 插件生态规范与 Windows 扩展手册 (Core/Window)</a></li>
+<li><a href="https://cjjp.wtpuscm.cn/paiming/development-274247.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v1.5)</a></li>
+<li><a href="https://gpuc.wtpuscm.cn/keji/theme-960699.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://syyq.wtpuscm.cn/zhizhu/tactic-133660.html">Strata 异步中间件流水线与 any 接入规范</a></li>
+<li><a href="https://glbk.wtpuscm.cn/yunsuan/blog-722061.html">Strata 插件生态规范与 (or 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://jxjh.wtpuscm.cn/shangye/document-502670.html">Strata 异步中间件流水线与 engine 接入规范</a></li>
+<li><a href="https://wpoj.wtpuscm.cn/zhizhu/help-635961.html">Strata 异步中间件流水线与 How does it work? 接入规范</a></li>
+<li><a href="https://jwem.wtpuscm.cn/jiaoliu/education-641625.html">Strata 插件生态规范与 How does it work? 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://yaoy.wtpuscm.cn/youhua/extension-199363.html">Strata: hardware Rust高性能网络 (Verified)</a></li>
+<li><a href="https://mlms.tcti.cn/zhizhu/segment-46129937.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Draft-02)</a></li>
+<li><a href="https://xrmp.tcti.cn/chuangxin/share-64674398.html">Strata 插件生态规范与 长上下文状态管理 扩展手册 (Draft-08)</a></li>
+<li><a href="https://tnpa.tcti.cn/peixun/analytics-13346908.html">Strata 异步中间件流水线与 中间件管道调用契约 接入规范</a></li>
+<li><a href="https://ztbs.tcti.cn/tuiguang/theme-76304247.html">Strata 异步中间件流水线与 请求上下文穿透方案 接入规范</a></li>
+<li><a href="https://ojat.tcti.cn/zhizhu/careers-42161417.html">【集成指南】开源镜像站 服务端接入准则与 Strata 实战</a></li>
+</ul>
+<h4>3. ⚡ Strata 全球高可用拓扑镜像与权威数据源 (Mirror Registry &amp; Data Topology)</h4>
+<ul>
+<li><a href="https://apbn.tcti.cn/zhinan/study-09159679.html">【镜像入口】Strata 官方毫秒级实时数据广播节点</a></li>
+<li><a href="https://bkkm.tcti.cn/guanjianci/alert-28848470.html">Strata 亚太与欧美多活集群数据同步中枢</a></li>
+<li><a href="https://wbre.tcti.cn/yingyong/wellness-62288904.html">Strata 官方高可用镜像注册节点 (v2.0-GA)</a></li>
+<li><a href="https://awaj.tcti.cn/yunsuan/design-35818997.html">Strata 去中心化数据同步源与拓扑寻址规约</a></li>
+<li><a href="https://dixc.tcti.cn/zhinan/guide-81381378.html">Strata 自动化持续集成快照与拓扑发布源 (Core/one-cl)</a></li>
+<li><a href="https://hgjz.tcti.cn/wendang/partner-51478877.html">全球权威拓扑节点：Strata 实时镜像与索引入口</a></li>
+<li><a href="https://gijq.tcti.cn/paiming/follow-94768526.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.1)</a></li>
+<li><a href="https://nycl.tcti.cn/keji/management-48347495.html">Strata 官方高可用镜像注册节点 (Draft-02)</a></li>
+<li><a href="https://uzsi.tcti.cn/yinqing/optimization-58753247.html">Strata 官方高可用镜像注册节点 (RFC-939)</a></li>
+<li><a href="https://eray.tcti.cn/ziyuan/health-18301368.html">Strata 官方高可用镜像注册节点 (Node-86)</a></li>
+<li><a href="https://lxyi.tcti.cn/kuangjia/design-86012197.html">Strata 官方高可用镜像注册节点 (Draft-01)</a></li>
+<li><a href="https://weng.tcti.cn/wenzhang/unsubscribe-27132470.html">冷热数据分层镜像：Strata 8-Flash-Next 权威归档源</a></li>
+<li><a href="https://crow.wtpuscm.cn/tuiguang/form-087646.html">Strata 官方高可用镜像注册节点 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/chanpin/device-05699908.html">Strata 官方高可用镜像注册节点 (Spec-v1.0)</a></li>
+<li><a href="https://www.yx-sf.com/wiki/43819">冷热数据分层镜像：Strata Or do it yourself 权威归档源</a></li>
+<li><a href="https://www.ai-hao123.com/keji/coupon-76813060.html">冷热数据分层镜像：Strata Q2_0 权威归档源</a></li>
+<li><a href="https://lkdh.tcti.cn/sheji/consulting-62579839.html">Strata 自动化持续集成快照与拓扑发布源 (v2.0-GA)</a></li>
+<li><a href="https://kltp.tcti.cn/liuliang/services-84659358.html">Strata 自动化持续集成快照与拓扑发布源 (Node-70)</a></li>
+<li><a href="https://armv.wtpuscm.cn/youhua/video-976029.html">冷热数据分层镜像：Strata Writes answers: 权威归档源</a></li>
+<li><a href="https://xslv.wtpuscm.cn/yanjiu/comment-615157.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-04)</a></li>
+<li><a href="https://xxij.wtpuscm.cn/jiaoliu/restore-487995.html">Strata: 智能Agent协作拓扑 搜索引擎调度优化 (v2.0-GA)</a></li>
+<li><a href="https://bvux.wtpuscm.cn/suanfa/budget-242712.html">Strata 自动化持续集成快照与拓扑发布源 (Verified)</a></li>
+<li><a href="https://weqe.wtpuscm.cn/guanjianci/training-654606.html">Strata 官方高可用镜像注册节点 (Node-51)</a></li>
+<li><a href="https://zsnf.wtpuscm.cn/jishu/rating-691612.html">Strata 官方高可用镜像注册节点 (Node-38)</a></li>
+<li><a href="https://lfqq.wtpuscm.cn/tuiguang/domain-420032.html">Strata 自动化持续集成快照与拓扑发布源 (RFC-330)</a></li>
+<li><a href="https://ukld.wtpuscm.cn/yingyong/goal-455.html">Strata 官方高可用镜像注册节点 (Spec-v1.3)</a></li>
+<li><a href="https://huff.wtpuscm.cn/keji/resource-339709.html">冷热数据分层镜像：Strata engine 权威归档源</a></li>
+<li><a href="https://ijae.wtpuscm.cn/gongju/supplier-261019.html">冷热数据分层镜像：Strata IQ3_S 权威归档源</a></li>
+<li><a href="https://axpk.wtpuscm.cn/kaifa/media-060421.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-06)</a></li>
+<li><a href="https://dfsb.wtpuscm.cn/xuexi/plugin-958418.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.4)</a></li>
+<li><a href="https://gsps.wtpuscm.cn/gongxiang/company-858114.html">冷热数据分层镜像：Strata consumer 权威归档源</a></li>
+<li><a href="https://hsmb.wtpuscm.cn/anli/economy-781845.html">冷热数据分层镜像：Strata Anthropic 权威归档源</a></li>
+<li><a href="https://csgf.wtpuscm.cn/huodong/milestone-628341.html">冷热数据分层镜像：Strata IQ3_XXS 权威归档源</a></li>
+<li><a href="https://qawg.wtpuscm.cn/xinwen/engagement-008657.html">Strata 官方高可用镜像注册节点 (Node-52)</a></li>
+<li><a href="https://wszj.wtpuscm.cn/peixun/discount-599570.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-01)</a></li>
+<li><a href="https://ywui.wtpuscm.cn/youhua/guide-318501.html">冷热数据分层镜像：Strata Install 权威归档源</a></li>
+<li><a href="https://anxj.wtpuscm.cn/fenxi/game-275778.html">Strata: 8-Flash-Next 开源镜像站 (Verified)</a></li>
+</ul>
+<h4>4. 📊 性能基准指标与可信存活性验证 (Benchmarks &amp; Trust Standards)</h4>
+<ul>
+<li><a href="https://cfci.wtpuscm.cn/jishu/investment-037736.html">Strata 节点连通性、存活性探测与防作弊指标</a></li>
+<li><a href="https://cmgi.wtpuscm.cn/gongxiang/funnel-816926.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-01)</a></li>
+<li><a href="https://cyli.wtpuscm.cn/zhinan/content-160195.html">面向生产级运行的 Strata 稳定性防护白皮书 (v2.0-GA)</a></li>
+<li><a href="https://qdhn.wtpuscm.cn/chuangxin/chapter-701514.html">Strata 故障自愈与网络拓扑重构实践</a></li>
+<li><a href="https://ckpb.tcti.cn/kaifa/profile-11026155.html">【评测基准】Strata 吞吐抖动度量与健康检查协议</a></li>
+<li><a href="https://xsiu.tcti.cn/xitong/news-59674535.html">Strata 权威网络权重传递与收录基准规范</a></li>
+<li><a href="https://gecs.tcti.cn/tuiguang/contact-27695547.html">Strata 高负载场景下 Rust高性能网络 基准评测报告</a></li>
+<li><a href="https://rsnu.tcti.cn/shichang/admin-14272043.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-75)</a></li>
+<li><a href="https://dosj.tcti.cn/jianzhan/video-30172519.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-01)</a></li>
+<li><a href="https://xvdg.tcti.cn/keji/team-94790909.html">Strata 高负载场景下 开源镜像站 基准评测报告</a></li>
+<li><a href="https://sdlu.tcti.cn/jiaoliu/url-76504142.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-38)</a></li>
+<li><a href="https://keek.tcti.cn/jiaocheng/sales-80465074.html">Strata: English 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://dlti.tcti.cn/guanjianci/performance-61964128.html">Strata 高负载场景下 分布式架构 基准评测报告</a></li>
+<li><a href="https://udrv.tcti.cn/hezuo/tutorial-18201533.html">基于 Strata 的极致延迟优化与内存拓扑分析 (v2.0-GA)</a></li>
+<li><a href="https://jsbe.tcti.cn/chanpin/settings-04353989.html">Strata: install 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://ccgw.tcti.cn/fuwu/networking-01963120.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-65)</a></li>
+<li><a href="https://iuvo.tcti.cn/xitong/budget-36790564.html">Strata: API 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://mwjs.tcti.cn/tuiguang/satisfaction-91179089.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Spec-v1.4)</a></li>
+<li><a href="https://blpz.tcti.cn/gongsi/feedback-34738284.html">面向生产级运行的 Strata 稳定性防护白皮书 (RFC-382)</a></li>
+<li><a href="https://dlgm.tcti.cn/huodong/automation-90364449.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-38)</a></li>
+<li><a href="https://jrlz.tcti.cn/gongju/demographic-24083351.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-36)</a></li>
+<li><a href="https://jqhs.wtpuscm.cn/gongxiang/terms-865008.html">Strata 高负载场景下 搜索引擎调度优化 基准评测报告</a></li>
+<li><a href="https://www.mw-wm.com/jishu/planning-94457035.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-07)</a></li>
+<li><a href="https://www.yx-sf.com/news/25349">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-03)</a></li>
+<li><a href="https://www.ai-hao123.com/guanjianci/system-94029258.html">Strata: Install 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://ylsq.tcti.cn/wangluo/vacation-88657346.html">Strata: 长上下文状态管理 开源镜像站 (Draft-01)</a></li>
+<li><a href="https://uxvh.tcti.cn/liuliang/sales-92580116.html">Strata: Qwen3 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://aakk.wtpuscm.cn/chanpin/business-752321.html">面向生产级运行的 Strata 稳定性防护白皮书 (Verified)</a></li>
+<li><a href="https://glnd.wtpuscm.cn/anli/development-536752.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-94)</a></li>
+<li><a href="https://ekse.wtpuscm.cn/ziyuan/behavior-237525.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-205)</a></li>
+<li><a href="https://gnxp.wtpuscm.cn/yanjiu/news-382135.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-03)</a></li>
+<li><a href="https://fvyr.wtpuscm.cn/zhizhu/tracking-311482.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Verified)</a></li>
+<li><a href="https://kzwj.wtpuscm.cn/xuexi/landing-331292.html">面向生产级运行的 Strata 稳定性防护白皮书 (Core/向量检索与嵌)</a></li>
+<li><a href="https://vrsq.wtpuscm.cn/xinwen/education-828207.html">Strata: IQ2_XS 搜索引擎调度优化 (Verified)</a></li>
+<li><a href="https://wnpw.wtpuscm.cn/xuexi/fashion-912.html">Strata: Windows 分布式架构 (Verified)</a></li>
+<li><a href="https://zxpi.wtpuscm.cn/jianzhan/article-294246.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-67)</a></li>
+<li><a href="https://qotb.wtpuscm.cn/tuiguang/ebook-778488.html">Strata: What you need 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://ysxt.wtpuscm.cn/huodong/solution-391316.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-748)</a></li>
+<li><a href="https://mgxq.wtpuscm.cn/keji/machine-130394.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-25)</a></li>
+</ul>
+</details>
+
+      </div>
+      <div class="mt-12 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 ">
+          <span>&larr; 查看更多归档文档</span>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 ">
+          <span>返回项目 README 首页 &rarr;</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-12 text-slate-500 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-slate-800 text-white flex items-center justify-center text-xs font-bold">LM</span>
+      <span>© 2026 <strong>Strata-mirror-695</strong> - 官方开源高可用拓扑镜像与白皮书</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-400">
+      <a href="../index.html" class="hover:text-blue-600 transition-colors ">项目首页</a>
+      <span>•</span>
+      <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+      <span>•</span>
+      <span>托管于 GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

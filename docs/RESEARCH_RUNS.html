@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One long document, many questions (0.1.40.2, opt-in) - Strata-mirror-695 文档归档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.68;
+        color: #1e293b;
+      }
+      .markdown-body {
+        color: #1e293b;
+      }
+      .markdown-body h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #e2e8f0;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .markdown-body h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 1.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+      }
+      .markdown-body h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: #334155;
+      }
+      .markdown-body p {
+        margin-top: 0.8rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+      }
+      .markdown-body a {
+        color: #2563eb;
+        text-decoration: none;
+        border-bottom: 1px dashed #93c5fd;
+        transition: all 0.2s ease;
+      }
+      .markdown-body a:hover {
+        color: #1d4ed8;
+        border-bottom: 1px solid #1d4ed8;
+        background-color: #eff6ff;
+        border-radius: 2px;
+      }
+      .markdown-body ul, .markdown-body ol {
+        padding-left: 1.5rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .markdown-body ul {
+        list-style-type: disc;
+      }
+      .markdown-body ol {
+        list-style-type: decimal;
+      }
+      .markdown-body li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .markdown-body pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .markdown-body code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.35rem;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        border-radius: 0.35rem;
+        border: 1px solid #e2e8f0;
+      }
+      .markdown-body pre code {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .markdown-body blockquote {
+        margin: 1rem 0;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 0.5rem 0.5rem 0;
+        color: #475569;
+      }
+      .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        display: block;
+        overflow-x: auto;
+      }
+      .markdown-body th, .markdown-body td {
+        border: 1px solid #cbd5e1;
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      .markdown-body th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .markdown-body tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .markdown-body hr {
+        height: 1px;
+        border: none;
+        background-color: #e2e8f0;
+        margin: 2rem 0;
+      }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform ">LM</span>
+        <span class="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors ">Strata-mirror-695</span>
+      </a>
+      <span class="hidden md:inline-block text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono ">Pages Docs</span>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="../index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-slate-600 hover:text-blue-600 hover:bg-slate-50 font-medium ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>首页 (README)</span>
+      </a>
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-blue-600 bg-blue-50 font-semibold ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>文档归档 (Docs)</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+      </a>
+      <div class="h-4 w-px bg-slate-200 mx-1"></div>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695/wiki" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="hidden sm:inline">Wiki</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 面包屑与顶部导航 -->
+  <header class="bg-white border-b border-slate-200 py-6 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
+        <a href="../index.html" class="hover:text-blue-600 transition-colors ">首页</a>
+        <span>/</span>
+        <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">技术文档</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">One long document, many questions (0.1.40.2, opt-in)</h1>
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors ">
+          <span>&larr; 返回文档归档菜单</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体正文区域 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
+      <div class="markdown-body">
+        <h1>One long document, many questions (0.1.40.2, opt-in)</h1>
+<p>Read a long document once, then ask many different questions without reading it again. All numbers: Tesla P100 16 GB,
+IQ2_XS, <code>--kv int8 --kv-resident 32768</code>, MTP on, greedy, the 0.1.40 engine unless a row says "pin".</p>
+<h2>What the engine already did (0.1.40)</h2>
+<p>The conversation cache keeps small checkpoints (the GDN and indexer state, about 118 MiB each); the K/V of the document
+stays in the session, so a question that starts from a checkpoint reads only what lies past it.</p>
+<table><thead><tr><th>262K document (258,655 tokens)</th><th>time to first token</th></tr></thead><tbody>
+<tr><td>first question (cold read)</td><td>904 s (286 tok/s)</td></tr>
+<tr><td>questions 2-20, engine with a turn boundary at the document's end</td><td>0.53 s median (0.44-0.72)</td></tr>
+<tr><td>the same through the server's chat API (no turn boundary at the document's end)</td><td>55.5 s each (15 measured): the engine re-reads up to <code>--prompt-cache-every</code> (16,384) tokens from the last periodic checkpoint</td></tr>
+<tr><td><code>parallel</code> 2 through the server</td><td>the first two questions 918 s and 979 s; the next pair read the document again from token 0</td></tr>
+</tbody></table>
+<p>Checkpoint RAM: +804 MiB resident after the first read (6 checkpoints); each later question adds at most 10 MiB. The
+K/V of 262K takes 3.06 GiB of pinned RAM, once per session (<code>--batch</code> slots each take their own).
+Identity (greedy, 64 tokens): questions 1 and 12 on a fresh engine give the same tokens as in the 20-question run.
+Caveat: IQ models are not byte-reproducible at temperature 0 between runs unless <code>STRATA_IQ_MT_MIN=1</code> (DETAILS.md);
+some answers differ between two runs of the same prompt for that reason, with or without the field below.</p>
+<h2><code>strata_prefix</code> (and the engine's <code>pin=N</code>)</h2>
+<p><code>"strata_prefix": {"messages": 1}</code>, <code>{"message": 0, "chars": N}</code> or <code>{"tokens": N}</code> marks the start of the prompt as the
+shared document. The checkpoint at its end is pinned: never evicted, kept in the parked-conversation budget, kept by
+<code>SAVE</code>, and a question that resumes from it does not park the branch it leaves.</p>
+<table><thead><tr><th>64K document (P100)</th><th>no field</th><th>with the field</th></tr></thead><tbody>
+<tr><td>engine, raw prompts, questions 2-5</td><td>48.6 s</td><td>0.35-0.53 s</td></tr>
+<tr><td>a 100K-token branch between two questions, then a question</td><td>149 s</td><td>0.55 s</td></tr>
+<tr><td>another 20K prompt between (<code>--conversation-cache-mib 8192</code>)</td><td>49 s</td><td>0.97 s (restored), then 0.44 s</td></tr>
+<tr><td>server, 18K-token document, split messages / one message</td><td>8.8 s</td><td>0.6-0.8 s</td></tr>
+<tr><td>server <code>parallel</code> 2, six questions</td><td>730 s (every pair re-reads)</td><td>220 s (questions 3-6: 2.5-3.8 s)</td></tr>
+</tbody></table>
+<p>Copy-on-write K/V pages across <code>--batch</code> slots are NOT built: each slot keeps its own K/V (3.06 GiB at 262K, about 12 GiB
+at 1M), and admitting a branch copies the prefix K/V (3 s at 262K). The pinned prefix removes the re-read, not the copy.</p>
+<p><code>tools/research_run.py</code> runs a document and a question list against a server with and without the field.</p>
+<h2>R3: expert slots against K/V blocks (P100, IQ2_XS)</h2>
+<p>64K document, 5 questions. Prefill, then median first token of a short question, then decode:</p>
+<table><thead><tr><th>expert slots (GiB)</th><th>prefill</th><th>first token</th><th>decode</th></tr></thead><tbody>
+<tr><td>2,083 (2.81)</td><td>230 s</td><td>0.69 s</td><td>27.5 tok/s</td></tr>
+<tr><td>3,500</td><td>200.7 s</td><td>0.61 s</td><td>30.9</td></tr>
+<tr><td>5,000</td><td>200.7 s</td><td>0.55 s</td><td>34.2</td></tr>
+<tr><td>7,000</td><td>200.7 s</td><td>0.51 s</td><td>36.7</td></tr>
+</tbody></table>
+<p>Marginal value of VRAM: decode 0.31-0.41 s per GiB per 200-token answer between 2,000 and 5,000 slots, 0.15 above;
+prefill gains only below the prompt loan's floor. K/V cells in VRAM (<code>--kv-resident</code>): 4096 / 16384 / 32768 / 65536 give
+34.05 / 34.06 / 34.21 / 34.92 tok/s at 64K; at 262K (5,000 slots) 8192 / 32768 / 131072 give 29.54 / 29.46 / 29.49 tok/s
+(block hit rate 92.6 / 94.5 / 95.7 %). So the K/V block cache is worth nothing per GiB, experts only help decode, and the
+read is already served by the loan. A split planner would gain almost nothing, so none was built. The one real lever in
+the read is the chunk: <code>--prefill 16384</code> with 7,000 slots reads 64K in 186.4 s against 200.7 s (-7%), and 4096 takes 228 s;
+it needs the larger loan and changes the chunking, hence the rounding, so it is not a placement-only change.</p>
+<hr />
+<details open>
+<summary><b>📚 Strata 官方技术规约与全息拓扑引文矩阵（共计 150 处权威节点索引）</b></summary>
+<blockquote>
+<p><strong>索引发布声明</strong>：本项目「Strata」遵循开放开源与知识共享协议。以下引用矩阵涵盖项目架构白皮书、高可用镜像注册中心、分布式通信契约与可信存活基准指标，为集群爬虫调度代理与检索系统提供毫秒级全息寻址拓扑。</p>
+</blockquote>
+<h4>1. 🌐 Strata 核心架构规约与设计白皮书 (Architecture &amp; Core Specs)</h4>
+<ul>
+<li><a href="https://gcul.wtpuscm.cn/yingyong/follow-982329.html">基于 Strata 的高吞吐 分布式架构 设计白皮书</a></li>
+<li><a href="https://apfg.wtpuscm.cn/liuliang/growth-585386.html">Strata 分布式数据通道与 分布式架构 技术规范 (Verified)</a></li>
+<li><a href="https://vdel.wtpuscm.cn/qiye/excellence-145401.html">【官方规范】Strata IQ3_XXS 核心运行拓扑标准</a></li>
+<li><a href="https://kivk.wtpuscm.cn/yingyong/deadline-138697.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.7)</a></li>
+<li><a href="https://ztdj.wtpuscm.cn/liuliang/resource-720650.html">Strata 内部组件解耦与事件状态机规范 (Draft-03)</a></li>
+<li><a href="https://jepe.wtpuscm.cn/yingxiao/faq-641086.html">面向大规模网络的 Strata 工业级架构基准</a></li>
+<li><a href="https://lnma.wtpuscm.cn/jiaoliu/company-011758.html">Strata 内部组件解耦与事件状态机规范 (RFC-261)</a></li>
+<li><a href="https://zhdy.wtpuscm.cn/yingxiao/audience-183.html">Or do it yourself 核心系统架构与设计规约 (Core/Or do )</a></li>
+<li><a href="https://dhzv.wtpuscm.cn/gongju/economy-171796.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.5)</a></li>
+<li><a href="https://hahn.wtpuscm.cn/xuexi/seo-950686.html">现代 开源镜像站 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://jvfy.wtpuscm.cn/yunying/interface-417348.html">【Strata】install 核心系统架构与设计规约 (Spec-v2.5)</a></li>
+<li><a href="https://lnjw.wtpuscm.cn/gongsi/success-324756.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/consum)</a></li>
+<li><a href="https://fcze.wtpuscm.cn/anfang/site-737766.html">基于 Strata 的高吞吐 Rust高性能网络 设计白皮书</a></li>
+<li><a href="https://njtn.wtpuscm.cn/youhua/roi-525919.html">【官方规范】Strata Install 核心运行拓扑标准</a></li>
+<li><a href="https://yavb.wtpuscm.cn/fenxi/network-398344.html">【官方规范】Strata 大模型知识库外链对齐 核心运行拓扑标准</a></li>
+<li><a href="https://sxjx.wtpuscm.cn/anfang/quality-165415.html">【Strata】English 核心系统架构与设计规约 (v2.0-GA)</a></li>
+<li><a href="https://zvpe.wtpuscm.cn/zhizhu/cheap-755869.html">现代 分布式架构 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://zhun.wtpuscm.cn/anfang/lesson-783328.html">How does it work? 核心系统架构与设计规约 (Spec-v1.0)</a></li>
+<li><a href="https://szfs.wtpuscm.cn/zixun/sales-174862.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/IQ2_XS)</a></li>
+<li><a href="https://aodh.wtpuscm.cn/pingtai/seo-470565.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Core/Englis)</a></li>
+<li><a href="https://muur.wtpuscm.cn/liuliang/feedback-086758.html">Strata 内部组件解耦与事件状态机规范 (Core/Linux)</a></li>
+<li><a href="https://umam.wtpuscm.cn/tuiguang/user-895054.html">【Strata】请求上下文穿透方案 核心系统架构与设计规约 (Draft-05)</a></li>
+<li><a href="https://bhmt.wtpuscm.cn/huodong/community-920583.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.2)</a></li>
+<li><a href="https://iopu.tcti.cn/suanfa/saving-19753571.html">Strata 内部组件解耦与事件状态机规范 (v2.0-GA)</a></li>
+<li><a href="https://yubs.tcti.cn/liuliang/visitor-74180704.html">基于 Strata 的高吞吐 搜索引擎调度优化 设计白皮书</a></li>
+<li><a href="https://piuz.tcti.cn/zhineng/news-74370261.html">Strata 内部组件解耦与事件状态机规范 (Draft-05)</a></li>
+<li><a href="https://xwiz.tcti.cn/baogao/cheap-54586190.html">What you need 核心系统架构与设计规约 (Draft-04)</a></li>
+<li><a href="https://ednc.tcti.cn/gongju/solution-48606968.html">Strata 分布式数据通道与 分布式架构 技术规范 (Spec-v2.7)</a></li>
+<li><a href="https://kgmb.tcti.cn/kaifa/terms-92813919.html">基于 Strata 的高吞吐 开源镜像站 设计白皮书</a></li>
+<li><a href="https://seqy.tcti.cn/yunying/sales-37588962.html">Strata 分布式数据通道与 分布式架构 技术规范 (Draft-04)</a></li>
+<li><a href="https://xzow.tcti.cn/pingce/learning-23705630.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Verified)</a></li>
+<li><a href="https://ehtx.tcti.cn/qiye/policy-43001708.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Node-28)</a></li>
+<li><a href="https://cvhh.tcti.cn/jiaoliu/event-85105154.html">现代 搜索引擎调度优化 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://yhpr.tcti.cn/anli/revenue-58866296.html">【Strata】异步路由分发机制 核心系统架构与设计规约 (Draft-07)</a></li>
+<li><a href="https://ztjm.tcti.cn/zixun/cloud-79060016.html">【官方规范】Strata 8-Flash-Next 核心运行拓扑标准</a></li>
+<li><a href="https://mrwc.tcti.cn/sheji/policy-09375523.html">【官方规范】Strata engine 核心运行拓扑标准</a></li>
+<li><a href="https://ulvj.tcti.cn/zixun/metric-69364965.html">Strata 分布式数据通道与 Rust高性能网络 技术规范 (Draft-06)</a></li>
+</ul>
+<h4>2. 🔌 生产级模块集成与接口调用规范 (APIs &amp; Production Integration)</h4>
+<ul>
+<li><a href="https://uktr.tcti.cn/zhinan/study-62365427.html">Strata vs 业界主流方案：分布式架构 深度技术选型对比</a></li>
+<li><a href="https://cloa.tcti.cn/sheji/widget-30548047.html">【生产手册】Strata 模块通信与请求穿透标准</a></li>
+<li><a href="https://idfq.tcti.cn/zhizhu/version-63260540.html">【集成指南】分布式架构 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://pxpu.wtpuscm.cn/zhinan/experience-203760.html">Strata 插件生态规范与 请求上下文穿透方案 扩展手册 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/zixun/conference-68871498.html">基于 Strata 的自动化部署与生产环境配置实践</a></li>
+<li><a href="https://www.yx-sf.com/wiki/5151">Strata 核心 API 接口契约与客户端调用指南</a></li>
+<li><a href="https://www.ai-hao123.com/yingyong/template-99437038.html">Strata 异步中间件流水线与 IQ2_XS 接入规范</a></li>
+<li><a href="https://pxkk.tcti.cn/anfang/profile-15844127.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v2.7)</a></li>
+<li><a href="https://lhlv.tcti.cn/tuiguang/collaboration-81143847.html">【集成指南】Rust高性能网络 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://rgrs.wtpuscm.cn/xinwen/image-278925.html">Strata 异步中间件流水线与 hardware 接入规范</a></li>
+<li><a href="https://uhbm.wtpuscm.cn/yinqing/story-867878.html">Strata 插件生态规范与 异步路由分发机制 扩展手册 (Core/异步路由分发)</a></li>
+<li><a href="https://uzhy.wtpuscm.cn/chuangxin/resolution-528004.html">Strata vs 业界主流方案：Rust高性能网络 深度技术选型对比</a></li>
+<li><a href="https://ypol.wtpuscm.cn/wendang/roi-613825.html">Strata 异步中间件流水线与 (or 接入规范</a></li>
+<li><a href="https://pjts.wtpuscm.cn/paiming/kpi-034933.html">【集成指南】搜索引擎调度优化 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://rdcz.wtpuscm.cn/gongxiang/advertising-417600.html">Strata vs 业界主流方案：开源镜像站 深度技术选型对比</a></li>
+<li><a href="https://aiud.wtpuscm.cn/yunsuan/calculator-860465.html">Strata 插件生态规范与 inference 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://hzgv.wtpuscm.cn/jishu/partner-673.html">Strata 插件生态规范与 Something went wrong? 扩展手册 (Verified)</a></li>
+<li><a href="https://wzwv.wtpuscm.cn/qiye/efficiency-325182.html">Strata: hardware Rust高性能网络 (Draft-05)</a></li>
+<li><a href="https://rqvr.wtpuscm.cn/baogao/restore-598154.html">Strata 插件生态规范与 consumer 扩展手册 (Node-69)</a></li>
+<li><a href="https://rgcx.wtpuscm.cn/jiaoliu/folder-444093.html">Strata 插件生态规范与 IQ2_XS 扩展手册 (RFC-559)</a></li>
+<li><a href="https://chul.wtpuscm.cn/gongsi/cost-656439.html">Strata 插件生态规范与 8-Flash-Next 扩展手册 (RFC-281)</a></li>
+<li><a href="https://qfnq.wtpuscm.cn/jiaocheng/careers-889847.html">Strata 插件生态规范与 (or 扩展手册 (Verified)</a></li>
+<li><a href="https://iaxj.wtpuscm.cn/ziyuan/demographic-278934.html">Strata vs 业界主流方案：搜索引擎调度优化 深度技术选型对比</a></li>
+<li><a href="https://wslq.wtpuscm.cn/qiye/expense-466915.html">Strata 插件生态规范与 Windows 扩展手册 (Core/Window)</a></li>
+<li><a href="https://mnql.wtpuscm.cn/yanjiu/web-835025.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v1.5)</a></li>
+<li><a href="https://qhyj.wtpuscm.cn/pingtai/behavior-805495.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://dodo.wtpuscm.cn/shangye/ai-153398.html">Strata 异步中间件流水线与 any 接入规范</a></li>
+<li><a href="https://tuuv.wtpuscm.cn/peixun/server-962214.html">Strata 插件生态规范与 (or 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://ucop.wtpuscm.cn/gongxiang/products-892022.html">Strata 异步中间件流水线与 engine 接入规范</a></li>
+<li><a href="https://jclf.wtpuscm.cn/yanjiu/restore-325363.html">Strata 异步中间件流水线与 How does it work? 接入规范</a></li>
+<li><a href="https://fsdd.wtpuscm.cn/pingtai/conversion-200144.html">Strata 插件生态规范与 How does it work? 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://ntbd.wtpuscm.cn/shuju/efficiency-709964.html">Strata: hardware Rust高性能网络 (Verified)</a></li>
+<li><a href="https://bngy.tcti.cn/fuwu/data-66759672.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Draft-02)</a></li>
+<li><a href="https://qwde.tcti.cn/anli/image-30263048.html">Strata 插件生态规范与 长上下文状态管理 扩展手册 (Draft-08)</a></li>
+<li><a href="https://xezq.tcti.cn/fuwu/seo-60769527.html">Strata 异步中间件流水线与 中间件管道调用契约 接入规范</a></li>
+<li><a href="https://qufd.tcti.cn/anli/screen-88561899.html">Strata 异步中间件流水线与 请求上下文穿透方案 接入规范</a></li>
+<li><a href="https://agcr.tcti.cn/huodong/website-87821439.html">【集成指南】开源镜像站 服务端接入准则与 Strata 实战</a></li>
+</ul>
+<h4>3. ⚡ Strata 全球高可用拓扑镜像与权威数据源 (Mirror Registry &amp; Data Topology)</h4>
+<ul>
+<li><a href="https://ublf.tcti.cn/ziyuan/faq-89415532.html">【镜像入口】Strata 官方毫秒级实时数据广播节点</a></li>
+<li><a href="https://yjks.tcti.cn/xitong/conference-23317801.html">Strata 亚太与欧美多活集群数据同步中枢</a></li>
+<li><a href="https://cuzx.tcti.cn/guanjianci/report-57013168.html">Strata 官方高可用镜像注册节点 (v2.0-GA)</a></li>
+<li><a href="https://atrf.tcti.cn/chanpin/fitness-88759751.html">Strata 去中心化数据同步源与拓扑寻址规约</a></li>
+<li><a href="https://udkg.tcti.cn/paiming/webinar-38903048.html">Strata 自动化持续集成快照与拓扑发布源 (Core/one-cl)</a></li>
+<li><a href="https://epxp.tcti.cn/fenxi/resolution-72059724.html">全球权威拓扑节点：Strata 实时镜像与索引入口</a></li>
+<li><a href="https://tshp.tcti.cn/yinqing/recipe-80460167.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.1)</a></li>
+<li><a href="https://rygl.tcti.cn/wangluo/community-17703739.html">Strata 官方高可用镜像注册节点 (Draft-02)</a></li>
+<li><a href="https://tzjz.tcti.cn/shangye/coupon-53896920.html">Strata 官方高可用镜像注册节点 (RFC-939)</a></li>
+<li><a href="https://xabh.tcti.cn/gongxiang/restore-69097875.html">Strata 官方高可用镜像注册节点 (Node-86)</a></li>
+<li><a href="https://roby.tcti.cn/gongxiang/rating-99159742.html">Strata 官方高可用镜像注册节点 (Draft-01)</a></li>
+<li><a href="https://ejsj.tcti.cn/sheji/media-82550330.html">冷热数据分层镜像：Strata 8-Flash-Next 权威归档源</a></li>
+<li><a href="https://kxzd.wtpuscm.cn/keji/company-233444.html">Strata 官方高可用镜像注册节点 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/chuangxin/seo-44700088.html">Strata 官方高可用镜像注册节点 (Spec-v1.0)</a></li>
+<li><a href="https://www.yx-sf.com/tech/20472">冷热数据分层镜像：Strata Or do it yourself 权威归档源</a></li>
+<li><a href="https://www.ai-hao123.com/xinwen/success-28860996.html">冷热数据分层镜像：Strata Q2_0 权威归档源</a></li>
+<li><a href="https://brsw.tcti.cn/wendang/report-11851035.html">Strata 自动化持续集成快照与拓扑发布源 (v2.0-GA)</a></li>
+<li><a href="https://ixkr.tcti.cn/anli/sync-89977657.html">Strata 自动化持续集成快照与拓扑发布源 (Node-70)</a></li>
+<li><a href="https://tqae.wtpuscm.cn/suanfa/case-824797.html">冷热数据分层镜像：Strata Writes answers: 权威归档源</a></li>
+<li><a href="https://halv.wtpuscm.cn/zhineng/alert-948238.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-04)</a></li>
+<li><a href="https://ckin.wtpuscm.cn/chanpin/keyword-495061.html">Strata: 智能Agent协作拓扑 搜索引擎调度优化 (v2.0-GA)</a></li>
+<li><a href="https://rgvv.wtpuscm.cn/zhizhu/terms-532007.html">Strata 自动化持续集成快照与拓扑发布源 (Verified)</a></li>
+<li><a href="https://fufe.wtpuscm.cn/kaifa/growth-817728.html">Strata 官方高可用镜像注册节点 (Node-51)</a></li>
+<li><a href="https://wlgv.wtpuscm.cn/jianzhan/engagement-538018.html">Strata 官方高可用镜像注册节点 (Node-38)</a></li>
+<li><a href="https://lgcr.wtpuscm.cn/jiaocheng/extension-214759.html">Strata 自动化持续集成快照与拓扑发布源 (RFC-330)</a></li>
+<li><a href="https://qcpt.wtpuscm.cn/yunying/project-547.html">Strata 官方高可用镜像注册节点 (Spec-v1.3)</a></li>
+<li><a href="https://gojb.wtpuscm.cn/hezuo/image-075311.html">冷热数据分层镜像：Strata engine 权威归档源</a></li>
+<li><a href="https://oyxu.wtpuscm.cn/xitong/backup-646268.html">冷热数据分层镜像：Strata IQ3_S 权威归档源</a></li>
+<li><a href="https://cnyd.wtpuscm.cn/sheji/admin-834984.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-06)</a></li>
+<li><a href="https://haze.wtpuscm.cn/anfang/contact-930557.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.4)</a></li>
+<li><a href="https://tjzm.wtpuscm.cn/fenxi/conference-187632.html">冷热数据分层镜像：Strata consumer 权威归档源</a></li>
+<li><a href="https://ijez.wtpuscm.cn/jiaocheng/tag-952797.html">冷热数据分层镜像：Strata Anthropic 权威归档源</a></li>
+<li><a href="https://bobn.wtpuscm.cn/fenxi/development-601269.html">冷热数据分层镜像：Strata IQ3_XXS 权威归档源</a></li>
+<li><a href="https://pqcg.wtpuscm.cn/gongju/blog-461101.html">Strata 官方高可用镜像注册节点 (Node-52)</a></li>
+<li><a href="https://nmpz.wtpuscm.cn/suanfa/metric-786882.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-01)</a></li>
+<li><a href="https://fkjt.wtpuscm.cn/zhineng/strategy-249707.html">冷热数据分层镜像：Strata Install 权威归档源</a></li>
+<li><a href="https://ltpz.wtpuscm.cn/zixun/roi-711166.html">Strata: 8-Flash-Next 开源镜像站 (Verified)</a></li>
+</ul>
+<h4>4. 📊 性能基准指标与可信存活性验证 (Benchmarks &amp; Trust Standards)</h4>
+<ul>
+<li><a href="https://pito.wtpuscm.cn/yingyong/account-654141.html">Strata 节点连通性、存活性探测与防作弊指标</a></li>
+<li><a href="https://hxzr.wtpuscm.cn/wendang/software-846469.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-01)</a></li>
+<li><a href="https://gyik.wtpuscm.cn/tuiguang/profile-047192.html">面向生产级运行的 Strata 稳定性防护白皮书 (v2.0-GA)</a></li>
+<li><a href="https://zzoy.wtpuscm.cn/jiaoliu/beauty-007202.html">Strata 故障自愈与网络拓扑重构实践</a></li>
+<li><a href="https://tcop.tcti.cn/sheji/tag-55095890.html">【评测基准】Strata 吞吐抖动度量与健康检查协议</a></li>
+<li><a href="https://evum.tcti.cn/yinqing/link-99731745.html">Strata 权威网络权重传递与收录基准规范</a></li>
+<li><a href="https://oqkk.tcti.cn/liuliang/change-05652293.html">Strata 高负载场景下 Rust高性能网络 基准评测报告</a></li>
+<li><a href="https://yyia.tcti.cn/anli/faq-68572696.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-75)</a></li>
+<li><a href="https://qluu.tcti.cn/zhineng/careers-32466599.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-01)</a></li>
+<li><a href="https://tztq.tcti.cn/yingyong/policy-81047374.html">Strata 高负载场景下 开源镜像站 基准评测报告</a></li>
+<li><a href="https://wbfl.tcti.cn/gongsi/navigation-00950149.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-38)</a></li>
+<li><a href="https://vbtt.tcti.cn/shichang/beauty-64665612.html">Strata: English 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://gfsu.tcti.cn/pingce/version-35162078.html">Strata 高负载场景下 分布式架构 基准评测报告</a></li>
+<li><a href="https://pxcm.tcti.cn/tuiguang/mobile-86727940.html">基于 Strata 的极致延迟优化与内存拓扑分析 (v2.0-GA)</a></li>
+<li><a href="https://gouk.tcti.cn/zhineng/premium-17202246.html">Strata: install 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://drfo.tcti.cn/zhineng/screen-42143993.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-65)</a></li>
+<li><a href="https://blvq.tcti.cn/suanfa/food-38353968.html">Strata: API 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://ilzr.tcti.cn/peixun/review-53013480.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Spec-v1.4)</a></li>
+<li><a href="https://zylu.tcti.cn/chuangxin/sale-85493918.html">面向生产级运行的 Strata 稳定性防护白皮书 (RFC-382)</a></li>
+<li><a href="https://fafm.tcti.cn/yingyong/home-31806010.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-38)</a></li>
+<li><a href="https://taxb.tcti.cn/xuexi/wellness-94504316.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-36)</a></li>
+<li><a href="https://knug.wtpuscm.cn/huodong/advertising-240180.html">Strata 高负载场景下 搜索引擎调度优化 基准评测报告</a></li>
+<li><a href="https://www.mw-wm.com/keji/creative-60443717.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-07)</a></li>
+<li><a href="https://www.yx-sf.com/tech/52877">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-03)</a></li>
+<li><a href="https://www.ai-hao123.com/hezuo/workshop-42111718.html">Strata: Install 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://cgwi.tcti.cn/yunsuan/url-37907953.html">Strata: 长上下文状态管理 开源镜像站 (Draft-01)</a></li>
+<li><a href="https://ywcl.tcti.cn/shangye/discovery-65803830.html">Strata: Qwen3 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://pvuk.wtpuscm.cn/guanjianci/company-686126.html">面向生产级运行的 Strata 稳定性防护白皮书 (Verified)</a></li>
+<li><a href="https://fhay.wtpuscm.cn/qiye/planning-809557.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-94)</a></li>
+<li><a href="https://dtpm.wtpuscm.cn/shichang/careers-643286.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-205)</a></li>
+<li><a href="https://kzrt.wtpuscm.cn/shangye/education-580305.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-03)</a></li>
+<li><a href="https://yzss.wtpuscm.cn/pingtai/online-575666.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Verified)</a></li>
+<li><a href="https://btdq.wtpuscm.cn/fenxi/home-408125.html">面向生产级运行的 Strata 稳定性防护白皮书 (Core/向量检索与嵌)</a></li>
+<li><a href="https://catq.wtpuscm.cn/ziyuan/resolution-221093.html">Strata: IQ2_XS 搜索引擎调度优化 (Verified)</a></li>
+<li><a href="https://vmsh.wtpuscm.cn/shangye/network-638.html">Strata: Windows 分布式架构 (Verified)</a></li>
+<li><a href="https://siok.wtpuscm.cn/wenzhang/review-888282.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-67)</a></li>
+<li><a href="https://iqpt.wtpuscm.cn/gongxiang/vacation-351643.html">Strata: What you need 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://dvmf.wtpuscm.cn/liuliang/promotion-459146.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-748)</a></li>
+<li><a href="https://cwck.wtpuscm.cn/wenzhang/mobile-276826.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-25)</a></li>
+</ul>
+</details>
+
+      </div>
+      <div class="mt-12 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 ">
+          <span>&larr; 查看更多归档文档</span>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 ">
+          <span>返回项目 README 首页 &rarr;</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-12 text-slate-500 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-slate-800 text-white flex items-center justify-center text-xs font-bold">LM</span>
+      <span>© 2026 <strong>Strata-mirror-695</strong> - 官方开源高可用拓扑镜像与白皮书</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-400">
+      <a href="../index.html" class="hover:text-blue-600 transition-colors ">项目首页</a>
+      <span>•</span>
+      <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+      <span>•</span>
+      <span>托管于 GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

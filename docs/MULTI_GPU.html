@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strata on two or three GPUs (layer split) - Strata-mirror-695 文档归档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.68;
+        color: #1e293b;
+      }
+      .markdown-body {
+        color: #1e293b;
+      }
+      .markdown-body h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #e2e8f0;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .markdown-body h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 1.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+      }
+      .markdown-body h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: #334155;
+      }
+      .markdown-body p {
+        margin-top: 0.8rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+      }
+      .markdown-body a {
+        color: #2563eb;
+        text-decoration: none;
+        border-bottom: 1px dashed #93c5fd;
+        transition: all 0.2s ease;
+      }
+      .markdown-body a:hover {
+        color: #1d4ed8;
+        border-bottom: 1px solid #1d4ed8;
+        background-color: #eff6ff;
+        border-radius: 2px;
+      }
+      .markdown-body ul, .markdown-body ol {
+        padding-left: 1.5rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .markdown-body ul {
+        list-style-type: disc;
+      }
+      .markdown-body ol {
+        list-style-type: decimal;
+      }
+      .markdown-body li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .markdown-body pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .markdown-body code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.35rem;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        border-radius: 0.35rem;
+        border: 1px solid #e2e8f0;
+      }
+      .markdown-body pre code {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .markdown-body blockquote {
+        margin: 1rem 0;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 0.5rem 0.5rem 0;
+        color: #475569;
+      }
+      .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        display: block;
+        overflow-x: auto;
+      }
+      .markdown-body th, .markdown-body td {
+        border: 1px solid #cbd5e1;
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      .markdown-body th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .markdown-body tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .markdown-body hr {
+        height: 1px;
+        border: none;
+        background-color: #e2e8f0;
+        margin: 2rem 0;
+      }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform ">LM</span>
+        <span class="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors ">Strata-mirror-695</span>
+      </a>
+      <span class="hidden md:inline-block text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono ">Pages Docs</span>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="../index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-slate-600 hover:text-blue-600 hover:bg-slate-50 font-medium ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>首页 (README)</span>
+      </a>
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-blue-600 bg-blue-50 font-semibold ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>文档归档 (Docs)</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+      </a>
+      <div class="h-4 w-px bg-slate-200 mx-1"></div>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695/wiki" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="hidden sm:inline">Wiki</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 面包屑与顶部导航 -->
+  <header class="bg-white border-b border-slate-200 py-6 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
+        <a href="../index.html" class="hover:text-blue-600 transition-colors ">首页</a>
+        <span>/</span>
+        <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">技术文档</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Strata on two or three GPUs (layer split)</h1>
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors ">
+          <span>&larr; 返回文档归档菜单</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体正文区域 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
+      <div class="markdown-body">
+        <h1>Strata on two or three GPUs (layer split)</h1>
+<p>One model can run across several NVIDIA cards in one PC. The layers are split into contiguous ranges, one per GPU:
+the first card runs layers 0 to K-1, the next card runs K onward, and so on; the last card also runs the output head
+and the draft (MTP) layer. Each card keeps an expert cache for <strong>its own layers only</strong>, so two cards hold about twice
+the experts one card holds - for the Coder model on a 16 GB + 24 GB pair, nearly all of them, which is where the
+speed comes from (decode then barely touches the CPU pool).</p>
+<p>This is pipeline (layer) parallelism, not tensor parallelism: a token crosses from one card to the next once per
+verify window (a few hundred KB through pinned RAM), not twice per layer. No NVLink or peer-to-peer access is
+needed; cards on x4 or x1 slots work, and the PCIe share of each card is probed on its own link. A <code>--pcie-frac</code> you give
+is every card's share and skips those probes; there is no per-card setting yet.</p>
+<h2>Using it</h2>
+<p><strong>Nothing to type.</strong> <code>START-HERE.bat</code> (Linux: <code>./setup.sh</code>) lists your NVIDIA cards and says for each one whether
+Strata can use it:</p>
+<pre><code>  Your NVIDIA GPUs:
+    GPU 0: NVIDIA GeForce RTX 5080, 16 GB VRAM - can be used
+    GPU 1: NVIDIA GeForce GTX 1080 Ti, 11 GB VRAM - not supported - older than the RTX 20 series (compute capability 6.1; Strata needs 7.5 or newer)
+    GPU 2: NVIDIA GeForce RTX 3090, 24 GB VRAM - can be used
+  ...
+  1) GPU 0 (NVIDIA GeForce RTX 5080, 16 GB) + GPU 2 (NVIDIA GeForce RTX 3090, 24 GB) together   (recommended)
+  2) GPU 2 (NVIDIA GeForce RTX 3090, 24 GB) only
+  3) GPU 0 (NVIDIA GeForce RTX 5080, 16 GB) only
+Which GPUs? [1]:
+</code></pre>
+<p>When two or more cards can share the model, the two best together are recommended (the newest generation first:
+it becomes the main card). A model installed on one card asks once, at its next start, whether to use both from
+now on; the answer is kept.</p>
+<p><strong>Choosing yourself</strong> (at setup or at any start):</p>
+<pre><code>--gpus 0,2                 these cards together, as nvidia-smi numbers them; the first is the main one. Remembered.
+--gpus all                 every card that can share the model
+--gpu 0                    one card (at a start: for that start only)
+--layer-split auto         (default) or the first layer of each later card, e.g. 18 or 16,32
+</code></pre>
+<p><strong>Not supported</strong> (setup says so and names the cards that can be used instead):</p>
+<ul>
+<li>a card older than the RTX 20 series (compute capability below 7.5: GTX 10 and older), unless you name it: Pascal
+and Volta cards (Tesla P100 / P40, GTX 10, V100) are admitted when you choose them with <code>--gpus</code> (or <code>--gpu</code>,
+<code>--cuda 12</code>) and then run the experimental CUDA 12 engine, see <a href="OLDER_GPUS.md">OLDER_GPUS.md</a>. Two Tesla P40s
+(<code>"gpu": [0, 1]</code> in the config) ran the layer split in a community benchmark: IQ2_XS decode 19.6 tok/s on one card,
+34.8 on both (#1028, experimental, one report);</li>
+<li>a card with less than 8 GB of VRAM, together with others (each card holds a copy of the dense weights and its
+own prompt buffers) - unless you name it with <code>--gpus</code>: then setup says the risk and asks (<code>--yes</code> with the named
+cards goes ahead);</li>
+<li>Intel GPUs, and a mix of NVIDIA and AMD cards. (AMD cards share a model among themselves: <code>./setup.sh --backend  hip --gpus 1,0</code>, see <a href="AMD_HIP.md">AMD_HIP.md</a>.)</li>
+</ul>
+<p>Or edit an existing config (<code>strata-*.json</code>), then restart:</p>
+<pre><code class="language-json">"gpu": [0, 2],
+"layer_split": "auto"
+</code></pre>
+<p><code>"layer_split"</code> is <code>"auto"</code> (placed by each card's free VRAM) or the <strong>first layer of each later card</strong>: one rising
+number per card after the first, not a count of layers per card. With 4 cards and a 48-layer model, <code>"24,36,42"</code>
+(or <code>[24, 36, 42]</code>) puts layers 0-23 on the first card, 24-35 on the second, 36-41 on the third and 42-47 on the last.
+The server checks it before the start and says what is wrong (0.1.39, #644).</p>
+<p><strong>Card order with <code>"auto"</code></strong> (NVIDIA, #1352): the faster card (multiprocessors x max clock) goes <strong>last</strong> - the last stage runs the head, the draft layer and the verify, and a prompt chunk waits on it (a 4070 Ti SUPER + 5060 Ti read a 6K prompt in 50 s one way round and 15 s the other). Equal cards keep your order; a manual split keeps it too. <code>"gpu_order": "as_given"</code> keeps the order you wrote under <code>"auto"</code> as well. The engine log line <code>layer split: card order ...</code> says when it changed.</p>
+<p><strong>Skip the split when the first card holds everything</strong> (opt-in, 0.1.31): <code>"split_skip_if_fits": true</code> in the config
+(engine flag <code>--split-skip-if-fits</code>, with <code>--layer-split auto</code>) runs on the first card alone when it holds every
+profiled expert plus the context's KV, the draft layer and the reserve, and says so in the log; otherwise the split
+stays. On an R9700 32 GB + RX 9070 XT the R9700 holds all of the Coder's experts: with the flag 4K prompts read at
+1,776 tok/s instead of 1,244 (split) and decode runs at ~60 tok/s instead of ~51 (16K prompts ~5% slower than split).</p>
+<p><strong>Short prompts on a split (0.1.32, #340).</strong> 0.1.30 gave each card's prompt path a loan from its own expert cache,
+refilled after every request; on cards that hold nearly all their experts that cost short prompts up to a third of
+their speed. 0.1.32 refills all cards at once, uses a smaller streaming ring on a split, and lets a card with free
+VRAM keep its own prompt buffers - the same output as 0.1.31, measured on an R9700 + RX 9070 XT: 2K prompts 993 -&gt;
+1,265 tok/s, 16K 1,852 -&gt; 1,950, decode unchanged. <code>STRATA_SPLIT_OWN=1</code> (opt-in) gives every card its own buffers:
+2K 1,450 and 16K 2,227 tok/s there, but a full card then keeps a different set of experts resident, so the output
+differs from the default's (stable and coherent); <code>STRATA_SPLIT_OWN=auto</code> does that only where the buffers are at
+most 12% of each card's VRAM.</p>
+<p><strong>The idle card can help one-chunk prompts (opt-in, <code>STRATA_PREFILL_HELP=1</code>).</strong> A prompt that fits one chunk runs the stages one after the other, so while
+one card reads its layers the other idles. With it on, each stage hands a share of its streamed experts to the idle card: it
+streams them over its own PCIe link into its own (lent) prompt buffers, computes their rows on the MMQ path and sends
+them back - <code>--peer-device</code>'s peer streaming, without P2P (the activations and the rows go through mapped host memory,
+read by copy kernels, so they do not queue behind the expert blobs on either card's copy engine). The share falls with
+the prompt (0.41 of the streamed experts at 1.5K tokens, 0.32 at 3K) and is off from ~3.3K tokens, where the stages
+overlap anyway and no share paid. Measured on 2x RTX 3090 (UD-Q4_K_XL, no P2P), prompt tok/s without / with: 1.1K 496 /
+723, 1.5K 674 / 833, 2K 878 / 1,128, 2.5K 1,017 / 1,296, 3K 1,260 / 1,440; 4K and 8K unchanged, decode unchanged. It
+costs no VRAM (the idle card's own prompt buffers) and ~110 KB of mapped host memory per token of the largest chunk it
+helped (~360 MB at 3.3K tokens). The rows it computes round like a different MMQ grouping, so the output is not
+bit-identical to the default's (it is repeatable: same prompt, same output), which is why it is <strong>opt-in</strong>:
+<code>STRATA_PREFILL_HELP=1</code> turns it on. Native packs on the MMQ prompt path only (not with the fused prompt kernels,
+<code>STRATA_PF_FUSED=1</code>, nor with <code>--peer-device</code>). With it on, <code>STRATA_PREFILL_HELP_FRAC=f</code> fixes the share.</p>
+<p>The engine flags behind it: <code>--layer-split K1[,K2..]|auto</code> and <code>--split-device D1[,D2..]</code> (the later stages'
+devices; default the next visible ones). <code>--layer-split K --split-device 0</code> runs both stages on one card sharing
+everything - the bit-exact check of the hand-off, not a speed mode.</p>
+<p><strong>Each card loads only its own layers' dense weights</strong> (0.1.39, PR #639) with explicit split points (<code>--layer-split  27</code>, not <code>auto</code>): every card used to keep a full copy (~3.4 GB for the Coder) though its stage reads only its own
+layers, and the VRAM it frees goes to that card's expert cache (2x MI50 16 GB, Coder: 8,819 -&gt; 10,626 experts in
+VRAM, decode 39.2 -&gt; 41.7 tok/s). Opt-in for now, on AMD and NVIDIA alike: <code>STRATA_STAGE_TRIM=1</code> (please report how
+it goes).
+A card holding more experts can change which experts run on the GPU, so the output can differ slightly from a run
+without it.</p>
+<p><strong>The resident RAM mode works on a split</strong> (<code>--resident-experts</code>, the low-RAM mode). The RAM copy of the experts
+leaves out the ones every card's cache holds, not only the first card's, and when the rest does not fit whole it keeps
+the hottest by the expert profile over all the layers. An adaptive swap copies the evicted expert back into RAM from
+the card that owns its layer. Before, <code>--resident-experts</code> with a split ran as <code>--mmap-experts</code>, and setup recommended
+one card in the low-RAM mode; with an engine that has it (<code>RESIDENT_SPLIT_ENGINE</code> in setup.py), setup keeps the cards
+together and the experts no card holds in RAM. Swift 1.5 IQ3_XXS at
+160K (q4_0 KV, <code>--prefill 4096</code>, <code>--spec 4</code> with the stock draft layer), RTX 4060 Ti (layers 0-19) + RTX 5080 (20-47),
+i9-14900KF, 32 GB of RAM, Windows 11, four greedy prompts at a time, decode tok/s:</p>
+<table><thead><tr><th></th><th>first four prompts</th><th>after three more rounds</th></tr></thead><tbody>
+<tr><td>5080 alone, <code>--resident-experts</code></td><td>25</td><td>29</td></tr>
+<tr><td>split, <code>--mmap-experts</code> (what <code>--resident-experts</code> became on a split)</td><td>32</td><td>64</td></tr>
+<tr><td>split, <code>--resident-experts</code> (22 GiB of experts locked in RAM)</td><td>71</td><td>69</td></tr>
+</tbody></table>
+<p>The split with <code>--mmap-experts</code> catches up once the OS file cache holds the experts, on a PC with nothing else
+running; the resident copy is there from the first request and stays locked when other programs need the RAM. With
+<code>--pcie-frac 0 --adapt-every 0</code> the split's greedy output is the same with either mode.</p>
+<p><strong>A separate VRAM reserve for the later cards:</strong> <code>--vram-reserve-later-mib N</code> (default: <code>--vram-reserve-mib</code>'s value).
+The card that drives the monitors needs more headroom than one that drives none; with the display on the last card,
+<code>--vram-reserve-mib 300 --vram-reserve-later-mib 1800</code> gives the first card's cache that VRAM.</p>
+<p><strong>auto</strong> tries every placement (all of them for two, three or, since 0.1.40, four cards; proportional to the free VRAM beyond that) and
+keeps the one whose caches would hold the most of the expert profile, hottest pairs weighted most; ties go to the
+placement that leaves the fullest card the most room. The startup log prints the choice:</p>
+<pre><code>strata generate: layer split auto: K=19 - the caches hold 11767 of 12288 profiled pairs (fullest device 100%)
+strata serve: layer split: layers 0-18 (CUDA0), 19-47 (CUDA1), one hand-off per window
+</code></pre>
+<h2>What each card holds</h2>
+<ul>
+<li><strong>every card</strong>: a copy of the dense weights (~3.4 GB for the Coder), its own session state (the KV cache of the full
+context), its verify window and its prompt-path buffers, and an expert cache for its layers filled from the profile;</li>
+<li><strong>the last card</strong>: also the output head and the draft layer (~0.8 GB);</li>
+<li><strong>host RAM</strong>: the expert arena once, shared by all cards (the CPU pool computes whatever no card holds).</li>
+</ul>
+<p>Prompts are read in chunks that flow through the cards in turn; while a later card reads chunk c, the first card
+already reads chunk c+1. Conversation checkpoints save and restore every card's state; the adaptive expert swaps copy
+into the card that owns the layer.</p>
+<h2>Limits (for now)</h2>
+<ul>
+<li><strong>Works across cards</strong> (bench/results/2026-09-29-layer-split-limits):
+<ul>
+<li>images (<code>--vision</code>): each card keeps its own image-position table;</li>
+<li>control vectors and the experimental speed projection: each card holds the vector's tables, switched on and
+off per request on all of them;</li>
+<li>KV streaming (<code>--kv-resident</code>): each card streams the KV of its own session;</li>
+<li>mid-prompt checkpoints (<code>--prompt-cache-every</code>): each card saves its part of a checkpoint when it has read that
+chunk;</li>
+<li>the older helper-GPU caches (<code>--expert-cache-remote</code>, docs/SECOND_GPU.md): they take the visible GPUs no stage
+runs on, and hold only experts no stage's cache holds. On the test rig, a 2080 Ti helper made decoding slower,
+as it did without a split: its per-layer round trip costs more than the CPU pool needs for those experts.</li>
+</ul>
+</li>
+<li><code>--mmap-experts</code> needs a canonical pack (<code>experts.bin</code>), with or without a split; a native (IQ) pack says so at
+start.</li>
+<li>The prompt path has its own buffers on every card (1.5 GB each at the default 2048-token chunk; <code>--prefill 1024</code>
+halves that) instead of borrowing cache slots as one card does. An explicit <code>--expert-cache</code> on the first card is
+capped to leave room for them.</li>
+<li>Under WDDM (Windows, and WSL2) only 8 GiB of the expert arena is pinned (more, mapped into two GPU contexts,
+leaves WDDM refusing allocations); the rest streams through the pinned staging ring. A Linux driver has no such
+limit, so there the whole arena is pinned (since 0.1.31; the cap cost a 4090 + 3060 split two thirds of its
+prompt speed, #253). <code>STRATA_ARENA_PIN_GIB=N</code> pins at most N GiB, <code>0</code> the whole arena, on any OS.</li>
+<li>Every card needs compute capability 7.5 (RTX 20 or newer). The pre-sm_80 QSA scorer path is fp32 FMAs, so a
+Turing card runs the same kernels instead of the tensor-core prompt attention.</li>
+</ul>
+<h2>Measured</h2>
+<p>The Coder on an RTX 5080 + RTX 3090 (Ryzen 9 9950X3D), 32K context; details in
+<code>bench/results/2026-09-29-layer-split/</code>:</p>
+<table><thead><tr><th></th><th>Prompt 16K / 28K tok/s</th><th>Decode story / code tok/s</th></tr></thead><tbody>
+<tr><td>5080 alone</td><td>1,726-2,017 / 1,970</td><td>83-87 / 88-105</td></tr>
+<tr><td>5080 + 3090, best split (K=26)</td><td>2,039 / 2,357</td><td>84 / 110</td></tr>
+<tr><td>5080 + 3090, auto (K=22)</td><td>2,037 / 2,073</td><td>80 / 109</td></tr>
+</tbody></table>
+<ul>
+<li><strong>Prompts gain the most</strong> (+18-20%): each card reads its own layers of the chunk while the other reads the next.</li>
+<li><strong>Decode is on par with the faster card alone</strong>, and ahead on code. Once both caches hold nearly every routed
+expert, the per-layer GPU time decides.</li>
+<li><strong>Correctness:</strong> one GPU is byte-identical to 0.1.20, and the hand-off itself is bit-exact.</li>
+</ul>
+<p><strong>Which cards and in what order:</strong></p>
+<ul>
+<li>Put the fastest card first; auto gives it as many layers as its cache allows.</li>
+<li>Leave out a much slower card when two already hold the model. An RTX 2080 Ti as a third card made the 5080 +
+3090 pair slower (68 / 90 tok/s decode): every extra card costs its own round per window.</li>
+<li>More cards pay off when the model's routed experts do not fit the faster ones.</li>
+</ul>
+<h2>One conversation with both cards busy (<code>--pipeline-windows</code>, opt-in)</h2>
+<p>With a split the cards take turns on a verify window: the first card runs its layers and hands off, then waits while
+the last card runs the rest, the head and the draft. <code>--pipeline-windows 2</code> lets the first card start the <strong>next</strong>
+window while the last card still verifies this one. The next window is a guess: that this window is accepted whole
+and that its bonus token is the one the draft layer predicts (the draft layer is run on through the drafts of the
+window in flight). When the guess holds, half of the next window is already done; when it does not, the first card
+puts its state back (a copy of its recurrent state taken while the window ran) and the next window is built from the
+real tokens. A guessed window is only started when the draft layer's estimate says it is likely to be kept. Windows
+copied from earlier context (<code>--suffix-draft</code>) are guessed past as well, which is where edits that copy text gain
+most. <code>--pipeline-windows 1</code> overlaps only the short prompt reads that go through the verify windows
+(<code>--short-read</code>).</p>
+<p>Two cards, exactly two stages, <code>--serve</code>. In the config:</p>
+<pre><code>"args": [ ..., "--pipeline-windows", "2" ],
+"layer_split": "20"
+</code></pre>
+<ul>
+<li><strong>Cost</strong>: a second verify window on each card, 160 MiB more kept out of each card's expert cache, plus two copies
+of the first card's recurrent state (about 3 MiB per GDN layer it runs) on the first card with <code>2</code>.</li>
+<li><strong>Same text</strong>: the last card only ever runs windows that are verified, and every window row computes what it
+would in any other window, so the tokens are the serial loop's. With <code>STRATA_IQ_MT_MIN=1 --pcie-frac 0  --adapt-every 0</code> the greedy output is identical bit for bit to the serial loop's with the same expert caches. The pipeline keeps
+its VRAM out of the caches, so against a run without the flag a few experts move from a card to the CPU, which
+rounds them differently, and a near-tie can flip (a serial run given the same caches through <code>--vram-reserve-mib</code>
+matches it exactly).</li>
+<li><strong>Off, with one line in the log saying why</strong>, with <code>--batch</code> slots, <code>--peer-device</code>, the helper caches
+(<code>--expert-cache-device1..3</code>, which <code>--remote-expert-opt</code> builds on), a split into three or more stages or onto one GPU
+(<code>--split-device 0</code>), or no draft layer. A request with repetition penalties (<code>penalty_last_n</code>) or coupled
+draft sampling decodes serially.</li>
+<li><strong>With the resident RAM mode's asynchronous swaps</strong> (<code>--adapt-async 1</code>, <a href="DETAILS.md">DETAILS.md</a>) a round's steps
+advance between the verified windows. Each card's copies are queued by the decode loop itself while that card has
+no window in flight, after every window that may still read what they overwrite has finished; the moves into RAM
+wait the same way.</li>
+<li><strong>Measured</strong> (Swift 1.5 IQ3_XXS, 160K context, q4_0 KV, the stock draft layer, RTX 4060 Ti (layers 0-19) +
+RTX 5080 (20-47), i9-14900KF, 32 GB of RAM with the resident RAM mode on the split (#848); greedy, 500 tokens, two
+interleaved pairs of three rounds, decode tok/s): Python code 90.4 -&gt; 103.1, C code 76.6 -&gt; 81.6, English prose
+63.0 -&gt; 71.1, Italian prose 41.6 -&gt; 46.3, a copy-heavy edit (a 5 KB file back with a rename) 90.5 -&gt; 117.9; mean
+72.4 -&gt; 84.0 (+16%). It pays when the windows are GPU-bound: with the experts read through the OS file cache
+(<code>--mmap-experts</code> on that 32 GB PC) the file reads dominate and it measured no faster.</li>
+</ul>
+<p>The <code>STRATA_PIPELINE_*</code> tuning and test variables (THETA, FORCE_MISS, SWITCH, LOG, TRACE and the like) are read only with
+<code>STRATA_PIPELINE_DEBUG=1</code>. <code>--pipeline-windows</code> and <code>--adapt-async 1</code> combine: the engine turns the asynchronous tier
+off beside <code>--pipeline-windows 2</code> only when <code>STRATA_PIPELINE_ADAPT_ASYNC=0</code> is set. What switches either one off is
+printed once at start ("is off: ..."). <code>--remote-expert-opt</code> does something only with a helper cache
+(<code>--expert-cache-device1..3</code>); on a plain layer split it is inert, and setup no longer writes it there (#1447).</p>
+<p>Measured on 2x RTX 3090 (sm_86, 250 W limits; GPU0 PCIe 4.0 x16, GPU1 x4, no NVLink; Ryzen 7 9800X3D, 32 GB RAM),
+Qwen3.8-Flash-Next GSQ-RCO IQ3_S, <code>--resident-experts</code>, KV int8, <code>--spec 4 --mtp</code>, <code>"layer_split": "29"</code> for the
+<code>--pipeline-windows</code> rows (without <code>--remote-expert-opt</code>); the others are setup's config (<code>auto</code>). Decode is the mean of
+runs 2-6 of 1,500-token coding replies at temperature 0.6, prefill one cold 19.9K-token prompt; one run per arm unless
+noted (reported by adambenhassen, #1447; not repeated on our boxes):</p>
+<table><thead><tr><th>Arm</th><th style="text-align: right">Decode tok/s</th><th style="text-align: right">Prefill tok/s</th></tr></thead><tbody>
+<tr><td>setup defaults (two runs)</td><td style="text-align: right">137.0 / 136.9</td><td style="text-align: right">1798</td></tr>
+<tr><td><code>--adapt-async 1</code> (two runs)</td><td style="text-align: right">145.2 / 143.7</td><td style="text-align: right">1800 / 1797</td></tr>
+<tr><td><code>--adapt-async 1</code>, no <code>--remote-expert-opt</code></td><td style="text-align: right">145.0</td><td style="text-align: right">1807</td></tr>
+<tr><td><code>STRATA_ADAPT_LAG=2</code></td><td style="text-align: right">142.8</td><td style="text-align: right">1800</td></tr>
+<tr><td><code>STRATA_EXCHANGE_ROTATE=1</code></td><td style="text-align: right">139.6</td><td style="text-align: right">1800</td></tr>
+<tr><td><code>STRATA_PF_FUSED=1</code></td><td style="text-align: right">137.2</td><td style="text-align: right">1913</td></tr>
+<tr><td><code>--pipeline-windows 2</code></td><td style="text-align: right">136.7</td><td style="text-align: right">2097</td></tr>
+<tr><td><code>STRATA_SPEC_COUPLED=1</code></td><td style="text-align: right">137.6</td><td style="text-align: right">1804</td></tr>
+<tr><td><code>STRATA_SPEC_PROB=1</code></td><td style="text-align: right">137.2</td><td style="text-align: right">1788</td></tr>
+<tr><td><code>STRATA_SPEC_COUPLED=1</code> + <code>STRATA_SPEC_GUMBEL=1</code></td><td style="text-align: right">136.5</td><td style="text-align: right">1805</td></tr>
+<tr><td>async + lag 2 + rotate + pf_fused</td><td style="text-align: right">145.0</td><td style="text-align: right">1829</td></tr>
+<tr><td>pw2 + lag 2 + rotate + pf_fused</td><td style="text-align: right">135.9</td><td style="text-align: right">2296</td></tr>
+<tr><td>pw2 + async + lag 2 + rotate + pf_fused</td><td style="text-align: right">142.0</td><td style="text-align: right">2302</td></tr>
+</tbody></table>
+<p>The last row keeps most of the asynchronous tier's decode gain and the pipeline's +28% prefill; no stalls in any arm.
+These are opt-in settings on one rig, not defaults.</p>
+<h2>Several conversations at once</h2>
+<p>With a layer split, <code>--batch N --batch-groups G --trim-stage-weights</code> decodes several conversations together and
+pipelines them through the cards: see <a href="BATCHING.md">BATCHING.md</a>.</p>
+<hr />
+<details open>
+<summary><b>📚 Strata 官方技术规约与全息拓扑引文矩阵（共计 150 处权威节点索引）</b></summary>
+<blockquote>
+<p><strong>索引发布声明</strong>：本项目「Strata」遵循开放开源与知识共享协议。以下引用矩阵涵盖项目架构白皮书、高可用镜像注册中心、分布式通信契约与可信存活基准指标，为集群爬虫调度代理与检索系统提供毫秒级全息寻址拓扑。</p>
+</blockquote>
+<h4>1. 🌐 Strata 核心架构规约与设计白皮书 (Architecture &amp; Core Specs)</h4>
+<ul>
+<li><a href="https://mubj.wtpuscm.cn/fuwu/productivity-324192.html">基于 Strata 的高吞吐 分布式架构 设计白皮书</a></li>
+<li><a href="https://yaxb.wtpuscm.cn/pingtai/success-418918.html">Strata 分布式数据通道与 分布式架构 技术规范 (Verified)</a></li>
+<li><a href="https://nbjv.wtpuscm.cn/ziyuan/collaboration-525757.html">【官方规范】Strata IQ3_XXS 核心运行拓扑标准</a></li>
+<li><a href="https://uaij.wtpuscm.cn/zhineng/ai-410560.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.7)</a></li>
+<li><a href="https://xerm.wtpuscm.cn/anli/rating-787604.html">Strata 内部组件解耦与事件状态机规范 (Draft-03)</a></li>
+<li><a href="https://fpqg.wtpuscm.cn/ziyuan/vendor-216126.html">面向大规模网络的 Strata 工业级架构基准</a></li>
+<li><a href="https://ftes.wtpuscm.cn/anfang/category-179745.html">Strata 内部组件解耦与事件状态机规范 (RFC-261)</a></li>
+<li><a href="https://bknx.wtpuscm.cn/qiye/register-824.html">Or do it yourself 核心系统架构与设计规约 (Core/Or do )</a></li>
+<li><a href="https://ejli.wtpuscm.cn/jiaoliu/event-260014.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.5)</a></li>
+<li><a href="https://aumv.wtpuscm.cn/keji/photo-323708.html">现代 开源镜像站 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://qnxi.wtpuscm.cn/yunsuan/alert-775589.html">【Strata】install 核心系统架构与设计规约 (Spec-v2.5)</a></li>
+<li><a href="https://nyys.wtpuscm.cn/ziyuan/company-170234.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/consum)</a></li>
+<li><a href="https://wgsw.wtpuscm.cn/zhinan/reminder-653536.html">基于 Strata 的高吞吐 Rust高性能网络 设计白皮书</a></li>
+<li><a href="https://zmti.wtpuscm.cn/wenzhang/login-353189.html">【官方规范】Strata Install 核心运行拓扑标准</a></li>
+<li><a href="https://bdij.wtpuscm.cn/yunying/segment-582447.html">【官方规范】Strata 大模型知识库外链对齐 核心运行拓扑标准</a></li>
+<li><a href="https://ekjy.wtpuscm.cn/hezuo/objective-279552.html">【Strata】English 核心系统架构与设计规约 (v2.0-GA)</a></li>
+<li><a href="https://yfwn.wtpuscm.cn/fenxi/navigation-023475.html">现代 分布式架构 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://pmzm.wtpuscm.cn/tuiguang/brand-208953.html">How does it work? 核心系统架构与设计规约 (Spec-v1.0)</a></li>
+<li><a href="https://dynj.wtpuscm.cn/yingyong/revenue-148715.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/IQ2_XS)</a></li>
+<li><a href="https://jnio.wtpuscm.cn/kuangjia/discount-105700.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Core/Englis)</a></li>
+<li><a href="https://azrv.wtpuscm.cn/jiaocheng/management-581782.html">Strata 内部组件解耦与事件状态机规范 (Core/Linux)</a></li>
+<li><a href="https://eguy.wtpuscm.cn/anfang/article-800562.html">【Strata】请求上下文穿透方案 核心系统架构与设计规约 (Draft-05)</a></li>
+<li><a href="https://mjon.wtpuscm.cn/baogao/solution-001397.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.2)</a></li>
+<li><a href="https://ybmp.tcti.cn/kuangjia/social-38875915.html">Strata 内部组件解耦与事件状态机规范 (v2.0-GA)</a></li>
+<li><a href="https://wqrs.tcti.cn/paiming/account-94438006.html">基于 Strata 的高吞吐 搜索引擎调度优化 设计白皮书</a></li>
+<li><a href="https://bqur.tcti.cn/paiming/study-02538060.html">Strata 内部组件解耦与事件状态机规范 (Draft-05)</a></li>
+<li><a href="https://snan.tcti.cn/kuangjia/study-08602855.html">What you need 核心系统架构与设计规约 (Draft-04)</a></li>
+<li><a href="https://pmqp.tcti.cn/jiaoliu/ebook-47200924.html">Strata 分布式数据通道与 分布式架构 技术规范 (Spec-v2.7)</a></li>
+<li><a href="https://jcjg.tcti.cn/guanjianci/topic-93627310.html">基于 Strata 的高吞吐 开源镜像站 设计白皮书</a></li>
+<li><a href="https://gxtw.tcti.cn/wendang/products-84205401.html">Strata 分布式数据通道与 分布式架构 技术规范 (Draft-04)</a></li>
+<li><a href="https://wuhj.tcti.cn/pingtai/sales-50648411.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Verified)</a></li>
+<li><a href="https://sxqw.tcti.cn/gongju/luxury-66892575.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Node-28)</a></li>
+<li><a href="https://vktw.tcti.cn/pingtai/change-81606168.html">现代 搜索引擎调度优化 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://qape.tcti.cn/shangye/tracking-01286585.html">【Strata】异步路由分发机制 核心系统架构与设计规约 (Draft-07)</a></li>
+<li><a href="https://yqwi.tcti.cn/gongsi/campaign-63600050.html">【官方规范】Strata 8-Flash-Next 核心运行拓扑标准</a></li>
+<li><a href="https://jatv.tcti.cn/shuju/ebook-01892259.html">【官方规范】Strata engine 核心运行拓扑标准</a></li>
+<li><a href="https://xnbx.tcti.cn/qiye/planning-76947612.html">Strata 分布式数据通道与 Rust高性能网络 技术规范 (Draft-06)</a></li>
+</ul>
+<h4>2. 🔌 生产级模块集成与接口调用规范 (APIs &amp; Production Integration)</h4>
+<ul>
+<li><a href="https://nguc.tcti.cn/sheji/data-81844884.html">Strata vs 业界主流方案：分布式架构 深度技术选型对比</a></li>
+<li><a href="https://loej.tcti.cn/xitong/excellence-28492570.html">【生产手册】Strata 模块通信与请求穿透标准</a></li>
+<li><a href="https://wtha.tcti.cn/zhinan/url-75973313.html">【集成指南】分布式架构 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://mytc.wtpuscm.cn/sheji/help-423494.html">Strata 插件生态规范与 请求上下文穿透方案 扩展手册 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/chuangxin/funnel-86996348.html">基于 Strata 的自动化部署与生产环境配置实践</a></li>
+<li><a href="https://www.yx-sf.com/wiki/82970">Strata 核心 API 接口契约与客户端调用指南</a></li>
+<li><a href="https://www.ai-hao123.com/xitong/video-22713994.html">Strata 异步中间件流水线与 IQ2_XS 接入规范</a></li>
+<li><a href="https://byzg.tcti.cn/hezuo/tool-83317756.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v2.7)</a></li>
+<li><a href="https://fwxl.tcti.cn/anfang/alert-28067215.html">【集成指南】Rust高性能网络 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://yjrj.wtpuscm.cn/xuexi/productivity-088970.html">Strata 异步中间件流水线与 hardware 接入规范</a></li>
+<li><a href="https://sztk.wtpuscm.cn/kuangjia/demographic-543220.html">Strata 插件生态规范与 异步路由分发机制 扩展手册 (Core/异步路由分发)</a></li>
+<li><a href="https://dqdb.wtpuscm.cn/fenxi/brand-334008.html">Strata vs 业界主流方案：Rust高性能网络 深度技术选型对比</a></li>
+<li><a href="https://djlq.wtpuscm.cn/gongxiang/design-338968.html">Strata 异步中间件流水线与 (or 接入规范</a></li>
+<li><a href="https://qbkx.wtpuscm.cn/jishu/sport-159027.html">【集成指南】搜索引擎调度优化 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://jjyi.wtpuscm.cn/baogao/study-215137.html">Strata vs 业界主流方案：开源镜像站 深度技术选型对比</a></li>
+<li><a href="https://remu.wtpuscm.cn/qiye/roi-064372.html">Strata 插件生态规范与 inference 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://spra.wtpuscm.cn/huodong/news-029.html">Strata 插件生态规范与 Something went wrong? 扩展手册 (Verified)</a></li>
+<li><a href="https://rnih.wtpuscm.cn/yingxiao/tag-258010.html">Strata: hardware Rust高性能网络 (Draft-05)</a></li>
+<li><a href="https://fygi.wtpuscm.cn/jiaocheng/domain-698851.html">Strata 插件生态规范与 consumer 扩展手册 (Node-69)</a></li>
+<li><a href="https://ionp.wtpuscm.cn/tuiguang/web-971747.html">Strata 插件生态规范与 IQ2_XS 扩展手册 (RFC-559)</a></li>
+<li><a href="https://acpk.wtpuscm.cn/gongju/revenue-997431.html">Strata 插件生态规范与 8-Flash-Next 扩展手册 (RFC-281)</a></li>
+<li><a href="https://ksnp.wtpuscm.cn/ziyuan/layout-735554.html">Strata 插件生态规范与 (or 扩展手册 (Verified)</a></li>
+<li><a href="https://luxx.wtpuscm.cn/yunsuan/blog-233954.html">Strata vs 业界主流方案：搜索引擎调度优化 深度技术选型对比</a></li>
+<li><a href="https://jifm.wtpuscm.cn/paiming/customization-533607.html">Strata 插件生态规范与 Windows 扩展手册 (Core/Window)</a></li>
+<li><a href="https://jkkm.wtpuscm.cn/paiming/funnel-372704.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v1.5)</a></li>
+<li><a href="https://sapn.wtpuscm.cn/yanjiu/budget-085499.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://irjh.wtpuscm.cn/xinwen/sync-912810.html">Strata 异步中间件流水线与 any 接入规范</a></li>
+<li><a href="https://ewjq.wtpuscm.cn/tuiguang/terms-940975.html">Strata 插件生态规范与 (or 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://qiru.wtpuscm.cn/hezuo/collaborate-739655.html">Strata 异步中间件流水线与 engine 接入规范</a></li>
+<li><a href="https://iptd.wtpuscm.cn/paiming/server-281421.html">Strata 异步中间件流水线与 How does it work? 接入规范</a></li>
+<li><a href="https://dwod.wtpuscm.cn/huodong/comment-489214.html">Strata 插件生态规范与 How does it work? 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://trsi.wtpuscm.cn/fuwu/message-334175.html">Strata: hardware Rust高性能网络 (Verified)</a></li>
+<li><a href="https://pjgz.tcti.cn/zhizhu/subscribe-91700778.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Draft-02)</a></li>
+<li><a href="https://ktnz.tcti.cn/chanpin/growth-53605565.html">Strata 插件生态规范与 长上下文状态管理 扩展手册 (Draft-08)</a></li>
+<li><a href="https://ftok.tcti.cn/gongxiang/business-31676943.html">Strata 异步中间件流水线与 中间件管道调用契约 接入规范</a></li>
+<li><a href="https://xxtl.tcti.cn/keji/plugin-12623898.html">Strata 异步中间件流水线与 请求上下文穿透方案 接入规范</a></li>
+<li><a href="https://pfgu.tcti.cn/suanfa/ebook-21563577.html">【集成指南】开源镜像站 服务端接入准则与 Strata 实战</a></li>
+</ul>
+<h4>3. ⚡ Strata 全球高可用拓扑镜像与权威数据源 (Mirror Registry &amp; Data Topology)</h4>
+<ul>
+<li><a href="https://aqdn.tcti.cn/jishu/community-55666664.html">【镜像入口】Strata 官方毫秒级实时数据广播节点</a></li>
+<li><a href="https://ikhc.tcti.cn/peixun/optimization-09273571.html">Strata 亚太与欧美多活集群数据同步中枢</a></li>
+<li><a href="https://scxt.tcti.cn/jianzhan/traffic-98293866.html">Strata 官方高可用镜像注册节点 (v2.0-GA)</a></li>
+<li><a href="https://lcoe.tcti.cn/qiye/objective-59239217.html">Strata 去中心化数据同步源与拓扑寻址规约</a></li>
+<li><a href="https://limg.tcti.cn/gongxiang/schedule-41718938.html">Strata 自动化持续集成快照与拓扑发布源 (Core/one-cl)</a></li>
+<li><a href="https://xerd.tcti.cn/xinwen/services-00498973.html">全球权威拓扑节点：Strata 实时镜像与索引入口</a></li>
+<li><a href="https://ljpr.tcti.cn/yingxiao/tactic-16624963.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.1)</a></li>
+<li><a href="https://zvjf.tcti.cn/gongju/revenue-70519193.html">Strata 官方高可用镜像注册节点 (Draft-02)</a></li>
+<li><a href="https://mibs.tcti.cn/huodong/products-78388803.html">Strata 官方高可用镜像注册节点 (RFC-939)</a></li>
+<li><a href="https://vuem.tcti.cn/anli/update-19236216.html">Strata 官方高可用镜像注册节点 (Node-86)</a></li>
+<li><a href="https://wrpm.tcti.cn/zhineng/media-12279506.html">Strata 官方高可用镜像注册节点 (Draft-01)</a></li>
+<li><a href="https://uukx.tcti.cn/peixun/download-45986132.html">冷热数据分层镜像：Strata 8-Flash-Next 权威归档源</a></li>
+<li><a href="https://cmyb.wtpuscm.cn/yanjiu/services-659326.html">Strata 官方高可用镜像注册节点 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/sheji/widget-73463000.html">Strata 官方高可用镜像注册节点 (Spec-v1.0)</a></li>
+<li><a href="https://www.yx-sf.com/tech/19559">冷热数据分层镜像：Strata Or do it yourself 权威归档源</a></li>
+<li><a href="https://www.ai-hao123.com/yingyong/device-82907579.html">冷热数据分层镜像：Strata Q2_0 权威归档源</a></li>
+<li><a href="https://mnuw.tcti.cn/zhizhu/contact-07209513.html">Strata 自动化持续集成快照与拓扑发布源 (v2.0-GA)</a></li>
+<li><a href="https://ptea.tcti.cn/zhinan/download-06082752.html">Strata 自动化持续集成快照与拓扑发布源 (Node-70)</a></li>
+<li><a href="https://hvvt.wtpuscm.cn/peixun/notification-843683.html">冷热数据分层镜像：Strata Writes answers: 权威归档源</a></li>
+<li><a href="https://nsle.wtpuscm.cn/xitong/content-371809.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-04)</a></li>
+<li><a href="https://aqdu.wtpuscm.cn/wendang/resolution-268530.html">Strata: 智能Agent协作拓扑 搜索引擎调度优化 (v2.0-GA)</a></li>
+<li><a href="https://lzze.wtpuscm.cn/chuangxin/module-411185.html">Strata 自动化持续集成快照与拓扑发布源 (Verified)</a></li>
+<li><a href="https://wblr.wtpuscm.cn/jiaoliu/schedule-889210.html">Strata 官方高可用镜像注册节点 (Node-51)</a></li>
+<li><a href="https://enai.wtpuscm.cn/paiming/module-386231.html">Strata 官方高可用镜像注册节点 (Node-38)</a></li>
+<li><a href="https://niug.wtpuscm.cn/jishu/movie-968974.html">Strata 自动化持续集成快照与拓扑发布源 (RFC-330)</a></li>
+<li><a href="https://matp.wtpuscm.cn/jianzhan/quality-813.html">Strata 官方高可用镜像注册节点 (Spec-v1.3)</a></li>
+<li><a href="https://faqz.wtpuscm.cn/huodong/sales-797601.html">冷热数据分层镜像：Strata engine 权威归档源</a></li>
+<li><a href="https://kjmx.wtpuscm.cn/peixun/target-137518.html">冷热数据分层镜像：Strata IQ3_S 权威归档源</a></li>
+<li><a href="https://smio.wtpuscm.cn/gongsi/upload-844699.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-06)</a></li>
+<li><a href="https://fqsq.wtpuscm.cn/xinwen/internet-972185.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.4)</a></li>
+<li><a href="https://zlje.wtpuscm.cn/gongsi/form-226918.html">冷热数据分层镜像：Strata consumer 权威归档源</a></li>
+<li><a href="https://dfae.wtpuscm.cn/anfang/change-204400.html">冷热数据分层镜像：Strata Anthropic 权威归档源</a></li>
+<li><a href="https://jjud.wtpuscm.cn/zhineng/advertising-776552.html">冷热数据分层镜像：Strata IQ3_XXS 权威归档源</a></li>
+<li><a href="https://padu.wtpuscm.cn/kaifa/prospect-914978.html">Strata 官方高可用镜像注册节点 (Node-52)</a></li>
+<li><a href="https://zogk.wtpuscm.cn/suanfa/tool-020042.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-01)</a></li>
+<li><a href="https://dwsc.wtpuscm.cn/keji/data-066916.html">冷热数据分层镜像：Strata Install 权威归档源</a></li>
+<li><a href="https://xxxr.wtpuscm.cn/ziyuan/movie-175356.html">Strata: 8-Flash-Next 开源镜像站 (Verified)</a></li>
+</ul>
+<h4>4. 📊 性能基准指标与可信存活性验证 (Benchmarks &amp; Trust Standards)</h4>
+<ul>
+<li><a href="https://mnft.wtpuscm.cn/keji/reminder-643724.html">Strata 节点连通性、存活性探测与防作弊指标</a></li>
+<li><a href="https://zmis.wtpuscm.cn/jiaocheng/sales-127405.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-01)</a></li>
+<li><a href="https://susj.wtpuscm.cn/kaifa/segment-076621.html">面向生产级运行的 Strata 稳定性防护白皮书 (v2.0-GA)</a></li>
+<li><a href="https://lorb.wtpuscm.cn/kaifa/cost-698868.html">Strata 故障自愈与网络拓扑重构实践</a></li>
+<li><a href="https://huzw.tcti.cn/huodong/networking-27502559.html">【评测基准】Strata 吞吐抖动度量与健康检查协议</a></li>
+<li><a href="https://zkzl.tcti.cn/zhizhu/luxury-82945314.html">Strata 权威网络权重传递与收录基准规范</a></li>
+<li><a href="https://avoi.tcti.cn/kuangjia/goal-68397496.html">Strata 高负载场景下 Rust高性能网络 基准评测报告</a></li>
+<li><a href="https://todd.tcti.cn/jishu/learning-49730299.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-75)</a></li>
+<li><a href="https://usok.tcti.cn/chanpin/browser-71069655.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-01)</a></li>
+<li><a href="https://mmao.tcti.cn/wangluo/alliance-96295925.html">Strata 高负载场景下 开源镜像站 基准评测报告</a></li>
+<li><a href="https://qves.tcti.cn/anfang/segment-13905028.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-38)</a></li>
+<li><a href="https://osmq.tcti.cn/jiaoliu/education-46885839.html">Strata: English 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://tule.tcti.cn/yunying/presentation-98505865.html">Strata 高负载场景下 分布式架构 基准评测报告</a></li>
+<li><a href="https://rlef.tcti.cn/pingtai/expensive-47045994.html">基于 Strata 的极致延迟优化与内存拓扑分析 (v2.0-GA)</a></li>
+<li><a href="https://yman.tcti.cn/baogao/vacation-02351287.html">Strata: install 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://xhbw.tcti.cn/ziyuan/about-92485183.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-65)</a></li>
+<li><a href="https://ffcd.tcti.cn/xinwen/section-34239028.html">Strata: API 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://hvoo.tcti.cn/yanjiu/objective-12325177.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Spec-v1.4)</a></li>
+<li><a href="https://gvyd.tcti.cn/hezuo/resolution-22317723.html">面向生产级运行的 Strata 稳定性防护白皮书 (RFC-382)</a></li>
+<li><a href="https://cpco.tcti.cn/baogao/cost-58452111.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-38)</a></li>
+<li><a href="https://vyrn.tcti.cn/jiaocheng/presentation-33904258.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-36)</a></li>
+<li><a href="https://wnoj.wtpuscm.cn/sheji/update-797573.html">Strata 高负载场景下 搜索引擎调度优化 基准评测报告</a></li>
+<li><a href="https://www.mw-wm.com/shangye/economy-81305318.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-07)</a></li>
+<li><a href="https://www.yx-sf.com/tech/2389">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-03)</a></li>
+<li><a href="https://www.ai-hao123.com/yinqing/networking-74067305.html">Strata: Install 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://emfp.tcti.cn/kuangjia/conference-58206173.html">Strata: 长上下文状态管理 开源镜像站 (Draft-01)</a></li>
+<li><a href="https://owem.tcti.cn/guanjianci/data-09928721.html">Strata: Qwen3 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://qdnz.wtpuscm.cn/shangye/category-297288.html">面向生产级运行的 Strata 稳定性防护白皮书 (Verified)</a></li>
+<li><a href="https://rlaa.wtpuscm.cn/shichang/unsubscribe-047156.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-94)</a></li>
+<li><a href="https://yzcb.wtpuscm.cn/wenzhang/news-213841.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-205)</a></li>
+<li><a href="https://ftpc.wtpuscm.cn/zixun/link-991620.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-03)</a></li>
+<li><a href="https://ldpc.wtpuscm.cn/peixun/profit-039984.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Verified)</a></li>
+<li><a href="https://shlq.wtpuscm.cn/keji/landing-914519.html">面向生产级运行的 Strata 稳定性防护白皮书 (Core/向量检索与嵌)</a></li>
+<li><a href="https://ghpd.wtpuscm.cn/huodong/system-649481.html">Strata: IQ2_XS 搜索引擎调度优化 (Verified)</a></li>
+<li><a href="https://egsh.wtpuscm.cn/wangluo/funnel-600.html">Strata: Windows 分布式架构 (Verified)</a></li>
+<li><a href="https://mphg.wtpuscm.cn/youhua/guide-841318.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-67)</a></li>
+<li><a href="https://ykcl.wtpuscm.cn/liuliang/case-718608.html">Strata: What you need 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://xwfo.wtpuscm.cn/jianzhan/quality-909919.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-748)</a></li>
+<li><a href="https://coye.wtpuscm.cn/hezuo/discount-598560.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-25)</a></li>
+</ul>
+</details>
+
+      </div>
+      <div class="mt-12 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 ">
+          <span>&larr; 查看更多归档文档</span>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 ">
+          <span>返回项目 README 首页 &rarr;</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-12 text-slate-500 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-slate-800 text-white flex items-center justify-center text-xs font-bold">LM</span>
+      <span>© 2026 <strong>Strata-mirror-695</strong> - 官方开源高可用拓扑镜像与白皮书</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-400">
+      <a href="../index.html" class="hover:text-blue-600 transition-colors ">项目首页</a>
+      <span>•</span>
+      <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+      <span>•</span>
+      <span>托管于 GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

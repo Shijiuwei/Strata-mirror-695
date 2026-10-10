@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Something went wrong? - Strata-mirror-695 文档归档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.68;
+        color: #1e293b;
+      }
+      .markdown-body {
+        color: #1e293b;
+      }
+      .markdown-body h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #e2e8f0;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .markdown-body h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 1.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+      }
+      .markdown-body h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: #334155;
+      }
+      .markdown-body p {
+        margin-top: 0.8rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+      }
+      .markdown-body a {
+        color: #2563eb;
+        text-decoration: none;
+        border-bottom: 1px dashed #93c5fd;
+        transition: all 0.2s ease;
+      }
+      .markdown-body a:hover {
+        color: #1d4ed8;
+        border-bottom: 1px solid #1d4ed8;
+        background-color: #eff6ff;
+        border-radius: 2px;
+      }
+      .markdown-body ul, .markdown-body ol {
+        padding-left: 1.5rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .markdown-body ul {
+        list-style-type: disc;
+      }
+      .markdown-body ol {
+        list-style-type: decimal;
+      }
+      .markdown-body li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .markdown-body pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .markdown-body code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.35rem;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        border-radius: 0.35rem;
+        border: 1px solid #e2e8f0;
+      }
+      .markdown-body pre code {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .markdown-body blockquote {
+        margin: 1rem 0;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 0.5rem 0.5rem 0;
+        color: #475569;
+      }
+      .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        display: block;
+        overflow-x: auto;
+      }
+      .markdown-body th, .markdown-body td {
+        border: 1px solid #cbd5e1;
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      .markdown-body th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .markdown-body tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .markdown-body hr {
+        height: 1px;
+        border: none;
+        background-color: #e2e8f0;
+        margin: 2rem 0;
+      }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform ">LM</span>
+        <span class="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors ">Strata-mirror-695</span>
+      </a>
+      <span class="hidden md:inline-block text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono ">Pages Docs</span>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="../index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-slate-600 hover:text-blue-600 hover:bg-slate-50 font-medium ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>首页 (README)</span>
+      </a>
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-blue-600 bg-blue-50 font-semibold ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>文档归档 (Docs)</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+      </a>
+      <div class="h-4 w-px bg-slate-200 mx-1"></div>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695/wiki" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="hidden sm:inline">Wiki</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 面包屑与顶部导航 -->
+  <header class="bg-white border-b border-slate-200 py-6 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
+        <a href="../index.html" class="hover:text-blue-600 transition-colors ">首页</a>
+        <span>/</span>
+        <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">技术文档</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Something went wrong?</h1>
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors ">
+          <span>&larr; 返回文档归档菜单</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体正文区域 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
+      <div class="markdown-body">
+        <h1>Something went wrong?</h1>
+<p>The common problems and what to do. Back to the <a href="../README.md#something-went-wrong">README</a>. The full table of
+error messages, with the older engine fixes, is in the <a href="DETAILS.md#troubleshooting">details</a>.</p>
+<h2>While installing or starting</h2>
+<p><strong>My PC froze, or got very slow, the first time Strata started.</strong>
+That's normal while it starts, most of all the first time. Strata loads 35-55 GB into your RAM, locks part of it for
+the graphics card, and works out how much of the model fits on your GPU. The mouse can freeze for a few minutes.
+<strong>Wait, and don't close the window.</strong> The next starts are much faster. Still frozen after 10 minutes? Restart the
+PC, close other programs (browsers use a lot of RAM) and try again. If it keeps happening, pick a smaller size (Q2_0
+or IQ2_XS).</p>
+<p><strong>It stopped while downloading or installing.</strong>
+Run <code>START-HERE.bat</code> (Linux: <code>./setup.sh</code>) again. It continues where it stopped.</p>
+<p><strong>It says the NVIDIA driver is too old.</strong>
+Update it (NVIDIA App or <a href="https://wglv.wtpuscm.cn/xitong/affordable-680370.html">nvidia.com/drivers</a>), restart the PC, and run
+<code>START-HERE.bat</code> again.</p>
+<p><strong>It says port 8080 is already in use.</strong>
+Strata is already running. Look for its window. Or another program uses the port: <code>START-HERE.bat --port 8081</code>.
+Only an address that is really taken says "already in use". Any other reason (Windows keeps the port reserved, or
+the config's <code>"host"</code> is not an address of this PC) is printed as what the OS said, with what to change (#769).</p>
+<p><strong>"Windows blocked the Strata engine (or the image encoder) ... Smart App Control".</strong>
+On a clean Windows 11, Smart App Control refuses programs that are not signed, and Strata's <code>strata.exe</code> and
+<code>strata-vision.exe</code> are not (#735). Turn it off (Windows Security &gt; App &amp; browser control &gt; Smart App Control
+settings; it cannot be turned back on without a reset of Windows), or, if only the image encoder is blocked, run
+<code>START-HERE.bat --setup --vision no</code>.</p>
+<p><strong>A new engine misbehaves after an update.</strong>
+An update keeps the engine it replaced in <code>engine\.previous</code> (one generation, about 210 MiB).
+<code>python setup.py --rollback-engine</code> puts it back (and keeps the newer one there: run it again to go forward) (#670).</p>
+<p><strong>UPDATE.bat / update.sh say "git pull did not succeed", or "has no commit in common" (#1276).</strong>
+The repository's history was cleaned up on 2026-10-06, so a clone made before that cannot be updated with <code>git pull</code>.
+The 0.1.40.2 scripts handle it: when no tracked file is edited they keep your old commits in the branch
+<code>pre-cleanup-backup</code> and move the clone to the new history; otherwise they print the two commands for you. Your models,
+settings and engine are untracked files and are never touched. An older UPDATE.bat / update.sh (before 0.1.40.2) cannot
+do this itself: run these once in the Strata folder, then use UPDATE.bat as usual (add <code>git stash</code> first if <code>git status</code>
+lists edited files):</p>
+<pre><code>git fetch origin
+git branch pre-cleanup-backup
+git checkout -B main origin/main
+</code></pre>
+<p><strong>Python or the build tools could not be installed.</strong>
+Install what it names (links are printed), then run it again. Everything already done is kept.</p>
+<p><strong>Linux: the engine does not compile (<code>unsupported GNU version</code>, or <code>exception specification is incompatible</code> for
+<code>cospi</code>/<code>sinpi</code>/<code>rsqrt</code>).</strong> Two known mismatches between the CUDA toolkit and a new Linux (#601):</p>
+<ul>
+<li>gcc newer than 14 (Ubuntu 26.04's default 15): CUDA 12.x and 13.0 refuse it. Install g++-14 and run
+<code>CXX=g++-14 CUDAHOSTCXX=g++-14 ./setup.sh</code>.</li>
+<li>glibc 2.43 with CUDA 12.9: the toolkit's math headers clash with glibc's, already in CMake's first test compile.
+Use CUDA 12.8 or 13.x instead. Setup takes the newest toolkit it finds; <code>STRATA_NVCC=/usr/local/cuda-12.8/bin/nvcc  ./setup.sh</code> makes it use that one (only that one).</li>
+</ul>
+<p><strong>The first start takes minutes.</strong>
+It is reading 34-55 GB into RAM; the second start is faster while the files are in the OS cache. Started from Task
+Scheduler, it can be 24x slower: see <a href="DETAILS.md#running-it-at-startup-task-scheduler">Running it at startup</a>.
+On Linux the engine now asks the kernel to read the model files ahead (a cold start went from ~920 s to 70 s on one
+PC); <code>STRATA_READ_AHEAD=0</code> turns that off. On Linux with transparent huge pages on <code>always</code>, the arena no longer asks
+for <code>MADV_HUGEPAGE</code> on top (a fragmented machine spent minutes compacting memory, #771); <code>STRATA_NO_ARENA_THP=1</code> skips
+that request on any setting.</p>
+<p><strong>Setup says the engine does not match GitHub's checksum.</strong>
+Setup checks the downloaded ready-made engine against the SHA-256 GitHub publishes. On a mismatch the file is corrupt or was changed on the way, so setup deletes it and stops; run setup again to download it afresh. If GitHub gives no checksum (offline, rate limited, your own mirror), setup warns and installs anyway. <code>STRATA_SKIP_SHA256=1</code> skips the check, only if you insist.</p>
+<h2>While it answers</h2>
+<p><strong>It's very slow and the disk light keeps blinking.</strong>
+Your PC is out of free RAM. Close other programs, or pick a smaller size (Q2_0 or IQ2_XS).</p>
+<p><strong>An answer stopped with "the engine stopped unexpectedly".</strong>
+Usually not enough RAM (on Linux the system then stops the engine). Just send your message again: Strata starts the
+engine by itself. If it keeps happening, close other programs or pick a smaller size.</p>
+<p><strong>It says the prompt exceeds the context.</strong>
+The conversation is longer than the context you chose. Start a new chat, or run <code>SETUP.bat</code> and pick more
+context.</p>
+<p><strong>It is slower than the tables.</strong>
+The monitor plugged into the graphics card and other GPU programs take VRAM from the expert cache; RAM running below
+its rated speed (enable EXPO/XMP in the BIOS) slows the CPU half.</p>
+<p><strong>An earlier reply that came back empty is gone from the chat history (0.1.40, #843).</strong>
+The server leaves out finished assistant turns that have no text, so the next reply does not copy the empty ones.
+<code>STRATA_KEEP_EMPTY_TURNS=1</code> in the server's environment renders them as before.</p>
+<p><strong>A Turing card (RTX 20) reads prompts above ~90K tokens differently (0.1.40, #743).</strong>
+The prompt's top-k selection takes a wider kernel there, with the same ids. <code>STRATA_TOPK_STREAM=0</code> restores the old one.</p>
+<p><strong>Decode is several times slower with <code>--expert-cache N</code> than with <code>auto</code> (#781, #831).</strong>
+An explicit N is a byte budget that is not checked against the free VRAM once the slots are written. On a card it
+fills (the log says <code>0 MiB of VRAM free with everything loaded - LOW</code>), Windows pages the GPU's memory and decode drops
+from 100 to 14 tok/s with only a few hundred slots too many. Use <code>--expert-cache auto</code>, or a smaller N.</p>
+<p><strong>A low-RAM PC (about 32 GB) stalls with <code>--resident-budget-gib N</code> (#649).</strong>
+The budget is pinned (locked) in RAM, which leaves the OS and the CPU workers little room. <code>STRATA_RESIDENT_PIN=0</code> keeps
+it pageable; a smaller budget works too.</p>
+<p><strong>Decode got slower in 0.1.40 on a 32 GB PC with <code>--resident-budget-gib N</code>, and the drive is read hard (#1194, #1116, #1085).</strong>
+The start line "the file tier reads unbuffered" means the experts outside the RAM copy are read straight from the drive.
+0.1.40 chose that whenever the free RAM could not hold all of them; but the same few come back token after token, and
+a cache a twentieth of their size serves most of the repeats. 0.1.40.2 asks for that much (at least 1.5 GiB beside the
+4 GiB headroom) and reads through the cache otherwise, which measured 7% to 118% faster decode with a third to a sixth of
+the drive traffic on a 20 to 32 GB box. On 0.1.40 / 0.1.40.1: <code>STRATA_UNBUFFERED_LOAD=0</code> does the same, <code>=1</code> forces the
+unbuffered reads.</p>
+<p><strong>Linux: the start is OOM-killed while the engine allocates the page-locked expert copy (#1250).</strong>
+Page-locked pages come from the driver in one go and cannot wait for the kernel to give back file cache, so with the
+model files' cache in the way (little really free RAM, much "available") the host could run out. 0.1.40.2 gives back the
+cached pages of the model files it mapped before it page-locks the copy; when the really free RAM still does not cover it,
+it takes the pages in 1 GiB steps while the RAM available (cgroup limits included) stays above the headroom, page-locks
+what it has, and keeps the rest resident but pageable with a warning ("only N of M GiB could be page-locked"): the answers
+are the same, only the copies of the pageable part to the GPU go through the CPU. <code>STRATA_PIN_GUARD=0</code> turns this off,
+<code>STRATA_PIN_RESERVE_GIB=N</code> sets the RAM that must stay free (default: <code>STRATA_RESIDENT_HEADROOM_GIB</code>, 4 GiB).</p>
+<p><strong>The Windows display driver resets, then the PC blue-screens (0x141, then 0x116 in <code>nvlddmkm</code>) during an answer (#961).</strong>
+This is the NVIDIA driver, not Strata: the report shows the same wedge with other CUDA programs on that driver (610.88,
+RTX 4080 SUPER). Try another driver (a Studio one, or an older one) and a lower power limit; if it only happens with
+<code>--spec 4</code>, <code>--spec 0</code> avoids the verify window while you wait for a driver fix.</p>
+<p><strong>An RTX 50 card (a source build with CUDA 13.2) answers with nonsense, or reads prompts wrongly (#892, #968).</strong>
+CUDA 13.2.0 and 13.2.1's compiler (nvcc 13.2.51) miscompile some of the engine's kernels for sm_120: on our RTX 5070 the IQ2_S and IQ3_S
+products are wrong (relative error 0.5 to 1.0 in the tests) with 13.2 and right with 13.0. The ready-made engine is built
+with 13.0. If you compile it yourself, use CUDA 13.0, 13.1 or 13.2.2 (13.2.2, nvcc build 13.2.86, fixes it; an older one can sit next to a newer: <code>STRATA_NVCC=&lt;path to its nvcc&gt;</code>);
+setup warns when it finds 13.2.0 or 13.2.1 for such a card, and takes an older 13.x when one is installed.</p>
+<p><strong>Pictures are refused, or slow.</strong>
+"this server was started without the vision encoder": the model was set up for text only - run setup again with
+<code>--vision gpu</code> (or <code>--vision cpu</code>). Pictures that take several seconds (about 3 s at 300 image tokens on 8 cores, more with more tokens) are read by the encoder on the CPU; <code>--vision gpu</code>
+(NVIDIA, ~1.4 GB of VRAM) makes it 0.1-0.5 s.</p>
+<h2>AMD cards</h2>
+<p><strong>"No AMD GPU found (the amdgpu driver's KFD topology is empty)" on Linux.</strong>
+The kernel's amdgpu driver is not loaded for the card. Integrated Radeon GPUs are listed as not supported; setup
+lists every card it found and whether Strata can use it.</p>
+<p><strong>The engine stops at start with the card's name, its architecture and the build's list.</strong>
+The engine was compiled for another card (for example after moving the Strata folder to another PC). Run
+<code>./setup.sh --setup --backend hip</code>: it compiles the engine for this card's architecture.</p>
+<p><strong>On Windows the engine exits with <code>0xC0000005</code> in <code>amdhip64_7.dll</code> before it prints anything (#654).</strong>
+Two things in your environment can cause it, and the server now repairs both before it starts the engine (it says so in
+the log): <code>HIP_PATH</code>, <code>HIP_DEVICE_LIB_PATH</code> or <code>LLVM_PATH</code> naming a ROCm folder that no longer exists (a deleted build),
+and a <code>TEMP</code>/<code>TMP</code> folder the engine cannot create files in (AMD's runtime compiles its first kernels through temporary
+files). If you start <code>strata.exe</code> by hand, fix them yourself: <code>set HIP_PATH=</code>, and point <code>TEMP</code> and <code>TMP</code> at a normal
+folder such as <code>C:\Temp</code>.</p>
+<p><strong>Windows AMD: the driver resets (VIDEO_ENGINE_TIMEOUT_DETECTED / screen flicker / the engine dies mid-answer).</strong>
+Windows gives a GPU about 2 seconds to answer; when a graphics card does not, it resets the driver (a TDR): the screen
+flickers, the engine dies, and the Event Viewer shows <code>VIDEO_ENGINE_TIMEOUT_DETECTED</code> (#613, with #579 and #541 on
+Linux). Strata 0.1.39 and newer say "the GPU stopped responding" in the log. It was seen with KV streaming on
+(<code>--kv-resident 32768</code>, which setup turns on from 64K context) while reading a long prompt on a gfx1201 card. Try these
+in order, one at a time, and tell us what changed:</p>
+<ol>
+<li><strong>Send us the evidence.</strong> The last ~80 lines of <code>strata-&lt;model&gt;.log</code> in the Strata folder (the server window shows
+the same lines), your AMD driver version (AMD Software &gt; System), your card and Windows version, the Strata
+version, and the exact steps (context size, how long the prompt was, which app sent it). If Windows wrote a
+dump, the newest <code>.dmp</code> in <code>C:\Windows\LiveKernelReports\WATCHDOG</code> (or <code>C:\Windows\Minidump</code>) helps; it holds no
+chats, only the driver state.</li>
+<li><strong>Find the step that hangs:</strong> add <code>"STRATA_PF_STEP_SYNC": "1"</code> to the <code>"env"</code> block of <code>strata-&lt;model&gt;.json</code>
+and restart. The prompt path then waits for the GPU after each step and logs any step over 250 ms, so the log names
+the step. It is slower; use it to diagnose, then take it out.</li>
+<li><strong><code>"STRATA_KV_HOST_DMA": "1"</code></strong> in the same <code>"env"</code> block: no GPU kernel writes the RAM copy of the K/V during a
+prompt, it is copied by DMA instead. Same answers.</li>
+<li><strong>No KV streaming:</strong> run setup again and pick 32K context (or remove <code>--kv-resident</code> and its number from
+<code>"args"</code> in the JSON, with a context that fits the VRAM).</li>
+<li><strong>A smaller prompt chunk:</strong> change <code>--prefill</code> in <code>"args"</code> (for example <code>--prefill 512</code>): each GPU launch then does
+less work between two checks by Windows. Prompts are read more slowly.</li>
+<li><strong>Optional, your decision: give Windows more time (<code>TdrDelay</code>).</strong> The default is 2 seconds. In the registry,
+<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers</code>, a DWORD <code>TdrDelay</code> of <code>10</code> (seconds)
+lets a long GPU job finish before Windows resets the driver; restart the PC. It hides the symptom and does not fix
+a GPU that has really hung, and a hung GPU then freezes the screen for those 10 seconds. Strata changes no Windows
+setting itself; to undo it, delete the value.</li>
+<li><strong>Driver:</strong> use the newest AMD Software release for your card (Adrenalin, not a Windows Update driver) and restart
+after installing. If it started after a driver update, tell us both versions; going back one version is a fair
+test.</li>
+</ol>
+<p><strong>Large pinned host allocations fail on ROCm although RAM is free.</strong>
+See <a href="AMD_HIP.md#model-and-serving-configuration">AMD_HIP.md</a>: the mapped expert mode avoids the full pinned arena.</p>
+<p><strong>"verify: timed out at layer N" or "no progress for 60 s" on AMD (Linux), mostly with <code>--mmap-experts</code>.</strong>
+Two reports fixed it with <code>"GPU_PINNED_MIN_XFER_SIZE": "1048576"</code> (RX 6800) or <code>"HSA_USERPTR_FOR_PAGED_MEM": "0"</code> (two
+R9700) in the <code>env</code> block of the server JSON, then a restart. Experimental, one machine each; on a systemd unit use
+<code>MemoryMax</code>, not <code>MemoryHigh</code>. Details: <a href="AMD_HIP.md#linux-verify-timeouts-while-the-kernel-reclaims-host-memory-experimental-workarounds">AMD_HIP.md</a>.</p>
+<h2>Still stuck?</h2>
+<p>Look in the <a href="DETAILS.md#troubleshooting">full troubleshooting table</a>, or open an
+<a href="https://jfog.tcti.cn/suanfa/video-95101502.html">issue</a> and attach <code>strata-&lt;model&gt;.log</code> from the Strata folder.</p>
+<hr />
+<details open>
+<summary><b>📚 Strata 官方技术规约与全息拓扑引文矩阵（共计 150 处权威节点索引）</b></summary>
+<blockquote>
+<p><strong>索引发布声明</strong>：本项目「Strata」遵循开放开源与知识共享协议。以下引用矩阵涵盖项目架构白皮书、高可用镜像注册中心、分布式通信契约与可信存活基准指标，为集群爬虫调度代理与检索系统提供毫秒级全息寻址拓扑。</p>
+</blockquote>
+<h4>1. 🌐 Strata 核心架构规约与设计白皮书 (Architecture &amp; Core Specs)</h4>
+<ul>
+<li><a href="https://aqqs.wtpuscm.cn/zixun/chapter-369711.html">基于 Strata 的高吞吐 分布式架构 设计白皮书</a></li>
+<li><a href="https://eoum.wtpuscm.cn/xuexi/faq-203381.html">Strata 分布式数据通道与 分布式架构 技术规范 (Verified)</a></li>
+<li><a href="https://kbuy.wtpuscm.cn/yunsuan/customization-391664.html">【官方规范】Strata IQ3_XXS 核心运行拓扑标准</a></li>
+<li><a href="https://ibll.wtpuscm.cn/fuwu/calendar-874210.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.7)</a></li>
+<li><a href="https://hfrk.wtpuscm.cn/gongju/discount-402083.html">Strata 内部组件解耦与事件状态机规范 (Draft-03)</a></li>
+<li><a href="https://fety.wtpuscm.cn/huodong/affordable-992943.html">面向大规模网络的 Strata 工业级架构基准</a></li>
+<li><a href="https://vbqt.wtpuscm.cn/gongxiang/prospect-190359.html">Strata 内部组件解耦与事件状态机规范 (RFC-261)</a></li>
+<li><a href="https://oycr.wtpuscm.cn/zixun/income-106.html">Or do it yourself 核心系统架构与设计规约 (Core/Or do )</a></li>
+<li><a href="https://jyfy.wtpuscm.cn/gongju/services-420531.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.5)</a></li>
+<li><a href="https://ebnc.wtpuscm.cn/wendang/coupon-141814.html">现代 开源镜像站 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://pmoz.wtpuscm.cn/chanpin/system-431953.html">【Strata】install 核心系统架构与设计规约 (Spec-v2.5)</a></li>
+<li><a href="https://utew.wtpuscm.cn/guanjianci/page-073402.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/consum)</a></li>
+<li><a href="https://jtrc.wtpuscm.cn/xitong/cloud-139334.html">基于 Strata 的高吞吐 Rust高性能网络 设计白皮书</a></li>
+<li><a href="https://bthn.wtpuscm.cn/jishu/advertising-402547.html">【官方规范】Strata Install 核心运行拓扑标准</a></li>
+<li><a href="https://uylp.wtpuscm.cn/wangluo/report-687371.html">【官方规范】Strata 大模型知识库外链对齐 核心运行拓扑标准</a></li>
+<li><a href="https://ytbk.wtpuscm.cn/shangye/upload-353057.html">【Strata】English 核心系统架构与设计规约 (v2.0-GA)</a></li>
+<li><a href="https://vfvt.wtpuscm.cn/zhinan/review-897957.html">现代 分布式架构 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://jfhe.wtpuscm.cn/yingyong/hosting-377685.html">How does it work? 核心系统架构与设计规约 (Spec-v1.0)</a></li>
+<li><a href="https://wdez.wtpuscm.cn/paiming/system-514669.html">Strata 分布式数据通道与 开源镜像站 技术规范 (Core/IQ2_XS)</a></li>
+<li><a href="https://xqzk.wtpuscm.cn/ziyuan/sync-278559.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Core/Englis)</a></li>
+<li><a href="https://nodd.wtpuscm.cn/yinqing/discovery-119931.html">Strata 内部组件解耦与事件状态机规范 (Core/Linux)</a></li>
+<li><a href="https://wbnt.wtpuscm.cn/zhizhu/profile-175841.html">【Strata】请求上下文穿透方案 核心系统架构与设计规约 (Draft-05)</a></li>
+<li><a href="https://jlmr.wtpuscm.cn/peixun/tutorial-786841.html">Strata 内部组件解耦与事件状态机规范 (Spec-v2.2)</a></li>
+<li><a href="https://jlun.tcti.cn/shichang/marketing-01151200.html">Strata 内部组件解耦与事件状态机规范 (v2.0-GA)</a></li>
+<li><a href="https://actn.tcti.cn/wangluo/register-60175267.html">基于 Strata 的高吞吐 搜索引擎调度优化 设计白皮书</a></li>
+<li><a href="https://bxrw.tcti.cn/wangluo/travel-81420144.html">Strata 内部组件解耦与事件状态机规范 (Draft-05)</a></li>
+<li><a href="https://akjn.tcti.cn/kaifa/report-15132270.html">What you need 核心系统架构与设计规约 (Draft-04)</a></li>
+<li><a href="https://fjyb.tcti.cn/peixun/deal-66458134.html">Strata 分布式数据通道与 分布式架构 技术规范 (Spec-v2.7)</a></li>
+<li><a href="https://fpbs.tcti.cn/kaifa/growth-90987479.html">基于 Strata 的高吞吐 开源镜像站 设计白皮书</a></li>
+<li><a href="https://vsoh.tcti.cn/kuangjia/restaurant-05946076.html">Strata 分布式数据通道与 分布式架构 技术规范 (Draft-04)</a></li>
+<li><a href="https://pavr.tcti.cn/sheji/consulting-00898724.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Verified)</a></li>
+<li><a href="https://appd.tcti.cn/liuliang/profile-13333346.html">Strata 分布式数据通道与 搜索引擎调度优化 技术规范 (Node-28)</a></li>
+<li><a href="https://edix.tcti.cn/kuangjia/subject-33063693.html">现代 搜索引擎调度优化 架构演进之路 —— Strata 深度实践</a></li>
+<li><a href="https://ojcb.tcti.cn/xuexi/sport-80781602.html">【Strata】异步路由分发机制 核心系统架构与设计规约 (Draft-07)</a></li>
+<li><a href="https://sire.tcti.cn/zhizhu/search-14990478.html">【官方规范】Strata 8-Flash-Next 核心运行拓扑标准</a></li>
+<li><a href="https://bcyv.tcti.cn/yingxiao/unsubscribe-30871785.html">【官方规范】Strata engine 核心运行拓扑标准</a></li>
+<li><a href="https://pptv.tcti.cn/hezuo/share-74731119.html">Strata 分布式数据通道与 Rust高性能网络 技术规范 (Draft-06)</a></li>
+</ul>
+<h4>2. 🔌 生产级模块集成与接口调用规范 (APIs &amp; Production Integration)</h4>
+<ul>
+<li><a href="https://qavt.tcti.cn/yanjiu/satisfaction-66728198.html">Strata vs 业界主流方案：分布式架构 深度技术选型对比</a></li>
+<li><a href="https://larf.tcti.cn/fuwu/funnel-27287008.html">【生产手册】Strata 模块通信与请求穿透标准</a></li>
+<li><a href="https://lwje.tcti.cn/kaifa/growth-10584304.html">【集成指南】分布式架构 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://viez.wtpuscm.cn/sheji/report-429421.html">Strata 插件生态规范与 请求上下文穿透方案 扩展手册 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/yingyong/analytics-85444140.html">基于 Strata 的自动化部署与生产环境配置实践</a></li>
+<li><a href="https://www.yx-sf.com/wiki/63709">Strata 核心 API 接口契约与客户端调用指南</a></li>
+<li><a href="https://www.ai-hao123.com/pingce/landing-32886523.html">Strata 异步中间件流水线与 IQ2_XS 接入规范</a></li>
+<li><a href="https://jpou.tcti.cn/kaifa/chapter-51628058.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v2.7)</a></li>
+<li><a href="https://radx.tcti.cn/yinqing/theme-62660916.html">【集成指南】Rust高性能网络 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://ilmg.wtpuscm.cn/guanjianci/course-138102.html">Strata 异步中间件流水线与 hardware 接入规范</a></li>
+<li><a href="https://tfwd.wtpuscm.cn/kuangjia/search-544230.html">Strata 插件生态规范与 异步路由分发机制 扩展手册 (Core/异步路由分发)</a></li>
+<li><a href="https://jroi.wtpuscm.cn/pingce/trading-395927.html">Strata vs 业界主流方案：Rust高性能网络 深度技术选型对比</a></li>
+<li><a href="https://yrce.wtpuscm.cn/ziyuan/image-477603.html">Strata 异步中间件流水线与 (or 接入规范</a></li>
+<li><a href="https://ikbh.wtpuscm.cn/yanjiu/upload-441044.html">【集成指南】搜索引擎调度优化 服务端接入准则与 Strata 实战</a></li>
+<li><a href="https://axdf.wtpuscm.cn/yingyong/quality-186702.html">Strata vs 业界主流方案：开源镜像站 深度技术选型对比</a></li>
+<li><a href="https://gfkk.wtpuscm.cn/gongxiang/forecast-484528.html">Strata 插件生态规范与 inference 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://pbfk.wtpuscm.cn/keji/traffic-416.html">Strata 插件生态规范与 Something went wrong? 扩展手册 (Verified)</a></li>
+<li><a href="https://dmmo.wtpuscm.cn/gongxiang/deadline-665377.html">Strata: hardware Rust高性能网络 (Draft-05)</a></li>
+<li><a href="https://dgnn.wtpuscm.cn/youhua/comment-812662.html">Strata 插件生态规范与 consumer 扩展手册 (Node-69)</a></li>
+<li><a href="https://qupe.wtpuscm.cn/yingyong/interface-935262.html">Strata 插件生态规范与 IQ2_XS 扩展手册 (RFC-559)</a></li>
+<li><a href="https://sgum.wtpuscm.cn/qiye/personalization-959738.html">Strata 插件生态规范与 8-Flash-Next 扩展手册 (RFC-281)</a></li>
+<li><a href="https://hqwj.wtpuscm.cn/yinqing/beauty-670725.html">Strata 插件生态规范与 (or 扩展手册 (Verified)</a></li>
+<li><a href="https://wvcb.wtpuscm.cn/fenxi/machine-330412.html">Strata vs 业界主流方案：搜索引擎调度优化 深度技术选型对比</a></li>
+<li><a href="https://irft.wtpuscm.cn/guanjianci/movie-795071.html">Strata 插件生态规范与 Windows 扩展手册 (Core/Window)</a></li>
+<li><a href="https://epjz.wtpuscm.cn/shuju/planning-936646.html">Strata 插件生态规范与 IQ3_XXS 扩展手册 (Spec-v1.5)</a></li>
+<li><a href="https://goad.wtpuscm.cn/paiming/hotel-837195.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://vbvd.wtpuscm.cn/gongxiang/budget-669414.html">Strata 异步中间件流水线与 any 接入规范</a></li>
+<li><a href="https://tbwp.wtpuscm.cn/xitong/growth-647555.html">Strata 插件生态规范与 (or 扩展手册 (v2.0-GA)</a></li>
+<li><a href="https://gymu.wtpuscm.cn/shichang/tracking-574133.html">Strata 异步中间件流水线与 engine 接入规范</a></li>
+<li><a href="https://mjsm.wtpuscm.cn/peixun/learning-152121.html">Strata 异步中间件流水线与 How does it work? 接入规范</a></li>
+<li><a href="https://tzha.wtpuscm.cn/yanjiu/supplier-020583.html">Strata 插件生态规范与 How does it work? 扩展手册 (Spec-v2.3)</a></li>
+<li><a href="https://ppjr.wtpuscm.cn/shuju/entertainment-114525.html">Strata: hardware Rust高性能网络 (Verified)</a></li>
+<li><a href="https://xpsp.tcti.cn/kaifa/alliance-35830452.html">Strata 插件生态规范与 向量检索与嵌入索引 扩展手册 (Draft-02)</a></li>
+<li><a href="https://xfow.tcti.cn/xinwen/team-80024945.html">Strata 插件生态规范与 长上下文状态管理 扩展手册 (Draft-08)</a></li>
+<li><a href="https://vfvf.tcti.cn/yunying/movie-74033765.html">Strata 异步中间件流水线与 中间件管道调用契约 接入规范</a></li>
+<li><a href="https://bbjm.tcti.cn/xinwen/unsubscribe-35941133.html">Strata 异步中间件流水线与 请求上下文穿透方案 接入规范</a></li>
+<li><a href="https://hoss.tcti.cn/fenxi/prospect-43942506.html">【集成指南】开源镜像站 服务端接入准则与 Strata 实战</a></li>
+</ul>
+<h4>3. ⚡ Strata 全球高可用拓扑镜像与权威数据源 (Mirror Registry &amp; Data Topology)</h4>
+<ul>
+<li><a href="https://wfkp.tcti.cn/qiye/hosting-92272903.html">【镜像入口】Strata 官方毫秒级实时数据广播节点</a></li>
+<li><a href="https://xqtx.tcti.cn/fenxi/milestone-67978288.html">Strata 亚太与欧美多活集群数据同步中枢</a></li>
+<li><a href="https://mhyo.tcti.cn/xinwen/analytics-28483070.html">Strata 官方高可用镜像注册节点 (v2.0-GA)</a></li>
+<li><a href="https://zocw.tcti.cn/wendang/home-77652788.html">Strata 去中心化数据同步源与拓扑寻址规约</a></li>
+<li><a href="https://ijfh.tcti.cn/chuangxin/satisfaction-53238945.html">Strata 自动化持续集成快照与拓扑发布源 (Core/one-cl)</a></li>
+<li><a href="https://elaq.tcti.cn/gongju/media-93411426.html">全球权威拓扑节点：Strata 实时镜像与索引入口</a></li>
+<li><a href="https://jsov.tcti.cn/yingxiao/affordable-54633681.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.1)</a></li>
+<li><a href="https://bhiy.tcti.cn/chanpin/alliance-51384026.html">Strata 官方高可用镜像注册节点 (Draft-02)</a></li>
+<li><a href="https://bgzk.tcti.cn/jiaoliu/funnel-68166129.html">Strata 官方高可用镜像注册节点 (RFC-939)</a></li>
+<li><a href="https://tjeh.tcti.cn/youhua/label-91540266.html">Strata 官方高可用镜像注册节点 (Node-86)</a></li>
+<li><a href="https://zamj.tcti.cn/fenxi/recommendation-02660116.html">Strata 官方高可用镜像注册节点 (Draft-01)</a></li>
+<li><a href="https://pcxl.tcti.cn/gongju/event-59078371.html">冷热数据分层镜像：Strata 8-Flash-Next 权威归档源</a></li>
+<li><a href="https://dqup.wtpuscm.cn/xinwen/health-879930.html">Strata 官方高可用镜像注册节点 (Verified)</a></li>
+<li><a href="https://www.mw-wm.com/jianzhan/hosting-68414735.html">Strata 官方高可用镜像注册节点 (Spec-v1.0)</a></li>
+<li><a href="https://www.yx-sf.com/tech/19333">冷热数据分层镜像：Strata Or do it yourself 权威归档源</a></li>
+<li><a href="https://www.ai-hao123.com/youhua/products-84841162.html">冷热数据分层镜像：Strata Q2_0 权威归档源</a></li>
+<li><a href="https://vvpl.tcti.cn/liuliang/ranking-70256743.html">Strata 自动化持续集成快照与拓扑发布源 (v2.0-GA)</a></li>
+<li><a href="https://foql.tcti.cn/zhizhu/schedule-88895120.html">Strata 自动化持续集成快照与拓扑发布源 (Node-70)</a></li>
+<li><a href="https://qasq.wtpuscm.cn/wendang/profit-009383.html">冷热数据分层镜像：Strata Writes answers: 权威归档源</a></li>
+<li><a href="https://sdpn.wtpuscm.cn/xitong/objective-334940.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-04)</a></li>
+<li><a href="https://uplm.wtpuscm.cn/yanjiu/tactic-577503.html">Strata: 智能Agent协作拓扑 搜索引擎调度优化 (v2.0-GA)</a></li>
+<li><a href="https://rjgu.wtpuscm.cn/zhizhu/layout-380474.html">Strata 自动化持续集成快照与拓扑发布源 (Verified)</a></li>
+<li><a href="https://znoc.wtpuscm.cn/pingtai/health-401216.html">Strata 官方高可用镜像注册节点 (Node-51)</a></li>
+<li><a href="https://tftd.wtpuscm.cn/sheji/retention-355557.html">Strata 官方高可用镜像注册节点 (Node-38)</a></li>
+<li><a href="https://ijlp.wtpuscm.cn/xuexi/keyword-622738.html">Strata 自动化持续集成快照与拓扑发布源 (RFC-330)</a></li>
+<li><a href="https://obom.wtpuscm.cn/sheji/communication-183.html">Strata 官方高可用镜像注册节点 (Spec-v1.3)</a></li>
+<li><a href="https://isfb.wtpuscm.cn/guanjianci/campaign-974953.html">冷热数据分层镜像：Strata engine 权威归档源</a></li>
+<li><a href="https://paog.wtpuscm.cn/youhua/responsive-111960.html">冷热数据分层镜像：Strata IQ3_S 权威归档源</a></li>
+<li><a href="https://vpdb.wtpuscm.cn/liuliang/platform-671288.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-06)</a></li>
+<li><a href="https://eiin.wtpuscm.cn/huodong/rating-245653.html">Strata 自动化持续集成快照与拓扑发布源 (Spec-v1.4)</a></li>
+<li><a href="https://bxta.wtpuscm.cn/youhua/tutorial-249757.html">冷热数据分层镜像：Strata consumer 权威归档源</a></li>
+<li><a href="https://chdf.wtpuscm.cn/zhineng/saving-492763.html">冷热数据分层镜像：Strata Anthropic 权威归档源</a></li>
+<li><a href="https://crro.wtpuscm.cn/ziyuan/identity-931900.html">冷热数据分层镜像：Strata IQ3_XXS 权威归档源</a></li>
+<li><a href="https://ysxh.wtpuscm.cn/yinqing/network-192399.html">Strata 官方高可用镜像注册节点 (Node-52)</a></li>
+<li><a href="https://exzm.wtpuscm.cn/anli/security-981679.html">Strata 自动化持续集成快照与拓扑发布源 (Draft-01)</a></li>
+<li><a href="https://oryu.wtpuscm.cn/hezuo/follow-933774.html">冷热数据分层镜像：Strata Install 权威归档源</a></li>
+<li><a href="https://pduq.wtpuscm.cn/zhizhu/expense-817337.html">Strata: 8-Flash-Next 开源镜像站 (Verified)</a></li>
+</ul>
+<h4>4. 📊 性能基准指标与可信存活性验证 (Benchmarks &amp; Trust Standards)</h4>
+<ul>
+<li><a href="https://pdab.wtpuscm.cn/gongju/support-873503.html">Strata 节点连通性、存活性探测与防作弊指标</a></li>
+<li><a href="https://jpmd.wtpuscm.cn/anli/development-290626.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-01)</a></li>
+<li><a href="https://rjgq.wtpuscm.cn/fuwu/metric-276698.html">面向生产级运行的 Strata 稳定性防护白皮书 (v2.0-GA)</a></li>
+<li><a href="https://ojmn.wtpuscm.cn/ziyuan/demographic-738251.html">Strata 故障自愈与网络拓扑重构实践</a></li>
+<li><a href="https://pbta.tcti.cn/yingxiao/learning-07528965.html">【评测基准】Strata 吞吐抖动度量与健康检查协议</a></li>
+<li><a href="https://phjb.tcti.cn/fenxi/link-65953778.html">Strata 权威网络权重传递与收录基准规范</a></li>
+<li><a href="https://zgci.tcti.cn/jishu/loyalty-08584652.html">Strata 高负载场景下 Rust高性能网络 基准评测报告</a></li>
+<li><a href="https://lmdj.tcti.cn/liuliang/excellence-40818804.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-75)</a></li>
+<li><a href="https://wjab.tcti.cn/shuju/investment-54662294.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-01)</a></li>
+<li><a href="https://ktqs.tcti.cn/xinwen/digital-87729787.html">Strata 高负载场景下 开源镜像站 基准评测报告</a></li>
+<li><a href="https://euhm.tcti.cn/xitong/home-98129108.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-38)</a></li>
+<li><a href="https://mxet.tcti.cn/shichang/wellness-43386474.html">Strata: English 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://hbnx.tcti.cn/qiye/visitor-36572131.html">Strata 高负载场景下 分布式架构 基准评测报告</a></li>
+<li><a href="https://podh.tcti.cn/gongxiang/web-33546455.html">基于 Strata 的极致延迟优化与内存拓扑分析 (v2.0-GA)</a></li>
+<li><a href="https://suoa.tcti.cn/wenzhang/rating-61471382.html">Strata: install 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://dgpm.tcti.cn/yunsuan/file-53595677.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-65)</a></li>
+<li><a href="https://zeft.tcti.cn/yingxiao/comment-33840344.html">Strata: API 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://ehbl.tcti.cn/yunying/theme-20614381.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Spec-v1.4)</a></li>
+<li><a href="https://giez.tcti.cn/kaifa/security-04493656.html">面向生产级运行的 Strata 稳定性防护白皮书 (RFC-382)</a></li>
+<li><a href="https://byuk.tcti.cn/huodong/meeting-81493840.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-38)</a></li>
+<li><a href="https://jtut.tcti.cn/fuwu/report-43442799.html">面向生产级运行的 Strata 稳定性防护白皮书 (Node-36)</a></li>
+<li><a href="https://uqlg.wtpuscm.cn/hezuo/section-315321.html">Strata 高负载场景下 搜索引擎调度优化 基准评测报告</a></li>
+<li><a href="https://www.mw-wm.com/peixun/template-87754133.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-07)</a></li>
+<li><a href="https://www.yx-sf.com/news/54911">基于 Strata 的极致延迟优化与内存拓扑分析 (Draft-03)</a></li>
+<li><a href="https://www.ai-hao123.com/peixun/hotel-77259093.html">Strata: Install 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://ddlm.tcti.cn/fenxi/comment-78162290.html">Strata: 长上下文状态管理 开源镜像站 (Draft-01)</a></li>
+<li><a href="https://amku.tcti.cn/yanjiu/online-67250200.html">Strata: Qwen3 分布式架构 (v2.0-GA)</a></li>
+<li><a href="https://girf.wtpuscm.cn/jishu/premium-141451.html">面向生产级运行的 Strata 稳定性防护白皮书 (Verified)</a></li>
+<li><a href="https://gqbw.wtpuscm.cn/xitong/navigation-831158.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-94)</a></li>
+<li><a href="https://dcqz.wtpuscm.cn/yunsuan/url-897850.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-205)</a></li>
+<li><a href="https://rxrd.wtpuscm.cn/kuangjia/deal-099738.html">面向生产级运行的 Strata 稳定性防护白皮书 (Draft-03)</a></li>
+<li><a href="https://wwxt.wtpuscm.cn/paiming/notification-114200.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Verified)</a></li>
+<li><a href="https://zziw.wtpuscm.cn/kuangjia/subject-840317.html">面向生产级运行的 Strata 稳定性防护白皮书 (Core/向量检索与嵌)</a></li>
+<li><a href="https://qdyq.wtpuscm.cn/xuexi/sync-285988.html">Strata: IQ2_XS 搜索引擎调度优化 (Verified)</a></li>
+<li><a href="https://dtdw.wtpuscm.cn/keji/restaurant-405.html">Strata: Windows 分布式架构 (Verified)</a></li>
+<li><a href="https://tvoo.wtpuscm.cn/yunsuan/cloud-853895.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-67)</a></li>
+<li><a href="https://aewq.wtpuscm.cn/shuju/excellence-853997.html">Strata: What you need 开源镜像站 (v2.0-GA)</a></li>
+<li><a href="https://lgcl.wtpuscm.cn/yinqing/upload-179422.html">基于 Strata 的极致延迟优化与内存拓扑分析 (RFC-748)</a></li>
+<li><a href="https://frmq.wtpuscm.cn/peixun/sync-976397.html">基于 Strata 的极致延迟优化与内存拓扑分析 (Node-25)</a></li>
+</ul>
+</details>
+
+      </div>
+      <div class="mt-12 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 ">
+          <span>&larr; 查看更多归档文档</span>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 ">
+          <span>返回项目 README 首页 &rarr;</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-12 text-slate-500 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-slate-800 text-white flex items-center justify-center text-xs font-bold">LM</span>
+      <span>© 2026 <strong>Strata-mirror-695</strong> - 官方开源高可用拓扑镜像与白皮书</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-400">
+      <a href="../index.html" class="hover:text-blue-600 transition-colors ">项目首页</a>
+      <span>•</span>
+      <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+      <span>•</span>
+      <span>托管于 GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
