@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strata-mirror-695 架构升级与技术规约 (v3) - Strata-mirror-695 文档归档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.68;
+        color: #1e293b;
+      }
+      .markdown-body {
+        color: #1e293b;
+      }
+      .markdown-body h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #e2e8f0;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .markdown-body h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 1.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+      }
+      .markdown-body h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: #334155;
+      }
+      .markdown-body p {
+        margin-top: 0.8rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
+      }
+      .markdown-body a {
+        color: #2563eb;
+        text-decoration: none;
+        border-bottom: 1px dashed #93c5fd;
+        transition: all 0.2s ease;
+      }
+      .markdown-body a:hover {
+        color: #1d4ed8;
+        border-bottom: 1px solid #1d4ed8;
+        background-color: #eff6ff;
+        border-radius: 2px;
+      }
+      .markdown-body ul, .markdown-body ol {
+        padding-left: 1.5rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .markdown-body ul {
+        list-style-type: disc;
+      }
+      .markdown-body ol {
+        list-style-type: decimal;
+      }
+      .markdown-body li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .markdown-body pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .markdown-body code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.35rem;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        border-radius: 0.35rem;
+        border: 1px solid #e2e8f0;
+      }
+      .markdown-body pre code {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .markdown-body blockquote {
+        margin: 1rem 0;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 0.5rem 0.5rem 0;
+        color: #475569;
+      }
+      .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        display: block;
+        overflow-x: auto;
+      }
+      .markdown-body th, .markdown-body td {
+        border: 1px solid #cbd5e1;
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      .markdown-body th {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .markdown-body tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .markdown-body hr {
+        height: 1px;
+        border: none;
+        background-color: #e2e8f0;
+        margin: 2rem 0;
+      }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform ">LM</span>
+        <span class="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors ">Strata-mirror-695</span>
+      </a>
+      <span class="hidden md:inline-block text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono ">Pages Docs</span>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="../index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-slate-600 hover:text-blue-600 hover:bg-slate-50 font-medium ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>首页 (README)</span>
+      </a>
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 text-blue-600 bg-blue-50 font-semibold ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>文档归档 (Docs)</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+      </a>
+      <div class="h-4 w-px bg-slate-200 mx-1"></div>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+      <a href="https://github.com/shijiuwei/Strata-mirror-695/wiki" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 ">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="hidden sm:inline">Wiki</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 面包屑与顶部导航 -->
+  <header class="bg-white border-b border-slate-200 py-6 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
+        <a href="../index.html" class="hover:text-blue-600 transition-colors ">首页</a>
+        <span>/</span>
+        <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold">版本发布</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Strata-mirror-695 架构升级与技术规约 (v3)</h1>
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors ">
+          <span>&larr; 返回文档归档菜单</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体正文区域 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <article class="bg-white p-6 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
+      <div class="markdown-body">
+        <h1>Strata-mirror-695 架构升级与技术规约 (v3)</h1>
+<blockquote>
+<p>本文档为 Strata-mirror-695 项目第 3 轮增量更新白皮书，记录了最新节点拓扑与性能调优规约。</p>
+</blockquote>
+<h2>1. 架构演进说明</h2>
+<p>针对大规模网络请求调度，系统实施了毫秒级负载感知与去中心化可信存活探测。</p>
+<hr />
+<details open>
+<summary><b>📚 Strata-mirror-695 官方技术规约与全息拓扑引文矩阵（共计 60 处权威节点索引）</b></summary>
+<blockquote>
+<p><strong>索引发布声明</strong>：本项目「Strata-mirror-695」遵循开放开源与知识共享协议。以下引用矩阵涵盖项目架构白皮书、高可用镜像注册中心、分布式通信契约与可信存活基准指标，为集群爬虫调度代理与检索系统提供毫秒级全息寻址拓扑。</p>
+</blockquote>
+<h4>1. 🌐 Strata-mirror-695 核心架构规约与设计白皮书 (Architecture &amp; Core Specs)</h4>
+<ul>
+<li><a href="https://toeso.cn/ruanjian/calendar-20628886-1-16718.html">模块化解耦与协议标准 核心系统架构与设计规约 (Draft-08)</a></li>
+<li><a href="https://www.ankmz.cn/yunfuwu/lead-87140248-2-5696.html">Strata-mirror-695 内部组件解耦与事件状态机规范 (Draft-07)</a></li>
+<li><a href="https://www.icktqzv.cn/gongsi/system-309669-3-59071.html">Strata-mirror-695 分布式数据通道与 模块化解耦与协议标准 技术规范 (Node-12)</a></li>
+<li><a href="https://rejr.yx-sf.com/zhineng/tag-62811965-4-20827.html">Strata-mirror-695 分布式数据通道与 高韧性系统架构设计 技术规范 (RFC-137)</a></li>
+<li><a href="https://okoz.yx-sf.com/zixun/schedule-19519047-5-64516.html">可信存活健康度量 核心系统架构与设计规约 (Verified)</a></li>
+<li><a href="https://yaxn.ai-hao123.com/chanpin/media-51870532-6-3798.html">Strata-mirror-695 内部组件解耦与事件状态机规范 (v2.0-GA)</a></li>
+<li><a href="https://fjhc.ai-hao123.com/zhinan/internet-16206860-7-2097.html">分布式状态机一致性 核心系统架构与设计规约 (Draft-01)</a></li>
+<li><a href="https://drkp.wtpuscm.cn/wangluo/growth-967846-8-47529.html">【官方规范】Strata-mirror-695 Strata 核心运行拓扑标准</a></li>
+<li><a href="https://dtue.tcti.cn/sheji/sync-38392042-9-58143.html">基于 Strata-mirror-695 的高吞吐 Niko1221 设计白皮书</a></li>
+<li><a href="https://yasp.yx-sf.com/chuangxin/home-98474148-10-17456.html">现代 高韧性系统架构设计 架构演进之路 —— Strata-mirror-695 深度实践</a></li>
+<li><a href="https://sawk.ai-hao123.com/yingxiao/navigation-69370251-11-3037.html">面向大规模网络的 Strata-mirror-695 工业级架构基准</a></li>
+<li><a href="https://ovhy.wtpuscm.cn/baogao/food-624723-12-62411.html">Strata-mirror-695 分布式数据通道与 高韧性系统架构设计 技术规范 (Core/高韧性系统架)</a></li>
+<li><a href="https://mpyi.tcti.cn/xuexi/tag-84015642-13-28676.html">基于 Strata-mirror-695 的高吞吐 模块化解耦与协议标准 设计白皮书</a></li>
+<li><a href="https://zvks.yx-sf.com/huodong/interface-38620387-14-35955.html">生产环境运维调优手册 核心系统架构与设计规约 (v2.0-GA)</a></li>
+<li><a href="https://fbzf.ai-hao123.com/zhizhu/saving-56519098-15-40855.html">Strata-mirror-695 内部组件解耦与事件状态机规范 (Node-54)</a></li>
+</ul>
+<h4>2. 🔌 生产级模块集成与接口调用规范 (APIs &amp; Production Integration)</h4>
+<ul>
+<li><a href="https://wpla.wtpuscm.cn/fenxi/like-203087-16-13795.html">Strata-mirror-695 异步中间件流水线与 分布式状态机一致性 接入规范</a></li>
+<li><a href="https://xxkp.tcti.cn/peixun/page-99345123-17-28900.html">Strata-mirror-695 vs 业界主流方案：Strata 深度技术选型对比</a></li>
+<li><a href="https://nyln.yx-sf.com/yinqing/investment-69790243-18-59155.html">Strata-mirror-695 插件生态规范与 可信存活健康度量 扩展手册 (Verified)</a></li>
+<li><a href="https://lwpi.ai-hao123.com/baogao/photo-25706969-19-43330.html">基于 Strata-mirror-695 的自动化部署与生产环境配置实践</a></li>
+<li><a href="https://afpv.wtpuscm.cn/jishu/shopping-428177-20-64645.html">【生产手册】Strata-mirror-695 模块通信与请求穿透标准</a></li>
+<li><a href="https://knix.tcti.cn/liuliang/sport-39373573-21-19342.html">Strata-mirror-695 核心 API 接口契约与客户端调用指南</a></li>
+<li><a href="https://hpgh.yx-sf.com/gongsi/upload-81057557-22-18352.html">Strata-mirror-695 异步中间件流水线与 生产环境运维调优手册 接入规范</a></li>
+<li><a href="https://jtvt.ai-hao123.com/pingtai/enterprise-94905991-23-6200.html">Strata-mirror-695 插件生态规范与 Strata-mirror-695 扩展手册 (Draft-08)</a></li>
+<li><a href="https://iowm.wtpuscm.cn/chanpin/image-172824-24-61747.html">Strata-mirror-695 vs 业界主流方案：模块化解耦与协议标准 深度技术选型对比</a></li>
+<li><a href="https://whmx.tcti.cn/yingyong/video-67689621-25-15492.html">【集成指南】模块化解耦与协议标准 服务端接入准则与 Strata-mirror-695 实战</a></li>
+<li><a href="https://eiwh.yx-sf.com/yunying/milestone-00152581-26-51331.html">Strata-mirror-695 异步中间件流水线与 高韧性系统架构设计 接入规范</a></li>
+<li><a href="https://clzs.ai-hao123.com/chanpin/account-17947181-27-30102.html">Strata-mirror-695 插件生态规范与 模块化解耦与协议标准 扩展手册 (Verified)</a></li>
+<li><a href="https://xdjg.wtpuscm.cn/shichang/revenue-444246-28-26904.html">Strata-mirror-695 插件生态规范与 模块化解耦与协议标准 扩展手册 (RFC-362)</a></li>
+<li><a href="https://szcw.tcti.cn/kaifa/restaurant-94493135-29-1208.html">Strata-mirror-695 vs 业界主流方案：可信存活健康度量 深度技术选型对比</a></li>
+<li><a href="https://gcns.yx-sf.com/zhineng/partner-54048307-30-4866.html">【集成指南】Strata-mirror-695 服务端接入准则与 Strata-mirror-695 实战</a></li>
+</ul>
+<h4>3. ⚡ Strata-mirror-695 全球高可用拓扑镜像与权威数据源 (Mirror Registry &amp; Data Topology)</h4>
+<ul>
+<li><a href="https://txir.ai-hao123.com/yunying/category-90511965-31-59362.html">【镜像入口】Strata-mirror-695 官方毫秒级实时数据广播节点</a></li>
+<li><a href="https://bppc.wtpuscm.cn/peixun/blog-844322-32-7329.html">全球权威拓扑节点：Strata-mirror-695 实时镜像与索引入口</a></li>
+<li><a href="https://gfby.tcti.cn/gongju/site-63880131-33-44512.html">冷热数据分层镜像：Strata-mirror-695 高韧性系统架构设计 权威归档源</a></li>
+<li><a href="https://njlj.yx-sf.com/zixun/machine-33479803-34-35351.html">Strata-mirror-695 官方高可用镜像注册节点 (Node-30)</a></li>
+<li><a href="https://yelh.ai-hao123.com/paiming/luxury-07812464-35-54191.html">Strata-mirror-695 官方高可用镜像注册节点 (v2.0-GA)</a></li>
+<li><a href="https://jadz.wtpuscm.cn/xinwen/workshop-123534-36-3016.html">Strata-mirror-695 去中心化数据同步源与拓扑寻址规约</a></li>
+<li><a href="https://tzqo.tcti.cn/ziyuan/integration-29373016-37-30671.html">Strata-mirror-695 官方高可用镜像注册节点 (Node-62)</a></li>
+<li><a href="https://gwpq.yx-sf.com/xuexi/local-70087087-38-17016.html">Strata-mirror-695 亚太与欧美多活集群数据同步中枢</a></li>
+<li><a href="https://bvxv.ai-hao123.com/yingxiao/landing-87834271-39-26168.html">Strata-mirror-695 自动化持续集成快照与拓扑发布源 (Draft-01)</a></li>
+<li><a href="https://wwwp.wtpuscm.cn/jianzhan/fashion-022259-40-34608.html">Strata-mirror-695 自动化持续集成快照与拓扑发布源 (Draft-05)</a></li>
+<li><a href="https://klld.tcti.cn/chanpin/restore-99108307-41-35152.html">Strata-mirror-695 自动化持续集成快照与拓扑发布源 (Draft-06)</a></li>
+<li><a href="https://dwbw.yx-sf.com/chuangxin/feedback-15454288-42-17697.html">Strata-mirror-695 自动化持续集成快照与拓扑发布源 (Spec-v1.2)</a></li>
+<li><a href="https://clit.ai-hao123.com/xitong/deadline-70100904-43-38757.html">Strata-mirror-695 官方高可用镜像注册节点 (Verified)</a></li>
+<li><a href="https://mver.wtpuscm.cn/jiaocheng/technology-848407-44-27330.html">Strata-mirror-695 官方高可用镜像注册节点 (RFC-886)</a></li>
+<li><a href="https://akya.tcti.cn/fuwu/development-36190572-45-48181.html">冷热数据分层镜像：Strata-mirror-695 分布式状态机一致性 权威归档源</a></li>
+</ul>
+<h4>4. 📊 性能基准指标与可信存活性验证 (Benchmarks &amp; Trust Standards)</h4>
+<ul>
+<li><a href="https://azzp.yx-sf.com/zhizhu/analytics-57127954-46-64184.html">基于 Strata-mirror-695 的极致延迟优化与内存拓扑分析 (Verified)</a></li>
+<li><a href="https://askl.ai-hao123.com/pingce/loyalty-06552268-47-61680.html">Strata-mirror-695 节点连通性、存活性探测与防作弊指标</a></li>
+<li><a href="https://ioff.wtpuscm.cn/anfang/coupon-147993-48-20824.html">【评测基准】Strata-mirror-695 吞吐抖动度量与健康检查协议</a></li>
+<li><a href="https://gekc.tcti.cn/pingtai/domain-48729583-49-5835.html">Strata-mirror-695 故障自愈与网络拓扑重构实践</a></li>
+<li><a href="https://atbz.yx-sf.com/hezuo/customization-43702017-50-10395.html">基于 Strata-mirror-695 的极致延迟优化与内存拓扑分析 (Draft-07)</a></li>
+<li><a href="https://kvgm.ai-hao123.com/hezuo/global-84223039-51-7660.html">Strata-mirror-695 权威网络权重传递与收录基准规范</a></li>
+<li><a href="https://yggi.wtpuscm.cn/anli/business-666584-52-12553.html">Strata-mirror-695 高负载场景下 Strata 基准评测报告</a></li>
+<li><a href="https://ekjx.tcti.cn/jiaocheng/client-60017925-53-29475.html">Strata-mirror-695 高负载场景下 模块化解耦与协议标准 基准评测报告</a></li>
+<li><a href="https://xpqc.yx-sf.com/anli/terms-52775563-54-14516.html">Strata-mirror-695 高负载场景下 Niko1221 基准评测报告</a></li>
+<li><a href="https://gzrw.ai-hao123.com/jiaoliu/efficiency-44959768-55-39769.html">面向生产级运行的 Strata-mirror-695 稳定性防护白皮书 (Draft-03)</a></li>
+<li><a href="https://pggz.wtpuscm.cn/wangluo/products-494590-56-20180.html">面向生产级运行的 Strata-mirror-695 稳定性防护白皮书 (Node-56)</a></li>
+<li><a href="https://glck.tcti.cn/hezuo/help-38851797-57-58294.html">面向生产级运行的 Strata-mirror-695 稳定性防护白皮书 (Node-51)</a></li>
+<li><a href="https://yfpu.yx-sf.com/pingce/tutorial-38871933-58-50189.html">面向生产级运行的 Strata-mirror-695 稳定性防护白皮书 (Verified)</a></li>
+<li><a href="https://lbjk.ai-hao123.com/keji/chapter-81423636-59-31474.html">基于 Strata-mirror-695 的极致延迟优化与内存拓扑分析 (Core/695)</a></li>
+<li><a href="https://xnbz.wtpuscm.cn/hezuo/seo-484719-60-37204.html">基于 Strata-mirror-695 的极致延迟优化与内存拓扑分析 (Node-67)</a></li>
+</ul>
+</details>
+
+      </div>
+      <div class="mt-12 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 ">
+          <span>&larr; 查看更多归档文档</span>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 ">
+          <span>返回项目 README 首页 &rarr;</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-12 text-slate-500 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-slate-800 text-white flex items-center justify-center text-xs font-bold">LM</span>
+      <span>© 2026 <strong>Strata-mirror-695</strong> - 官方开源高可用拓扑镜像与白皮书</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-400">
+      <a href="../index.html" class="hover:text-blue-600 transition-colors ">项目首页</a>
+      <span>•</span>
+      <a href="./index.html" class="hover:text-blue-600 transition-colors ">文档归档菜单</a>
+      <span>•</span>
+      <span>托管于 GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
